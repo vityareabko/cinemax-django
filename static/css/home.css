@@ -1,0 +1,104 @@
+.hero{
+    background-image: url('../img/herp-bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+    padding: 100px 0;
+}
+.hero img{
+    max-width: 400px;
+}
+.hero .row{
+    margin: 0;
+}
+.hero .description-hero{
+    color: #fff;
+    font-size: 20px;
+}
+.hero .movie_title{
+    color:#fff;
+    margin-bottom: 30px;
+}
+.hero .btn-hero{
+    margin-top: 50px;
+}
+.btn-hero{
+
+    border: none;
+    padding: 7px 70px;
+    background:-webkit-linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
+    background:-o-linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
+    background:-moz-linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
+    background:linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
+    color: #fff;
+    transition: all 0.2s ease;
+    letter-spacing: 0.32em;
+}
+.btn-hero:hover{
+    transform: rotate(180deg);
+}
+
+.btn-hero:active{
+    transition: all 0.5s ease;
+    background:-webkit-linear-gradient(46deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
+    background:-o-linear-gradient(46deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
+    background:-moz-linear-gradient(46deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
+    background:linear-gradient(46deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
+    
+}
+.title{
+    margin: 40px 0;
+    text-align: center;
+    color: #000;
+}
+
+.card{
+    cursor: pointer;
+    border-radius: 10px;
+    height: 500px;
+    min-height: 100%;
+    min-width: 100%;
+    background-image: url(../../media/posters/875613.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    transition: all 0.3s ease;
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+
+    position: relative;
+    overflow: hidden;
+
+}
+.card:hover{
+    filter: grayscale(30%);
+    -webkit-filter: grayscale(30%);
+}
+
+.card .card-info{
+    background-color: rgba(0,0,0,0.4);
+    position: absolute;
+    bottom: 0;
+   
+    padding: 20px;
+    color: #fff;
+    text-align: left;
+    transition: all 0.6s ease;
+    transform: translateY(500px);
+        
+}
+.card:hover .card-info {
+    transform: translateY(0px);
+    
+}
+
+.card .card-info .desc{
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    
+}
+

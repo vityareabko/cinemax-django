@@ -3,5 +3,5 @@ from django.urls import path
 
 app_name = 'app'
 urlpatterns = [
-    path('', app_views.index, name='index')
+    path('', app_views.MoviesView.as_view())
 ]

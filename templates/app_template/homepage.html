@@ -1,11 +1,114 @@
+
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}Главная{% endblock %}
- 
+{% block stylesheet %} 
+    
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    
+{% endblock %}
 {% block content %}
+    
+    <div class="hero">
+        <div class="row">
+            <div class="offset-md-2 col-md-4 d-flex justify-content-md-end justify-content-center">
+                <img class="img-fluid " src="{% static 'img/hero.jpg' %}" alt="">
+            </div>
+            <div class="col-md-6">
+                <h2 class="movie_title">
+                    Губка Боб: Втеча Губки
+                </h2>
+                <p class="description-hero">Вік:0+ (Попередньо)</p>
+                <p class="description-hero">Оригінальна назва:The SpongeBob Movie: Sponge on the Run</p>
+                <p class="description-hero">Режисер:Тім Хілл </p>
+                <p class="description-hero">Дата виходу:04.06.2020</p>
+                <p class="description-hero">Мова:Українська мова</p>
+                <p class="description-hero">Жанр:Анімація, Комедія</p>
+                <p class="description-hero">Тривалість:0 хв.</p>
+                <p class="description-hero">Виробництво:США</p>
+                <p class="description-hero">Студія:Paramount</p>
 
-    <div class="container">
-        dasds
+                <input class="btn-hero" type="button" value="Трейлер">
+            </div>
+        </div>    
     </div>
 
+
+    <div class="container">
+        <h1 class="title">
+            Очікувані фільми 2020 року
+        </h1>
+
+        <div class="cards">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        
+                        <div class="card-info">
+                            <h3 class="card__title">
+                                Назва фильма
+                            </h3>
+                            <!-- <p class="duration"> <strong>Тривалість фільма:</strong> 1:30:30 </p>
+                            <p class="contry"> <strong>Країна: </strong> Украина, Казахстан</p>
+                            <p class="genre"> <strong>Жанри: </strong> Боевик </p>
+                            <p class="actors"> <strong>Актори</strong> <a href="#">актори</a> </p>
+                            <p class="director"> <strong>Режисер:</strong> режисер </p>
+                            <p class="premiere"> <strong>Прем’єра: </strong> 24 травня 2020</p>
+                            <p class="budget"> <strong>Бюджет</strong> 44800000</p> -->
+                            <p class="desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis voluptatem aspernatur mollitia adipisci aperiam veritatis accusamus voluptatibus! Amet sit ipsum sed veniam, nobis, quis mollitia, atque deserunt nam est officia. </p>
+                            <input type="button" class="btn btn-primary" value="Забронювати квиток">
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        
+                        <div class="card-info">
+                            <h3 class="card__title">
+                                Назва фильма
+                            </h3>
+                            <!-- <p class="duration"> <strong>Тривалість фільма:</strong> 1:30:30 </p>
+                            <p class="contry"> <strong>Країна: </strong> Украина, Казахстан</p>
+                            <p class="genre"> <strong>Жанри: </strong> Боевик </p>
+                            <p class="actors"> <strong>Актори</strong> <a href="#">актори</a> </p>
+                            <p class="director"> <strong>Режисер:</strong> режисер </p>
+                            <p class="premiere"> <strong>Прем’єра: </strong> 24 травня 2020</p>
+                            <p class="budget"> <strong>Бюджет</strong> 44800000</p> -->
+                            <p class="desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis voluptatem aspernatur mollitia adipisci aperiam veritatis accusamus voluptatibus! Amet sit ipsum sed veniam, nobis, quis mollitia, atque deserunt nam est officia. </p>
+                            <input type="button" class="btn btn-primary" value="Забронювати квиток">
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        
+                        <div class="card-info">
+                            <h3 class="card__title">
+                                Назва фильма
+                            </h3>
+                            <!-- <p class="duration"> <strong>Тривалість фільма:</strong> 1:30:30 </p>
+                            <p class="contry"> <strong>Країна: </strong> Украина, Казахстан</p>
+                            <p class="genre"> <strong>Жанри: </strong> Боевик </p>
+                            <p class="actors"> <strong>Актори</strong> <a href="#">актори</a> </p>
+                            <p class="director"> <strong>Режисер:</strong> режисер </p>
+                            <p class="premiere"> <strong>Прем’єра: </strong> 24 травня 2020</p>
+                            <p class="budget"> <strong>Бюджет</strong> 44800000</p> -->
+                            <p class="desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis voluptatem aspernatur mollitia adipisci aperiam veritatis accusamus voluptatibus! Amet sit ipsum sed veniam, nobis, quis mollitia, atque deserunt nam est officia. </p>
+                            <input type="button" class="btn btn-primary" value="Забронювати квиток">
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+{% block js %} 
+    
+    
+{% endblock %}
 {% endblock  %}

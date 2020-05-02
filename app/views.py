@@ -1,5 +1,12 @@
 from django.shortcuts import render
-# from .models import Film
+from django.views.generic.base import View
 
-def index(request):
-    return render(request, 'app_template/homepage.html')
+from .models import Film
+
+
+class MoviesView(View):
+
+    def get(self, request):
+        films = Film.objects.all()
+
+        return render(request, 'app_template/homepage.html', {'film_list': films})

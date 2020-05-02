@@ -8,22 +8,31 @@ from django.utils import timezone
 # TimeField() хранит время
 # TextField()
 
+
 class Genre(models.Model):
     name =models. CharField(max_length = 150)
 
-class Actor(models.Model):
+    def __str__(self):
+        return self.name
+
+class Actor(models.Model): # актеры и режисеры
     name = models.CharField(max_length = 150)
+    age = models.PositiveSmallIntegerField("Возраст")
+    description = models.TextField("Описание")
     image = models.ImageField(upload_to = 'media/actors/')
+
+    def __str__(self):
+        return self.name
 
 class Film(models.Model): # Фильм 
     name = models.CharField(max_length = 150)
     duration_film = models.TimeField() # '14:30'
-    genre = models.ForeignKey(Genre, on_delete = models.CASCADE)
     desc = models.TextField()
-    year = models.DateField()
+    year = models.PositiveSmallIntegerField("Дата выхода", default=2019)
     contry = models.CharField(max_length = 150)
-    director = models.CharField(max_length = 150)
-    actor = models.ForeignKey(Actor, on_delete = models.CASCADE)
+    genre = models.ManyToManyField(Genre, verbose_name="жанры")
+    actor = models.ManyToManyField(Actor, verbose_name="актеры", related_name="film_actor")
+    directors = models.ManyToManyField(Actor, verbose_name="режиссер", related_name="film_director")
     premiere = models.CharField(max_length = 150)
     budget = models.PositiveIntegerField()
     image = models.ImageField(upload_to = 'media/posters/')
