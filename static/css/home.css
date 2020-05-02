@@ -22,6 +22,12 @@
 .hero .btn-hero{
     margin-top: 50px;
 }
+.hero .trailer-hero{
+    font-size: 18px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: rgb(42, 147, 233);
+}
 .btn-hero{
 
     border: none;
@@ -32,14 +38,14 @@
     background:linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
     color: #fff;
     transition: all 0.2s ease;
-    letter-spacing: 0.32em;
+    text-transform: uppercase;
 }
 .btn-hero:hover{
-    transform: rotate(180deg);
+    transform: translate(0px, -5px);
 }
 
 .btn-hero:active{
-    transition: all 0.5s ease;
+    transform: translate(0px, 2px);
     background:-webkit-linear-gradient(46deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
     background:-o-linear-gradient(46deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
     background:-moz-linear-gradient(46deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
