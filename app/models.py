@@ -19,7 +19,7 @@ class Actor(models.Model): # актеры и режисеры
     name = models.CharField(max_length = 150)
     age = models.PositiveSmallIntegerField("Возраст")
     description = models.TextField("Описание")
-    image = models.ImageField(upload_to = 'media/actors/')
+    image = models.ImageField(upload_to = 'actors/')
 
     def __str__(self):
         return self.name
@@ -35,7 +35,7 @@ class Film(models.Model): # Фильм
     directors = models.ManyToManyField(Actor, verbose_name="режиссер", related_name="film_director")
     premiere = models.CharField(max_length = 150)
     budget = models.PositiveIntegerField()
-    image = models.ImageField(upload_to = 'media/posters/')
+    image = models.ImageField(upload_to = 'posters/')
     def __str__(self):
         return self.name
 

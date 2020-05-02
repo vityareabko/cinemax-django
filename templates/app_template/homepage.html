@@ -36,17 +36,19 @@
 
     <div class="container">
         <h1 class="title">
-            Очікувані фільми 2020 року
+            Недавні прем'єри
         </h1>
-
+        
         <div class="cards">
+            
             <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        
+                {% for film in film_list %} 
+                
+                <div class="col-md-4 my-3">
+                <div class="card" style="background-image: url('media/{{  film.image  }}');">
                         <div class="card-info">
                             <h3 class="card__title">
-                                Назва фильма
+                                {{ film.name }}
                             </h3>
                             <!-- <p class="duration"> <strong>Тривалість фільма:</strong> 1:30:30 </p>
                             <p class="contry"> <strong>Країна: </strong> Украина, Казахстан</p>
@@ -55,52 +57,14 @@
                             <p class="director"> <strong>Режисер:</strong> режисер </p>
                             <p class="premiere"> <strong>Прем’єра: </strong> 24 травня 2020</p>
                             <p class="budget"> <strong>Бюджет</strong> 44800000</p> -->
-                            <p class="desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis voluptatem aspernatur mollitia adipisci aperiam veritatis accusamus voluptatibus! Amet sit ipsum sed veniam, nobis, quis mollitia, atque deserunt nam est officia. </p>
+                            <p class="desc">{{ film.desc }}</p>
                             <input type="button" class="btn btn-primary" value="Забронювати квиток">
                         </div>
                         
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        
-                        <div class="card-info">
-                            <h3 class="card__title">
-                                Назва фильма
-                            </h3>
-                            <!-- <p class="duration"> <strong>Тривалість фільма:</strong> 1:30:30 </p>
-                            <p class="contry"> <strong>Країна: </strong> Украина, Казахстан</p>
-                            <p class="genre"> <strong>Жанри: </strong> Боевик </p>
-                            <p class="actors"> <strong>Актори</strong> <a href="#">актори</a> </p>
-                            <p class="director"> <strong>Режисер:</strong> режисер </p>
-                            <p class="premiere"> <strong>Прем’єра: </strong> 24 травня 2020</p>
-                            <p class="budget"> <strong>Бюджет</strong> 44800000</p> -->
-                            <p class="desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis voluptatem aspernatur mollitia adipisci aperiam veritatis accusamus voluptatibus! Amet sit ipsum sed veniam, nobis, quis mollitia, atque deserunt nam est officia. </p>
-                            <input type="button" class="btn btn-primary" value="Забронювати квиток">
-                        </div>
-                        
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        
-                        <div class="card-info">
-                            <h3 class="card__title">
-                                Назва фильма
-                            </h3>
-                            <!-- <p class="duration"> <strong>Тривалість фільма:</strong> 1:30:30 </p>
-                            <p class="contry"> <strong>Країна: </strong> Украина, Казахстан</p>
-                            <p class="genre"> <strong>Жанри: </strong> Боевик </p>
-                            <p class="actors"> <strong>Актори</strong> <a href="#">актори</a> </p>
-                            <p class="director"> <strong>Режисер:</strong> режисер </p>
-                            <p class="premiere"> <strong>Прем’єра: </strong> 24 травня 2020</p>
-                            <p class="budget"> <strong>Бюджет</strong> 44800000</p> -->
-                            <p class="desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis voluptatem aspernatur mollitia adipisci aperiam veritatis accusamus voluptatibus! Amet sit ipsum sed veniam, nobis, quis mollitia, atque deserunt nam est officia. </p>
-                            <input type="button" class="btn btn-primary" value="Забронювати квиток">
-                        </div>
-                        
-                    </div>
-                </div>
+                {% endfor %} 
+                
             </div>
         </div>
 
