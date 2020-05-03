@@ -28,30 +28,7 @@
     text-transform: uppercase;
     color: rgb(42, 147, 233);
 }
-.btn-hero{
 
-    border: none;
-    padding: 7px 70px;
-    background:-webkit-linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
-    background:-o-linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
-    background:-moz-linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
-    background:linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
-    color: #fff;
-    transition: all 0.2s ease;
-    text-transform: uppercase;
-}
-.btn-hero:hover{
-    transform: translate(0px, -5px);
-}
-
-.btn-hero:active{
-    transform: translate(0px, 2px);
-    background:-webkit-linear-gradient(46deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
-    background:-o-linear-gradient(46deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
-    background:-moz-linear-gradient(46deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
-    background:linear-gradient(46deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
-    
-}
 .title{
     margin: 40px 0;
     text-align: center;
@@ -88,7 +65,8 @@
     background-color: rgba(0,0,0,0.4);
     position: absolute;
     bottom: 0;
-   
+    display: block;
+    width: 100%;
     padding: 20px;
     color: #fff;
     text-align: left;

@@ -1,0 +1,26 @@
+.movie{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* .movie .desc{
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+} */
+
+.trailer{
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #616161 100%);
+    padding: 30px 0;
+    position: relative;
+}
+.trailer__title{
+    color: rgb(95, 95, 95);
+}
+.desc-detail{
+    color: #fff;
+    text-align: left;
+}

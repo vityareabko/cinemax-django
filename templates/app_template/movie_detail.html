@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ movie.name }}{% endblock %}
+{% block stylesheet %} 
+    <link rel="stylesheet" href="{% static 'css/movie-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container movie">
+        <div class="row ">
+            <div class="col-md-4">
+                <img class="img-fluid" src="{{ movie.image.url }}" alt="poster">
+            </div>
+            <div class="col-md-8">
+                <h3 class="movie-name">{{ movie.name }}</h3>
+                <p class="duration"> <strong>Тривалість фільма:</strong> {{ movie.duration_film }} </p>
+                <p class="contry"> <strong>Країна: </strong> {{ movie.contry }}</p>
+                <p class="genre"> <strong>Жанри: </strong> 
+                    {% for genre in movie.genre.all %}
+                       {{ genre.name }},
+                    {% endfor %}
+                </p>
+                <p class="actors"> <strong>Актори</strong> 
+                    {% for actor in movie.actor.all %}
+                        <a href="#"> {{ actor.name }}</a>,
+                    {% endfor %}
+                 </p>
+                <p class="director"> <strong>Режисер:</strong> 
+                    {% for director in movie.directors.all %}
+                        <a href="#"> {{ director.name }}</a>
+                    {% endfor %}
+                </p>
+                <p class="premiere"> <strong>Прем’єра: </strong> {{ movie.premiere }}</p>
+                <p class="budget"> <strong>Бюджет</strong>  {{ movie.budget }}</p>
+               
+            </div>
+        </div>
+    </div>
+    <div class="trailer mt-5">
+        <div class="container">
+            <h2 class="trailer__title text-center mb-4">
+                {{ movie.name }}
+            </h2>
+            <div class="trailer__media text-center">
+                <iframe width="992" height="480" src="{{ movie.url_trailer }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p class='desc-detail '><strong>Описание: </strong>{{ movie.desc }} </p>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
+
+{% block js %} 
+    
+    
+{% endblock %}

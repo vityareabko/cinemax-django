@@ -18,18 +18,18 @@
                 <h2 class="movie_title">
                     Губка Боб: Втеча Губки
                 </h2>
-                <p class="description-hero">Вік:0+ (Попередньо)</p>
-                <p class="description-hero">Оригінальна назва:The SpongeBob Movie: Sponge on the Run</p>
-                <p class="description-hero">Режисер:Тім Хілл </p>
-                <p class="description-hero">Дата виходу:04.06.2020</p>
-                <p class="description-hero">Мова:Українська мова</p>
-                <p class="description-hero">Жанр:Анімація, Комедія</p>
-                <p class="description-hero">Тривалість:0 хв.</p>
-                <p class="description-hero">Виробництво:США</p>
-                <p class="description-hero">Студія:Paramount</p>
+                <p class="description-hero">Вік: 0+ (Попередньо)</p>
+                <p class="description-hero">Оригінальна назва: The SpongeBob Movie: Sponge on the Run</p>
+                <p class="description-hero">Режисер: Тім Хілл </p>
+                <p class="description-hero">Дата виходу: 04.06.2020</p>
+                <p class="description-hero">Мова: Українська мова</p>
+                <p class="description-hero">Жанр: Анімація, Комедія</p>
+                <p class="description-hero">Тривалість: 0 хв.</p>
+                <p class="description-hero">Виробництво: США</p>
+                <p class="description-hero">Студія: Paramount</p>
                 <br>
                 <a class="trailer-hero" href="https://www.youtube.com/watch?v=Ml4SZWNlZ9I">трейлер ТУТ ! <i class="fab fa-youtube"></i></a> <br>
-                <input class="btn-hero" type="button" value="Забронювати місце">
+                <a href="#"><input class="btn-hero" type="button" value="Забронювати місце"></a>
             </div>
         </div>    
     </div>
@@ -37,7 +37,7 @@
 
     <div class="container">
         <h1 class="title">
-            Недавні прем'єри
+            найближчі прем'єри
         </h1>
         
         <div class="cards">
@@ -46,7 +46,8 @@
                 {% for film in film_list %} 
                 
                 <div class="col-md-4 my-3">
-                <div class="card" style="background-image: url('media/{{  film.image  }}');">
+                <div class="card" style="background-image: url('{{  film.image.url  }}')">
+                        <p>{{  film.image.url  }}</p>
                         <div class="card-info">
                             <h3 class="card__title">
                                 {{ film.name }}
@@ -59,7 +60,9 @@
                             <p class="premiere"> <strong>Прем’єра: </strong> 24 травня 2020</p>
                             <p class="budget"> <strong>Бюджет</strong> 44800000</p> -->
                             <p class="desc">{{ film.desc }}</p>
-                            <input type="button" class="btn btn-primary" value="Забронювати квиток">
+                            <a href="#!"><input type="button" class="btn btn-primary" value="Забронювати квиток"></a>
+                            <a href="{% url 'app:movie_detail' film.id %}"><input type="button" class="btn btn-secondary" value="Докладніше"></a>
+                            
                         </div>
                         
                     </div>
@@ -69,11 +72,13 @@
             </div>
         </div>
 
+        
+
 
 
     </div>
+{% endblock  %}
 {% block js %} 
     
     
 {% endblock %}
-{% endblock  %}
