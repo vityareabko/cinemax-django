@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Сеанси{% endblock %}
+{% block stylesheet %} 
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sessions.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="sessions">
+        <div class="container">
+            <h3 class="sessions-top mt-5">
+                Розклад фільмів в кінотеатрі СINEMAX
+            </h3>
+            <!-- <div class="sessions-all d-flex my-3">
+                <h4 class="sessions-all__title mr-4">
+                    Сеанси
+                </h4>
+                <p class="item mr-3">10:30</p>
+                <p class="item mr-3">12:30</p>
+                <p class="item mr-3">14:20</p>
+                <p class="item mr-3">16:40</p>
+                <p class="item mr-3">18:00</p>
+                <p class="item mr-3">20:00</p>
+                <p class="item">22:10</p>
+            </div>
+            <div class="sessions-halls d-flex ">
+                <h4 class="sessions-halls__title mr-5 text-right">
+                    Зали
+                </h4>
+                <p class="item mr-3">Зал № 1</p>
+                <p class="item mr-3">Зал № 2</p>
+                <p class="item mr-3">Зал № 3</p>
+            </div> -->
+            <div class="sessions-tabs d-flex align-items-center">
+                <nav class="days d-flex">
+                    <a href="#pn" class="day tabs-item active">пн</a></li>
+                    <a href="#vt" class="day tabs-item">вт</a></li>
+                    <a href="#sr" class="day tabs-item">ср</a></li>
+                    <a href="#ct" class="day tabs-item">чт</a></li>
+                    <a href="#pt" class="day tabs-item">пт</a></li>
+                    <a href="#sb" class="day tabs-item">сб</a></li>
+                    <a href="#nd" class="day tabs-item">нд</a></li>
+                </nav>
+                <span class="line"></span>  
+            </div>
+            
+            <div id="pn" class="sessions-bottom mt-5 tabs-content visible">
+                <div class="row text-center">
+                    {% if sessions_pn %}
+                        {% for movie in movies %}
+                            <div class="col-md-2">
+                                <h6>{{ movie.name }}</h6> <br>
+                            </div>
+                        {% endfor %}
+                        {% for movie in movies %}
+                            <div class="col-md-2">  
+                                {% for session in sessions_pn %}
+                                    {% if session.id_film_id == movie.id %}
+
+                                        <p class=mt-2>{{ session.session_time_start }}  зал № {{ session.id_hall_id  }} </p> <br>   
+                                        
+                                    {% endif %}   
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                    <div class="alert alert-secondary mx-auto" role="alert">
+                        <strong>Сумно !</strong> 
+                        в цей день немає сеансів
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div id="vt" class="sessions-bottom mt-5 tabs-content">
+                <div class="row text-center">
+                    {% if sessions_vt %}
+                        {% for movie in movies %}
+                            <div class="col-md-2">
+                                <h6>{{ movie.name }}</h6> <br>
+                            </div>
+                        {% endfor %}
+                        {% for movie in movies %}
+                            <div class="col-md-2">  
+                                {% for session in sessions_vt %}
+                                    {% if session.id_film_id == movie.id %}
+
+                                        <p class=mt-2>{{ session.session_time_start }}  зал № {{ session.id_hall_id  }} </p> <br>   
+                                        
+                                    {% endif %}   
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                    <div class="alert alert-secondary mx-auto" role="alert">
+                        <strong>Сумно !</strong> 
+                        в цей день немає сеансів
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div id="sr" class="sessions-bottom mt-5 tabs-content">
+                <div class="row text-center">
+                    {% if sessions_sr %}
+                        {% for movie in movies %}
+                            <div class="col-md-2">
+                                <h6>{{ movie.name }}</h6> <br>
+                            </div>
+                        {% endfor %}
+                        {% for movie in movies %}
+                            <div class="col-md-2">  
+                                {% for session in sessions_sr %}
+                                    {% if session.id_film_id == movie.id %}
+
+                                        <p class=mt-2>{{ session.session_time_start }}  зал № {{ session.id_hall_id  }} </p> <br>   
+                                        
+                                    {% endif %}   
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                    <div class="alert alert-secondary mx-auto" role="alert">
+                        <strong>Сумно !</strong> 
+                        в цей день немає сеансів
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div id="ct" class="sessions-bottom mt-5 tabs-content">
+                <div class="row text-center">
+                    {% if sessions_ct %}
+                        {% for movie in movies %}
+                            <div class="col-md-2">
+                                <h6>{{ movie.name }}</h6> <br>
+                            </div>
+                        {% endfor %}
+                        {% for movie in movies %}
+                            <div class="col-md-2">  
+                                {% for session in sessions_ct %}
+                                    {% if session.id_film_id == movie.id %}
+
+                                        <p class=mt-2>{{ session.session_time_start }}  зал № {{ session.id_hall_id  }} </p> <br>   
+                                        
+                                    {% endif %}   
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                    <div class="alert alert-secondary mx-auto" role="alert">
+                        <strong>Сумно !</strong> 
+                        в цей день немає сеансів
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div id="pt" class="sessions-bottom mt-5 tabs-content">
+                <div class="row text-center">
+                    {% if sessions_pt %}
+                        {% for movie in movies %}
+                            <div class="col-md-2">
+                                <h6>{{ movie.name }}</h6> <br>
+                            </div>
+                        {% endfor %}
+                        {% for movie in movies %}
+                            <div class="col-md-2">  
+                                {% for session in sessions_pt %}
+                                    {% if session.id_film_id == movie.id %}
+
+                                        <p class=mt-2>{{ session.session_time_start }}  зал № {{ session.id_hall_id  }} </p> <br>   
+                                        
+                                    {% endif %}   
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                    <div class="alert alert-secondary mx-auto" role="alert">
+                        <strong>Сумно !</strong> 
+                        в цей день немає сеансів
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div id="sb" class="sessions-bottom mt-5 tabs-content">
+                <div class="row text-center">
+                    {% if sessions_sb %}
+                        {% for movie in movies %}
+                            <div class="col-md-2">
+                                <h6>{{ movie.name }}</h6> <br>
+                            </div>
+                        {% endfor %}
+                        {% for movie in movies %}
+                            <div class="col-md-2">  
+                                {% for session in sessions_sb %}
+                                    {% if session.id_film_id == movie.id %}
+
+                                        <p class=mt-2>{{ session.session_time_start }}  зал № {{ session.id_hall_id  }} </p> <br>   
+                                        
+                                    {% endif %}   
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                    <div class="alert alert-secondary mx-auto" role="alert">
+                        <strong>Сумно !</strong>
+                        в цей день немає сеансів
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div id="nd" class="sessions-bottom mt-5 tabs-content">
+                <div class="row text-center">
+                    {% if sessions_nd %}
+                        {% for movie in movies %}
+                            <div class="col-md-2">
+                                <h6>{{ movie.name }}</h6> <br>
+                            </div>
+                        {% endfor %}
+                        {% for movie in movies %}
+                            <div class="col-md-2">  
+                                {% for session in sessions_nd %}
+                                    {% if session.id_film_id == movie.id %}
+
+                                        <p class=mt-2>{{ session.session_time_start }}  зал № {{ session.id_hall_id  }} </p> <br>   
+                                        
+                                    {% endif %}   
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                    <div class="alert alert-secondary mx-auto" role="alert">
+                        <strong>Сумно !</strong>
+                        в цей день немає сеансів
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+      
+
+        
+    </div>
+
+   
+{% endblock %}
+
+{% block js %}
+    <link rel="stylesheet" href="{% static 'js/jquery.fancybox.min.js' %}">
+{% endblock %}

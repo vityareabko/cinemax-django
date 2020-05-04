@@ -4,27 +4,29 @@ h1,h2,h3,h4,h5,h6,p{
 p{
     margin: 5px 0;
 }
-
+li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
 body{
 
 }
 
-.header{
-    background:-webkit-linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
-    background:-o-linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
-    background:-moz-linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
-    background:linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
-}
+
 .footer{
-    background:-webkit-linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
-    background:-o-linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
-    background:-moz-linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
-    background:linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
+    background: linear-gradient(265.6deg, #C72424 -18.27%, #133174 102.06%);
     height: 50px;
-    filter: grayscale(60%);
-    -webkit-filter: grayscale(60%);
-    
-    
+    display: none;
+}
+.header{
+    background: linear-gradient(265.6deg, #C72424 -18.27%, #133174 102.06%);
+}
+
+.header-wrap{
+    display: flex;
+    justify-content: space-between;
 }
 
 .logo a{
@@ -34,19 +36,19 @@ body{
 }
 .logo{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     color: #fff;
     padding: 20px 0;
     
 }
-.logo .line{
+.line{
     display: block;
     height: 2px;
-    width: 300px;
+    width: 70px;
     background-color: #fff;
-
 }
+
 
 .btn-hero{
 

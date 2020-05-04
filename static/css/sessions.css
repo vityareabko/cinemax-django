@@ -1,0 +1,44 @@
+.sessions-tabs{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.sessions-tabs .line{
+    width: 100%;
+    background: #9D2736 ;
+}
+.sessions-tabs .days{
+    font-size: 24px;
+    margin: 0;
+    padding: 0;
+    
+}
+.sessions-tabs .days .day{
+    margin-right: 20px;
+    
+    
+}
+.sessions-tabs .days .active{
+    
+    color: #fff !important;
+    background-color: #183071;
+}
+.tabs-content{
+    display: none;
+}
+.visible{
+    display: block;
+}
+.sessions-tabs .days .day{
+    text-decoration: none;
+    color: #aaa;
+    text-transform: uppercase;
+    padding: 5px 15px 9px ;
+    transition: all 0.3s ease;
+    
+}
+
+.sessions-tabs .days .day:hover {
+    color: #fff;
+    background-color: #183071;
+    
+}

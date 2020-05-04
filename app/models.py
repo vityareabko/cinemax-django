@@ -8,14 +8,20 @@ from django.utils import timezone
 # TimeField() хранит время
 # TextField()
 
+class TimeStampMixin(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
-class Genre(models.Model):
+    class Meta:
+        abstract = True
+
+class Genre( TimeStampMixin, models.Model):
     name =models. CharField(max_length = 150)
 
     def __str__(self):
         return self.name
 
-class Actor(models.Model): # актеры и режисеры
+class Actor(TimeStampMixin, models.Model ): # актеры и режисеры
     name = models.CharField(max_length = 150)
     age = models.PositiveSmallIntegerField("Возраст")
     description = models.TextField("Описание")
@@ -24,7 +30,7 @@ class Actor(models.Model): # актеры и режисеры
     def __str__(self):
         return self.name
 
-class Film(models.Model): # Фильм 
+class Film(TimeStampMixin, models.Model): # Фильм 
     name = models.CharField(max_length = 150)
     duration_film = models.TimeField() # '14:30'
     desc = models.TextField()
@@ -40,7 +46,7 @@ class Film(models.Model): # Фильм
     def __str__(self):
         return self.name
 
-class Hall(models.Model): # зал
+class Hall(TimeStampMixin, models.Model): # зал
     number_hall = models.IntegerField()
     number_of_row = models.IntegerField()
     number_of_seats_in_a_row = models.IntegerField()
@@ -49,7 +55,7 @@ class Hall(models.Model): # зал
     def __str__(self):
         return str(self.number_hall)
 
-class Session(models.Model): # сеанс  
+class Session(TimeStampMixin, models.Model): # сеанс  
     id_film = models.ForeignKey(Film, on_delete = models.CASCADE) 
     session_date = models.DateField()
     session_time_start = models.TimeField() # '14:30'
@@ -58,7 +64,7 @@ class Session(models.Model): # сеанс
     def __str__(self):
        return str(self.session_time_start)
 
-class Sector(models.Model): # сектор
+class Sector(TimeStampMixin,models.Model): # сектор
     name_sector = models.CharField(max_length = 150)
     id_hall = models.ForeignKey(Hall, on_delete = models.CASCADE)
 
@@ -66,7 +72,7 @@ class Sector(models.Model): # сектор
         return self.name_sector
 
         
-class Price(models.Model): # цена
+class Price(TimeStampMixin,models.Model): # цена
     id_sector_price = models.ForeignKey(Sector, on_delete = models.CASCADE)
     id_session = models.ForeignKey(Session, on_delete = models.CASCADE)
     price = models.PositiveIntegerField(default = 0)
@@ -74,7 +80,7 @@ class Price(models.Model): # цена
     def __str__(self):
         return str(self.price)
 
-class Place(models.Model): # место 
+class Place(TimeStampMixin, models.Model): # место 
     place_number = models.IntegerField()
     row_number = models.IntegerField()
     id_hall = models.ForeignKey(Hall, on_delete = models.CASCADE)
@@ -82,7 +88,7 @@ class Place(models.Model): # место
     def __str__(self):
         return str(self.place_number)
 
-class Ticket(models.Model): # билет 
+class Ticket(TimeStampMixin, models.Model): # билет 
     id_session = models.ForeignKey(Session, on_delete = models.CASCADE)
     id_place = models.ForeignKey(Place, on_delete = models.CASCADE)
     ticket_paid = models.BooleanField(default = False)

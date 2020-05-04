@@ -1,17 +1,144 @@
 from django.shortcuts import render
+from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
+from .models import Film, Session, Hall
+from datetime import datetime, date, time
+import datetime
 
-from .models import Film
+class MoviesListView(ListView):
 
-
-class MoviesView(View):
-
-    def get(self, request):
-        films = Film.objects.order_by('-id').all()
-        return render(request, 'app_template/homepage.html', {'film_list': films})
+    model = Film
+    queryset = Film.objects.order_by('-id').all()
+    context_object_name = "film_list"
+    template_name = "app_template/homepage.html"
+        #return render(request, 'app_template/homepage.html', {'film_list': films})
     
-class MoviesDetailView(View):
+class MoviesDetailView(DetailView):
 
-    def get(self, request, pk):
-        movie = Film.objects.get(id=pk)
-        return render(request, 'app_template/movie_detail.html', {'movie': movie})
+    model = Film
+    context_object_name = "movie"
+    template_name = "app_template/movie_detail.html"
+    
+   
+    # def get(self, request, pk):
+    #     movie = Film.objects.get(id=pk)
+    #     return render(request, 'app_template/movie_detail.html', {'movie': movie})
+
+
+
+
+
+
+class SessionsListView(View):
+    
+    def get(self, request):
+
+        
+
+        # for i in range(num_week_day, num_week_day + 6):
+        #     if i == 0:
+        #         pn = tday + datetime.timedelta(days=i)
+        #         vt = tday + datetime.timedelta(days=1) #2
+        #         sr = tday + datetime.timedelta(days=2) #3
+        #         ct = tday + datetime.timedelta(days=3) #4
+        #         pt = tday + datetime.timedelta(days=4) #5
+        #         sb = tday + datetime.timedelta(days=5) #6
+        #         nd = tday + datetime.timedelta(days=6) #7
+        
+
+
+        tday = date.today()
+        num_week_day = date.today().weekday()
+        
+
+
+        if num_week_day == 0:
+            pn = tday + datetime.timedelta(days=num_week_day) 
+            vt = tday + datetime.timedelta(days=num_week_day+1)
+            sr = tday + datetime.timedelta(days=num_week_day+2)
+            ct = tday + datetime.timedelta(days=num_week_day+3)
+            pt = tday + datetime.timedelta(days=num_week_day+4)
+            sb = tday + datetime.timedelta(days=num_week_day+5)
+            nd = tday + datetime.timedelta(days=num_week_day+6)
+        if num_week_day == 1:
+            pn = tday + datetime.timedelta(days=num_week_day+6) 
+            vt = tday + datetime.timedelta(days=num_week_day)
+            sr = tday + datetime.timedelta(days=num_week_day+1)
+            ct = tday + datetime.timedelta(days=num_week_day+2)
+            pt = tday + datetime.timedelta(days=num_week_day+3)
+            sb = tday + datetime.timedelta(days=num_week_day+4)
+            nd = tday + datetime.timedelta(days=num_week_day+5)
+        if num_week_day == 2:
+            pn = tday + datetime.timedelta(days=num_week_day+5) 
+            vt = tday + datetime.timedelta(days=num_week_day+6)
+            sr = tday + datetime.timedelta(days=num_week_day+0)
+            ct = tday + datetime.timedelta(days=num_week_day+1)
+            pt = tday + datetime.timedelta(days=num_week_day+2)
+            sb = tday + datetime.timedelta(days=num_week_day+3)
+            nd = tday + datetime.timedelta(days=num_week_day+4)
+        if num_week_day == 3:
+            pn = tday + datetime.timedelta(days=num_week_day+4) 
+            vt = tday + datetime.timedelta(days=num_week_day+5)
+            sr = tday + datetime.timedelta(days=num_week_day+6)
+            ct = tday + datetime.timedelta(days=num_week_day+0)
+            pt = tday + datetime.timedelta(days=num_week_day+1)
+            sb = tday + datetime.timedelta(days=num_week_day+2)
+            nd = tday + datetime.timedelta(days=num_week_day+3)
+        if num_week_day == 4:
+            pn = tday + datetime.timedelta(days=num_week_day+3) 
+            vt = tday + datetime.timedelta(days=num_week_day+4)
+            sr = tday + datetime.timedelta(days=num_week_day+5)
+            ct = tday + datetime.timedelta(days=num_week_day+6)
+            pt = tday + datetime.timedelta(days=num_week_day+0)
+            sb = tday + datetime.timedelta(days=num_week_day+1)
+            nd = tday + datetime.timedelta(days=num_week_day+2)
+        if num_week_day == 5:
+            pn = tday + datetime.timedelta(days=num_week_day+2) 
+            vt = tday + datetime.timedelta(days=num_week_day+3)
+            sr = tday + datetime.timedelta(days=num_week_day+4)
+            ct = tday + datetime.timedelta(days=num_week_day+5)
+            pt = tday + datetime.timedelta(days=num_week_day+6)
+            sb = tday + datetime.timedelta(days=num_week_day+0)
+            nd = tday + datetime.timedelta(days=num_week_day+1)
+        
+        if num_week_day == 6:
+            pn = tday + datetime.timedelta(days=num_week_day+1) 
+            vt = tday + datetime.timedelta(days=num_week_day+2)
+            sr = tday + datetime.timedelta(days=num_week_day+3)
+            ct = tday + datetime.timedelta(days=num_week_day+4)
+            pt = tday + datetime.timedelta(days=num_week_day+5)
+            sb = tday + datetime.timedelta(days=num_week_day+6)
+            nd = tday + datetime.timedelta(days=num_week_day+0)
+        
+      
+        
+
+        # sessions_td = Session.objects.filter( session_date = today ).all()
+        sessions_pn = Session.objects.filter(session_date = pn ).all()
+        sessions_vt = Session.objects.filter(session_date = vt ).all()
+        sessions_sr = Session.objects.filter(session_date = sr ).all()
+        sessions_ct = Session.objects.filter(session_date = ct ).all()
+        sessions_pt = Session.objects.filter(session_date = pt ).all()
+        sessions_sb = Session.objects.filter(session_date = sb ).all()
+        sessions_nd = Session.objects.filter(session_date = nd ).all()
+
+        movies = Film.objects.order_by('-id').all()
+        halls = Hall.objects.all()
+        context = {
+            
+            'sessions_pn': sessions_pn,
+            'sessions_vt': sessions_vt,
+            'sessions_sr': sessions_sr,
+            'sessions_ct': sessions_ct,
+            'sessions_pt': sessions_pt,
+            'sessions_sb': sessions_sb,
+            'sessions_nd': sessions_nd,
+
+            'movies': movies,
+            'halls': halls
+        }
+        return render(request, 'app_template/sessions.html', context)
+
+
+
+
