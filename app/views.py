@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
-from .models import Film, Session, Hall
+from .models import Film, Session, Hall, Place
 from datetime import datetime, date, time
 import datetime
 
@@ -50,65 +50,72 @@ class SessionsListView(View):
         tday = date.today()
         num_week_day = date.today().weekday()
         
-
+        # for i in range(0,6):
+        #     pn = tday + datetime.timedelta(days=num_week_day-num_week_day) 
+        #     vt = tday + datetime.timedelta(days=num_week_day+1)
+        #     sr = tday + datetime.timedelta(days=num_week_day+2)
+        #     ct = tday + datetime.timedelta(days=num_week_day+3)
+        #     pt = tday + datetime.timedelta(days=num_week_day+4)
+        #     sb = tday + datetime.timedelta(days=num_week_day+5)
+        #     nd = tday + datetime.timedelta(days=num_week_day+6)
 
         if num_week_day == 0:
-            pn = tday + datetime.timedelta(days=num_week_day) 
-            vt = tday + datetime.timedelta(days=num_week_day+1)
-            sr = tday + datetime.timedelta(days=num_week_day+2)
-            ct = tday + datetime.timedelta(days=num_week_day+3)
-            pt = tday + datetime.timedelta(days=num_week_day+4)
-            sb = tday + datetime.timedelta(days=num_week_day+5)
-            nd = tday + datetime.timedelta(days=num_week_day+6)
+            pn = tday + datetime.timedelta(days=0) 
+            vt = tday + datetime.timedelta(days=1)
+            sr = tday + datetime.timedelta(days=2)
+            ct = tday + datetime.timedelta(days=3)
+            pt = tday + datetime.timedelta(days=4)
+            sb = tday + datetime.timedelta(days=5)
+            nd = tday + datetime.timedelta(days=6)
         if num_week_day == 1:
-            pn = tday + datetime.timedelta(days=num_week_day+6) 
-            vt = tday + datetime.timedelta(days=num_week_day)
-            sr = tday + datetime.timedelta(days=num_week_day+1)
-            ct = tday + datetime.timedelta(days=num_week_day+2)
-            pt = tday + datetime.timedelta(days=num_week_day+3)
-            sb = tday + datetime.timedelta(days=num_week_day+4)
-            nd = tday + datetime.timedelta(days=num_week_day+5)
+            pn = tday + datetime.timedelta(days=6) 
+            vt = tday + datetime.timedelta(days=0)
+            sr = tday + datetime.timedelta(days=1)
+            ct = tday + datetime.timedelta(days=2)
+            pt = tday + datetime.timedelta(days=3)
+            sb = tday + datetime.timedelta(days=4)
+            nd = tday + datetime.timedelta(days=5)
         if num_week_day == 2:
-            pn = tday + datetime.timedelta(days=num_week_day+5) 
-            vt = tday + datetime.timedelta(days=num_week_day+6)
-            sr = tday + datetime.timedelta(days=num_week_day+0)
-            ct = tday + datetime.timedelta(days=num_week_day+1)
-            pt = tday + datetime.timedelta(days=num_week_day+2)
-            sb = tday + datetime.timedelta(days=num_week_day+3)
-            nd = tday + datetime.timedelta(days=num_week_day+4)
+            pn = tday + datetime.timedelta(days=5) 
+            vt = tday + datetime.timedelta(days=6)
+            sr = tday + datetime.timedelta(days=0)
+            ct = tday + datetime.timedelta(days=1)
+            pt = tday + datetime.timedelta(days=2)
+            sb = tday + datetime.timedelta(days=3)
+            nd = tday + datetime.timedelta(days=4)
         if num_week_day == 3:
-            pn = tday + datetime.timedelta(days=num_week_day+4) 
-            vt = tday + datetime.timedelta(days=num_week_day+5)
-            sr = tday + datetime.timedelta(days=num_week_day+6)
-            ct = tday + datetime.timedelta(days=num_week_day+0)
-            pt = tday + datetime.timedelta(days=num_week_day+1)
-            sb = tday + datetime.timedelta(days=num_week_day+2)
-            nd = tday + datetime.timedelta(days=num_week_day+3)
+            pn = tday + datetime.timedelta(days=4) 
+            vt = tday + datetime.timedelta(days=5)
+            sr = tday + datetime.timedelta(days=6)
+            ct = tday + datetime.timedelta(days=0)
+            pt = tday + datetime.timedelta(days=1)
+            sb = tday + datetime.timedelta(days=2)
+            nd = tday + datetime.timedelta(days=3)
         if num_week_day == 4:
-            pn = tday + datetime.timedelta(days=num_week_day+3) 
-            vt = tday + datetime.timedelta(days=num_week_day+4)
-            sr = tday + datetime.timedelta(days=num_week_day+5)
-            ct = tday + datetime.timedelta(days=num_week_day+6)
-            pt = tday + datetime.timedelta(days=num_week_day+0)
-            sb = tday + datetime.timedelta(days=num_week_day+1)
-            nd = tday + datetime.timedelta(days=num_week_day+2)
+            pn = tday + datetime.timedelta(days=3) 
+            vt = tday + datetime.timedelta(days=4)
+            sr = tday + datetime.timedelta(days=5)
+            ct = tday + datetime.timedelta(days=6)
+            pt = tday + datetime.timedelta(days=0)
+            sb = tday + datetime.timedelta(days=1)
+            nd = tday + datetime.timedelta(days=2)
         if num_week_day == 5:
-            pn = tday + datetime.timedelta(days=num_week_day+2) 
-            vt = tday + datetime.timedelta(days=num_week_day+3)
-            sr = tday + datetime.timedelta(days=num_week_day+4)
-            ct = tday + datetime.timedelta(days=num_week_day+5)
-            pt = tday + datetime.timedelta(days=num_week_day+6)
-            sb = tday + datetime.timedelta(days=num_week_day+0)
-            nd = tday + datetime.timedelta(days=num_week_day+1)
+            pn = tday + datetime.timedelta(days=2) 
+            vt = tday + datetime.timedelta(days=3)
+            sr = tday + datetime.timedelta(days=4)
+            ct = tday + datetime.timedelta(days=5)
+            pt = tday + datetime.timedelta(days=6)
+            sb = tday + datetime.timedelta(days=0)
+            nd = tday + datetime.timedelta(days=1)
         
         if num_week_day == 6:
-            pn = tday + datetime.timedelta(days=num_week_day+1) 
-            vt = tday + datetime.timedelta(days=num_week_day+2)
-            sr = tday + datetime.timedelta(days=num_week_day+3)
-            ct = tday + datetime.timedelta(days=num_week_day+4)
-            pt = tday + datetime.timedelta(days=num_week_day+5)
-            sb = tday + datetime.timedelta(days=num_week_day+6)
-            nd = tday + datetime.timedelta(days=num_week_day+0)
+            pn = tday + datetime.timedelta(days=1) 
+            vt = tday + datetime.timedelta(days=2)
+            sr = tday + datetime.timedelta(days=3)
+            ct = tday + datetime.timedelta(days=4)
+            pt = tday + datetime.timedelta(days=5)
+            sb = tday + datetime.timedelta(days=6)
+            nd = tday + datetime.timedelta(days=0)
         
       
         
@@ -139,6 +146,21 @@ class SessionsListView(View):
         }
         return render(request, 'app_template/sessions.html', context)
 
+class ReserveListView(View):
+    
+    
+    def get(self, request, pk_hall, pk_movie, pk_session):
+        hall = Hall.objects.get(id=pk_hall)
+        movie = Film.objects.get(id=pk_movie)
+        session = Session.objects.get(id=pk_session)
 
-
+        places = Place.objects.filter(id_hall_id=pk_hall)
+        context = {
+            'hall': hall,
+            'movie': movie,
+            'session': session,
+            'places': places,     
+        }
+        return render(request, 'app_template/hall.html', context)
+    
 

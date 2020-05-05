@@ -59,8 +59,13 @@
                                 {% for session in sessions_pn %}
                                     {% if session.id_film_id == movie.id %}
 
-                                        <p class=mt-2>{{ session.session_time_start }}  зал № {{ session.id_hall_id  }} </p> <br>   
-                                        
+                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">{{ session.session_time_start }}  зал № 
+                                            {% for i in halls %}
+                                                {% if i.id == session.id_hall_id %}
+                                                    {{ i.number_hall  }} 
+                                                {% endif %}
+                                            {% endfor %}
+                                        </a> <br> 
                                     {% endif %}   
                                 {% endfor %}
                             </div>
@@ -87,8 +92,14 @@
                                 {% for session in sessions_vt %}
                                     {% if session.id_film_id == movie.id %}
 
-                                        <p class=mt-2>{{ session.session_time_start }}  зал № {{ session.id_hall_id  }} </p> <br>   
-                                        
+                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">{{ session.session_time_start }}  зал № 
+                                            {% for i in halls %}
+                                                {% if i.id == session.id_hall_id %}
+                                                    {{ i.number_hall  }} 
+                                                {% endif %}
+                                            {% endfor %}
+                                        </a> <br> 
+
                                     {% endif %}   
                                 {% endfor %}
                             </div>
@@ -114,7 +125,13 @@
                                 {% for session in sessions_sr %}
                                     {% if session.id_film_id == movie.id %}
 
-                                        <p class=mt-2>{{ session.session_time_start }}  зал № {{ session.id_hall_id  }} </p> <br>   
+                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">{{ session.session_time_start }}  зал № 
+                                            {% for i in halls %}
+                                                {% if i.id == session.id_hall_id %}
+                                                    {{ i.number_hall  }} 
+                                                {% endif %}
+                                            {% endfor %}
+                                        </a> <br> 
                                         
                                     {% endif %}   
                                 {% endfor %}
@@ -141,7 +158,13 @@
                                 {% for session in sessions_ct %}
                                     {% if session.id_film_id == movie.id %}
 
-                                        <p class=mt-2>{{ session.session_time_start }}  зал № {{ session.id_hall_id  }} </p> <br>   
+                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">{{ session.session_time_start }}  зал № 
+                                            {% for i in halls %}
+                                                {% if i.id == session.id_hall_id %}
+                                                    {{ i.number_hall  }} 
+                                                {% endif %}
+                                            {% endfor %}
+                                        </a> <br> 
                                         
                                     {% endif %}   
                                 {% endfor %}
@@ -168,7 +191,13 @@
                                 {% for session in sessions_pt %}
                                     {% if session.id_film_id == movie.id %}
 
-                                        <p class=mt-2>{{ session.session_time_start }}  зал № {{ session.id_hall_id  }} </p> <br>   
+                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">{{ session.session_time_start }}  зал № 
+                                            {% for i in halls %}
+                                                {% if i.id == session.id_hall_id %}
+                                                    {{ i.number_hall  }} 
+                                                {% endif %}
+                                            {% endfor %}
+                                        </a> <br> 
                                         
                                     {% endif %}   
                                 {% endfor %}
@@ -195,7 +224,13 @@
                                 {% for session in sessions_sb %}
                                     {% if session.id_film_id == movie.id %}
 
-                                        <p class=mt-2>{{ session.session_time_start }}  зал № {{ session.id_hall_id  }} </p> <br>   
+                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">{{ session.session_time_start }}  зал № 
+                                            {% for i in halls %}
+                                                {% if i.id == session.id_hall_id %}
+                                                    {{ i.number_hall  }} 
+                                                {% endif %}
+                                            {% endfor %}
+                                        </a> <br> 
                                         
                                     {% endif %}   
                                 {% endfor %}
@@ -222,7 +257,13 @@
                                 {% for session in sessions_nd %}
                                     {% if session.id_film_id == movie.id %}
 
-                                        <p class=mt-2>{{ session.session_time_start }}  зал № {{ session.id_hall_id  }} </p> <br>   
+                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">{{ session.session_time_start }}  зал № 
+                                            {% for i in halls %}
+                                                {% if i.id == session.id_hall_id %}
+                                                    {{ i.number_hall  }} 
+                                                {% endif %}
+                                            {% endfor %}
+                                        </a> <br> 
                                         
                                     {% endif %}   
                                 {% endfor %}

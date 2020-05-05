@@ -1,0 +1,15 @@
+.hall .line{
+    background:linear-gradient(229deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
+    margin: 30px 0;
+    height: 4px;
+    width: 100%;
+
+}
+
+.hall .hall_info{
+    font-size: 20px;
+}
+.hall .num_hall{
+    color: rgb(255, 95, 46);
+    font-weight: bold;
+}

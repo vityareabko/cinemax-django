@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Зал{% endblock %}
+
+{% block stylesheet %} 
+<link rel="stylesheet" href="{% static 'css/hall.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="hall">
+        <div class="container">
+            <h2 class="hall_tittle mt-5">
+                Забронюйте місце на фільм {{ movie.name }}
+            </h2>
+            <span class="line"></span>
+            <p class="hall_info"> Сеанс почнеться на {{ session.session_time_start  }} в залі  <span class="num_hall">під номером №{{ hall.number_hall }}</span></p> 
+            
+            
+            <div class="places">
+                <div class=" row">
+                {% for place in places %} <!-- places.row_number -->
+                    <div class="col-md-1 place_num">
+               
+                        <p>{{ place.place_number }}</p>
+            
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock  %}
+
+{% block js %}  
+{% endblock %}

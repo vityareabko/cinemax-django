@@ -60,7 +60,7 @@
                             <p class="premiere"> <strong>Прем’єра: </strong> 24 травня 2020</p>
                             <p class="budget"> <strong>Бюджет</strong> 44800000</p> -->
                             <p class="desc">{{ film.desc }}</p>
-                            <a href="#!"><input type="button" class="btn btn-primary" value="Забронювати квиток"></a>
+                            <a href="{% url 'app:sessions' %}"><input type="button" class="btn btn-primary" value="Забронювати квиток"></a>
                             <a href="{% url 'app:movie_detail' film.id %}"><input type="button" class="btn btn-secondary" value="Докладніше"></a>
                             
                         </div>

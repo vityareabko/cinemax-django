@@ -86,7 +86,7 @@ class Place(TimeStampMixin, models.Model): # место
     id_hall = models.ForeignKey(Hall, on_delete = models.CASCADE)
 
     def __str__(self):
-        return str(self.place_number)
+        return str(self.id_hall)
 
 class Ticket(TimeStampMixin, models.Model): # билет 
     id_session = models.ForeignKey(Session, on_delete = models.CASCADE)
