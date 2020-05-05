@@ -13,3 +13,40 @@
     color: rgb(255, 95, 46);
     font-weight: bold;
 }
+.sector{
+   
+    padding: 5px 2px;
+    text-align: center;
+    vertical-align: middle;
+    transition: all 0.3s ease;
+}
+
+.green_sector{
+    background-color: rgb(55, 129, 73);
+    color: #fff;
+}
+
+.orange_sector{
+    background-color: rgb(223, 141, 48);
+    color: #fff;
+}
+
+.red_sector{
+    background-color: rgb(155, 56, 56);
+    color: #fff;
+}
+
+.sector_link{
+    text-decoration: none;
+}
+.sector_link:hover{
+    text-decoration: none;
+}
+.sector_link:hover .sector{
+    text-decoration: none;
+    transform: translate(0px, -3px);
+    box-shadow: 3px 14px 5px 1px rgba(0,0,0,0.75);
+}
+/* .sector_link:active .sector{
+    background-color: #aaa !important; 
+} */

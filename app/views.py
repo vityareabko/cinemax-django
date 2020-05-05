@@ -1,29 +1,55 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
-from .models import Film, Session, Hall, Place
+from .models import Film, Actor, Session, Hall, Place
 from datetime import datetime, date, time
 import datetime
+import random
 
-class MoviesListView(ListView):
+class MoviesListView(View):
 
-    model = Film
-    queryset = Film.objects.order_by('-id').all()
-    context_object_name = "film_list"
-    template_name = "app_template/homepage.html"
-        #return render(request, 'app_template/homepage.html', {'film_list': films})
+    # model = Film
+    # queryset = Film.objects.order_by('-id').all()
+    # context_object_name = "film_list"
+    # template_name = "app_template/homepage.html"
+    def get(self, request):
+        movie = Film.objects.order_by('-id').all()
+        
+        count_movie = 0
+        for i in movie:
+            count_movie += 1
+        
+        
+
+
+        movie_hero = Film.objects.get(id = random.randint(1, count_movie))
+
+        context = {
+            'film_list': movie,
+            'movie_hero': movie_hero,
+        }
+
+        return render(request, 'app_template/homepage.html', context)
     
-class MoviesDetailView(DetailView):
+class MoviesDetailView(View):
 
-    model = Film
-    context_object_name = "movie"
-    template_name = "app_template/movie_detail.html"
+    # model = Film
+    # context_object_name = "movie"
+    # template_name = "app_template/movie_detail.html"
     
    
-    # def get(self, request, pk):
-    #     movie = Film.objects.get(id=pk)
-    #     return render(request, 'app_template/movie_detail.html', {'movie': movie})
+    def get(self, request, pk):
+        movie = Film.objects.get(id=pk)
+        return render(request, 'app_template/movie_detail.html', {'movie': movie})
 
+class ActorDetailView(View):
+
+    def get(self, request, pk):
+        actor = Actor.objects.get(id=pk) 
+        context = {
+            'actor': actor,
+        }
+        return render(request, 'app_template/actor_detail.html', context)
 
 
 
@@ -154,6 +180,9 @@ class ReserveListView(View):
         movie = Film.objects.get(id=pk_movie)
         session = Session.objects.get(id=pk_session)
 
+        
+        
+        
         places = Place.objects.filter(id_hall_id=pk_hall)
         context = {
             'hall': hall,

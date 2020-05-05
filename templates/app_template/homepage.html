@@ -11,25 +11,40 @@
     
     <div class="hero">
         <div class="row">
-            <div class="offset-md-2 col-md-4 d-flex justify-content-md-end justify-content-center">
-                <img class="img-fluid " src="{% static 'img/hero.jpg' %}" alt="">
+            <div class="offset-md-2 col-md-4 ">
+                <img class="img-fluid " src="{{ movie_hero.image.url }}" alt="">
             </div>
             <div class="col-md-6">
                 <h2 class="movie_title">
-                    Губка Боб: Втеча Губки
+                    {{ movie_hero.name }}
                 </h2>
-                <p class="description-hero">Вік: 0+ (Попередньо)</p>
-                <p class="description-hero">Оригінальна назва: The SpongeBob Movie: Sponge on the Run</p>
-                <p class="description-hero">Режисер: Тім Хілл </p>
-                <p class="description-hero">Дата виходу: 04.06.2020</p>
-                <p class="description-hero">Мова: Українська мова</p>
-                <p class="description-hero">Жанр: Анімація, Комедія</p>
-                <p class="description-hero">Тривалість: 0 хв.</p>
-                <p class="description-hero">Виробництво: США</p>
-                <p class="description-hero">Студія: Paramount</p>
+                <p class="description-hero"><strong>Тривалість фільма:</strong> {{ movie_hero.duration_film }}</p>
+                <p class="description-hero"><strong>Країна: </strong> {{ movie_hero.contry }}</p>
+                <p class="description-hero"><strong>Жанри: </strong> 
+                    {% for genre in movie_hero.genre.all %}
+                       {{ genre.name }},
+                    {% endfor %}
+                </p>
+                <p class="description-hero">актори: 
+                    {% for actor in movie_hero.actor.all %}
+                        <a href="{% url 'app:actor_detail' actor.id %}"> {{ actor.name }}</a>,
+                    {% endfor %}
+                </p>
+                <p class="description-hero">режисер: 
+                    {% for director in movie_hero.directors.all %}
+                        <a href="{% url 'app:actor_detail' director.id %}"> {{ director.name }}</a>
+                    {% endfor %}
+                </p>
+                <p class="description-hero"> <strong>Прем’єра: </strong> {{ movie_hero.premiere }} </p>
+                <p class="description-hero"><strong>Бюджет</strong>  {{ movie_hero.budget }} </p>
+                
                 <br>
-                <a class="trailer-hero" href="https://www.youtube.com/watch?v=Ml4SZWNlZ9I">трейлер ТУТ ! <i class="fab fa-youtube"></i></a> <br>
-                <a href="#"><input class="btn-hero" type="button" value="Забронювати місце"></a>
+                
+                <a href="{% url 'app:sessions' %}" class="btn btn-primary">Забронювати місце</a>
+                <a href="{% url 'app:movie_detail' movie_hero.id %}" class="btn btn-secondary">Докладніше</a>
+                
+                
+                <!-- <a href="#"><input class="btn-hero" type="button" value="Забронювати місце"></a> -->
             </div>
         </div>    
     </div>

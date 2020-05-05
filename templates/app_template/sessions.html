@@ -11,8 +11,12 @@
     <div class="sessions">
         <div class="container">
             <h3 class="sessions-top mt-5">
-                Розклад фільмів в кінотеатрі СINEMAX
+                Розклад фільмів в кінотеатрі СINEMAX 
+                
+                
+                
             </h3>
+            
             <!-- <div class="sessions-all d-flex my-3">
                 <h4 class="sessions-all__title mr-4">
                     Сеанси
@@ -43,12 +47,19 @@
                     <a href="#sb" class="day tabs-item">сб</a></li>
                     <a href="#nd" class="day tabs-item">нд</a></li>
                 </nav>
-                <span class="line"></span>  
+                <span class="line"></span> 
+                
             </div>
             
             <div id="pn" class="sessions-bottom mt-5 tabs-content visible">
+                
+                {% for sess in sessions_pn|slice:":1" %}
+                    <p class="mb-5">{{ sess.session_date }}</p>
+                {% endfor %} 
                 <div class="row text-center">
+                    
                     {% if sessions_pn %}
+                    
                         {% for movie in movies %}
                             <div class="col-md-2">
                                 <h6>{{ movie.name }}</h6> <br>
@@ -57,6 +68,7 @@
                         {% for movie in movies %}
                             <div class="col-md-2">  
                                 {% for session in sessions_pn %}
+                                
                                     {% if session.id_film_id == movie.id %}
 
                                         <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">{{ session.session_time_start }}  зал № 
@@ -80,6 +92,10 @@
             </div>
             
             <div id="vt" class="sessions-bottom mt-5 tabs-content">
+                
+                {% for sess in sessions_vt|slice:":1" %}
+                    <p class="mb-5">{{ sess.session_date }}</p>
+                {% endfor %}
                 <div class="row text-center">
                     {% if sessions_vt %}
                         {% for movie in movies %}
@@ -113,6 +129,10 @@
                 </div>
             </div>
             <div id="sr" class="sessions-bottom mt-5 tabs-content">
+                
+                {% for sess in sessions_sr|slice:":1" %}
+                    <p class="mb-5">{{ sess.session_date }}</p>
+                {% endfor %}
                 <div class="row text-center">
                     {% if sessions_sr %}
                         {% for movie in movies %}
@@ -146,6 +166,9 @@
                 </div>
             </div>
             <div id="ct" class="sessions-bottom mt-5 tabs-content">
+                {% for sess in sessions_ct|slice:":1" %}
+                    <p class="mb-5">{{ sess.session_date }}</p>
+                {% endfor %}
                 <div class="row text-center">
                     {% if sessions_ct %}
                         {% for movie in movies %}
@@ -179,6 +202,9 @@
                 </div>
             </div>
             <div id="pt" class="sessions-bottom mt-5 tabs-content">
+                {% for sess in sessions_pt|slice:":1" %}
+                    <p class="mb-5">{{ sess.session_date }}</p>
+                {% endfor %}
                 <div class="row text-center">
                     {% if sessions_pt %}
                         {% for movie in movies %}
@@ -212,6 +238,9 @@
                 </div>
             </div>
             <div id="sb" class="sessions-bottom mt-5 tabs-content">
+                {% for sess in sessions_sb|slice:":1" %}
+                    <p class="mb-5">{{ sess.session_date }}</p>
+                {% endfor %}
                 <div class="row text-center">
                     {% if sessions_sb %}
                         {% for movie in movies %}
@@ -245,6 +274,9 @@
                 </div>
             </div>
             <div id="nd" class="sessions-bottom mt-5 tabs-content">
+                {% for sess in sessions_nd|slice:":1" %}
+                    <p class="mb-5">{{ sess.session_date }}</p>
+                {% endfor %}
                 <div class="row text-center">
                     {% if sessions_nd %}
                         {% for movie in movies %}

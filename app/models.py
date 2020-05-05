@@ -24,8 +24,12 @@ class Genre( TimeStampMixin, models.Model):
 class Actor(TimeStampMixin, models.Model ): # актеры и режисеры
     name = models.CharField(max_length = 150)
     age = models.PositiveSmallIntegerField("Возраст")
-    description = models.TextField("Описание")
+    birthplace = models.CharField(max_length = 300)
+    citizenship = models.CharField(max_length = 150)
+    career = models.CharField(max_length = 150)
+    biography = models.TextField("Биография")
     image = models.ImageField(upload_to = 'actors/')
+
 
     def __str__(self):
         return self.name
@@ -84,6 +88,7 @@ class Place(TimeStampMixin, models.Model): # место
     place_number = models.IntegerField()
     row_number = models.IntegerField()
     id_hall = models.ForeignKey(Hall, on_delete = models.CASCADE)
+    id_sector = models.ForeignKey(Sector, on_delete = models.CASCADE)
 
     def __str__(self):
         return str(self.id_hall)
