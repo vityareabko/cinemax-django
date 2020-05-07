@@ -33,7 +33,7 @@
                 Cектор - {{ sector.name_sector }} 
             </p>
             <p> Ціна - {{ price_total }} </p>
-            <a href="#" class="btn btn-primary mt-2">Забронувати</a>
+            <a href="{% url 'app:get_ticket' session.id place.id price_total %}" class="btn btn-primary mt-2">Забронувати</a>
             <a href="{% url 'app:home' %}" class="btn btn-danger mt-2" >Відміна</a>
         </div>
     </div>

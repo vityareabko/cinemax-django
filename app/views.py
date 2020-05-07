@@ -3,7 +3,7 @@ from django.views.generic.base import View
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 
-from .models import Film, Actor, Session, Time_Sessions, Hall, Place, Sector, Price
+from .models import Film, Actor, Session, Time_Sessions, Hall, Place, Sector, Ticket
 
 from datetime import datetime, date, time
 import datetime
@@ -212,19 +212,16 @@ class ReservationView(View):
         time_sessions = Time_Sessions.objects.get(id = session.id_time_session_id)
         place = Place.objects.get(id=pk_place)
         sector = Sector.objects.get(id=pk_sector)
-        price = Price.objects.filter(id_session_id = pk_session, id_sector_price_id = pk_sector)
+       
         num_hall = Hall.objects.get(number_hall = number_hall)
         
-
         type_time = time_sessions.time
 
         price_sess = session.price_session
         price_sect = sector.price_sector
-    
-            
+
         price_total = price_sess + price_sect
-     
-        
+
         context = {
             'movie': movie,
             'session': session,
@@ -237,6 +234,16 @@ class ReservationView(View):
 
         return render( request, 'app_template/reservations.html', context )
 
+class ReserveDoneView(View):
+    def get(self, request, pk_session, pk_place, total_sum):
+
+        Ticket(id_place_id = pk_place, id_session_id = pk_session, ticket_paid = total_sum).save()
+
+        context = {
+
+        }
+        
+        return render(request, 'app_template/get_ticket.html')
 
 # return HttpResponseRedirect(reverse('app:reserve', args = (pk_hall,pk_movie, pk_session) ))
 

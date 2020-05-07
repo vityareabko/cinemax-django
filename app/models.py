@@ -83,13 +83,7 @@ class Sector(TimeStampMixin,models.Model): # сектор
         return self.name_sector
 
         
-class Price(TimeStampMixin,models.Model): # цена
-    id_sector_price = models.ForeignKey(Sector, on_delete = models.CASCADE)
-    id_session = models.ForeignKey(Session, on_delete = models.CASCADE)
-    
 
-    def __str__(self):
-        return str('Сектор: ' + str(self.id_sector_price) + ' Сеанс: ' + str(self.id_session) )
 
 class Place(TimeStampMixin, models.Model): # место 
     place_number = models.IntegerField()
@@ -103,11 +97,7 @@ class Place(TimeStampMixin, models.Model): # место
 class Ticket(TimeStampMixin, models.Model): # билет 
     id_session = models.ForeignKey(Session, on_delete = models.CASCADE)
     id_place = models.ForeignKey(Place, on_delete = models.CASCADE)
-    ticket_paid = models.BooleanField(default = False)
-    date_created_ticket = models.DateTimeField(
-                   null=True, blank=True,
-                   verbose_name=u'Fecha de creación')
-    reservation_ticket = models.BooleanField(default = False)
+    ticket_paid = models.PositiveIntegerField()
     
     def __str__(self):
-        return str(self.date_created_ticket)
+        return str(self.id_session)
