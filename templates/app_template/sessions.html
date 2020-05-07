@@ -71,7 +71,13 @@
                                 
                                     {% if session.id_film_id == movie.id %}
 
-                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">{{ session.session_time_start }}  зал № 
+                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
+                                            {% for time_s in sessions_time %}
+                                                {% if time_s.id == session.id_time_session_id %}
+                                                    {{ time_s.time }}
+                                                {% endif %}
+                                            {%endfor%}
+                                            зал № 
                                             {% for i in halls %}
                                                 {% if i.id == session.id_hall_id %}
                                                     {{ i.number_hall  }} 
@@ -108,7 +114,13 @@
                                 {% for session in sessions_vt %}
                                     {% if session.id_film_id == movie.id %}
 
-                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">{{ session.session_time_start }}  зал № 
+                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
+                                            {% for time_s in sessions_time %}
+                                                {% if time_s.id == session.id_time_session_id %}
+                                                    {{ time_s.time }}
+                                                {% endif %}
+                                            {%endfor%}
+                                            зал № 
                                             {% for i in halls %}
                                                 {% if i.id == session.id_hall_id %}
                                                     {{ i.number_hall  }} 
@@ -145,7 +157,13 @@
                                 {% for session in sessions_sr %}
                                     {% if session.id_film_id == movie.id %}
 
-                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">{{ session.session_time_start }}  зал № 
+                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
+                                            {% for time_s in sessions_time %}
+                                                {% if time_s.id == session.id_time_session_id %}
+                                                    {{ time_s.time }}
+                                                {% endif %}
+                                            {%endfor%}
+                                            зал № 
                                             {% for i in halls %}
                                                 {% if i.id == session.id_hall_id %}
                                                     {{ i.number_hall  }} 
@@ -181,7 +199,13 @@
                                 {% for session in sessions_ct %}
                                     {% if session.id_film_id == movie.id %}
 
-                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">{{ session.session_time_start }}  зал № 
+                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
+                                            {% for time_s in sessions_time %}
+                                                {% if time_s.id == session.id_time_session_id %}
+                                                    {{ time_s.time }}
+                                                {% endif %}
+                                            {%endfor%}
+                                            зал № 
                                             {% for i in halls %}
                                                 {% if i.id == session.id_hall_id %}
                                                     {{ i.number_hall  }} 
@@ -217,7 +241,13 @@
                                 {% for session in sessions_pt %}
                                     {% if session.id_film_id == movie.id %}
 
-                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">{{ session.session_time_start }}  зал № 
+                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
+                                            {% for time_s in sessions_time %}
+                                                {% if time_s.id == session.id_time_session_id %}
+                                                    {{ time_s.time }}
+                                                {% endif %}
+                                            {%endfor%}
+                                            зал № 
                                             {% for i in halls %}
                                                 {% if i.id == session.id_hall_id %}
                                                     {{ i.number_hall  }} 
@@ -253,7 +283,13 @@
                                 {% for session in sessions_sb %}
                                     {% if session.id_film_id == movie.id %}
 
-                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">{{ session.session_time_start }}  зал № 
+                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
+                                            {% for time_s in sessions_time %}
+                                                {% if time_s.id == session.id_time_session_id %}
+                                                    {{ time_s.time }}
+                                                {% endif %}
+                                            {%endfor%}
+                                            зал № 
                                             {% for i in halls %}
                                                 {% if i.id == session.id_hall_id %}
                                                     {{ i.number_hall  }} 
@@ -289,7 +325,13 @@
                                 {% for session in sessions_nd %}
                                     {% if session.id_film_id == movie.id %}
 
-                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">{{ session.session_time_start }}  зал № 
+                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
+                                            {% for time_s in sessions_time %}
+                                                {% if time_s.id == session.id_time_session_id %}
+                                                    {{ time_s.time }}
+                                                {% endif %}
+                                            {%endfor%}
+                                            зал № 
                                             {% for i in halls %}
                                                 {% if i.id == session.id_hall_id %}
                                                     {{ i.number_hall  }} 

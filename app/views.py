@@ -3,7 +3,7 @@ from django.views.generic.base import View
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 
-from .models import Film, Actor, Session, Hall, Place, Sector, Price
+from .models import Film, Actor, Session, Time_Sessions, Hall, Place, Sector, Price
 
 from datetime import datetime, date, time
 import datetime
@@ -154,6 +154,10 @@ class SessionsListView(View):
         sessions_sb = Session.objects.filter(session_date = sb ).all()
         sessions_nd = Session.objects.filter(session_date = nd ).all()
 
+        sessions_time = Time_Sessions.objects.all()
+       
+
+        
         movies = Film.objects.order_by('-id').all()
         halls = Hall.objects.all()
         context = {
@@ -165,6 +169,14 @@ class SessionsListView(View):
             'sessions_pt': sessions_pt,
             'sessions_sb': sessions_sb,
             'sessions_nd': sessions_nd,
+            'sessions_time': sessions_time,
+            # 'sessions_time_pn': sessions_time_pn,
+            # 'sessions_time_vt': sessions_time_vt,
+            # 'sessions_time_sr': sessions_time_sr,
+            # 'sessions_time_ct': sessions_time_ct,
+            # 'sessions_time_pt': sessions_time_pt,
+            # 'sessions_time_sb': sessions_time_sb,
+            # 'sessions_time_nd': sessions_time_nd,     
 
             'movies': movies,
             'halls': halls
@@ -193,42 +205,25 @@ class ReservationView(View):
 
     def get(self, request, pk_movie, pk_session, number_hall, pk_place, pk_sector):
 
-        tod_dict = {
-            0: 'ночь',
-            1: 'ночь', 2: 'ночь', 3: 'ночь',
-            4: 'утро', 4: 'утро', 5: 'утро',
-            6: 'утро', 7: 'утро', 8: 'утро',
-            9: 'утро', 10: 'утро', 11: 'утро',
-            12: 'обед', 13: 'обед', 14: 'обед',
-            15: 'обеда', 16: 'обеда', 17: 'обеда',
-            18: 'вечер', 19: 'вечер', 20: 'вечер',
-            21: 'вечер', 22: 'вечер', 23: 'вечер'
-        }
+        
 
         movie = Film.objects.get(id=pk_movie)
         session = Session.objects.get(id=pk_session)
+        time_sessions = Time_Sessions.objects.get(id = session.id_time_session_id)
         place = Place.objects.get(id=pk_place)
         sector = Sector.objects.get(id=pk_sector)
         price = Price.objects.filter(id_session_id = pk_session, id_sector_price_id = pk_sector)
         num_hall = Hall.objects.get(number_hall = number_hall)
+        
 
+        type_time = time_sessions.time
 
-        morning = 30
-        lunchtime = 40
-        night = 60
-
-
-        print(price)
-        session_time = session.session_time_start
-        print(tod_dict[session_time.hour])
-
-        if tod_dict[session_time.hour] == 'утро':
-            print(morning)
-
-        if tod_dict[session_time.hour] == 'обед':
-            print(lunchtime)
-        if tod_dict[session_time.hour] == 'вечер':
-            print(night)
+        price_sess = session.price_session
+        price_sect = sector.price_sector
+    
+            
+        price_total = price_sess + price_sect
+     
         
         context = {
             'movie': movie,
@@ -236,7 +231,8 @@ class ReservationView(View):
             'place': place,
             'sector': sector,
             'num_hall': num_hall,
-            
+            'time_sessions': time_sessions,
+            'price_total': price_total,
         }
 
         return render( request, 'app_template/reservations.html', context )

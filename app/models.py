@@ -59,14 +59,21 @@ class Hall(TimeStampMixin, models.Model): # зал
     def __str__(self):
         return str(self.number_hall)
 
+class Time_Sessions(TimeStampMixin, models.Model):
+    time = models.TimeField()
+
+    def __str__(self):
+        return str(self.time)
+
 class Session(TimeStampMixin, models.Model): # сеанс  
     id_film = models.ForeignKey(Film, on_delete = models.CASCADE) 
     session_date = models.DateField()
-    session_time_start = models.TimeField() # '14:30'
+    id_time_session = models.ForeignKey(Time_Sessions, on_delete = models.CASCADE)
     id_hall = models.ForeignKey(Hall, on_delete = models.CASCADE)
+    price_session = models.PositiveIntegerField()
 
     def __str__(self):
-       return str("Дата: " + str(self.session_date) + ' время: '+ str(self.session_time_start) +' зал: ' + str(self.id_hall))
+       return str("Дата: " + str(self.session_date) + ' время: '+ str(self.id_time_session) +' зал: ' + str(self.id_hall))
 
 class Sector(TimeStampMixin,models.Model): # сектор
     name_sector = models.CharField(max_length = 150)
