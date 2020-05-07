@@ -1,7 +1,10 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
-from .models import Film, Actor, Session, Hall, Place
+from django.http import Http404, HttpResponseRedirect
+from django.urls import reverse
+
+from .models import Film, Actor, Session, Hall, Place, Sector, Price
+
 from datetime import datetime, date, time
 import datetime
 import random
@@ -18,10 +21,6 @@ class MoviesListView(View):
         count_movie = 0
         for i in movie:
             count_movie += 1
-        
-        
-
-
         movie_hero = Film.objects.get(id = random.randint(1, count_movie))
 
         context = {
@@ -180,9 +179,6 @@ class ReserveListView(View):
         movie = Film.objects.get(id=pk_movie)
         session = Session.objects.get(id=pk_session)
 
-        
-        
-        
         places = Place.objects.filter(id_hall_id=pk_hall)
         context = {
             'hall': hall,
@@ -192,4 +188,70 @@ class ReserveListView(View):
         }
         return render(request, 'app_template/hall.html', context)
     
+class ReservationView(View):
+    
 
+    def get(self, request, pk_movie, pk_session, number_hall, pk_place, pk_sector):
+
+        tod_dict = {
+            0: 'ночь',
+            1: 'ночь', 2: 'ночь', 3: 'ночь',
+            4: 'утро', 4: 'утро', 5: 'утро',
+            6: 'утро', 7: 'утро', 8: 'утро',
+            9: 'утро', 10: 'утро', 11: 'утро',
+            12: 'обед', 13: 'обед', 14: 'обед',
+            15: 'обеда', 16: 'обеда', 17: 'обеда',
+            18: 'вечер', 19: 'вечер', 20: 'вечер',
+            21: 'вечер', 22: 'вечер', 23: 'вечер'
+        }
+
+        movie = Film.objects.get(id=pk_movie)
+        session = Session.objects.get(id=pk_session)
+        place = Place.objects.get(id=pk_place)
+        sector = Sector.objects.get(id=pk_sector)
+        price = Price.objects.filter(id_session_id = pk_session, id_sector_price_id = pk_sector)
+        num_hall = Hall.objects.get(number_hall = number_hall)
+
+
+        morning = 30
+        lunchtime = 40
+        night = 60
+
+
+        print(price)
+        session_time = session.session_time_start
+        print(tod_dict[session_time.hour])
+
+        if tod_dict[session_time.hour] == 'утро':
+            print(morning)
+
+        if tod_dict[session_time.hour] == 'обед':
+            print(lunchtime)
+        if tod_dict[session_time.hour] == 'вечер':
+            print(night)
+        
+        context = {
+            'movie': movie,
+            'session': session,
+            'place': place,
+            'sector': sector,
+            'num_hall': num_hall,
+            
+        }
+
+        return render( request, 'app_template/reservations.html', context )
+
+
+# return HttpResponseRedirect(reverse('app:reserve', args = (pk_hall,pk_movie, pk_session) ))
+
+# >>> tod_dict = {                                             
+# ...
+# ...
+# ...
+# ...             9: 'утро', 10: 'утро', 11: 'утро',
+# ...             12: 'обед', 13: 'обед', 14: 'обед',
+# ...             15: 'обеда', 16: 'обеда', 17: 'обеда',
+# ...             18: 'вечер', 19: 'вечер', 20: 'вечер',
+# ...             21: 'вечер', 22: 'вечер', 23: 'вечер'
+# ...         }
+# >>> tod_dict[a.hour] 

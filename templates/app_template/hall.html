@@ -27,21 +27,21 @@
                 {% for place in places %} <!-- places.row_number -->
                     <div class="col-lg-1 col-md-2 col-sm-3 col-12 place_num">
                             {% if place.id_sector_id == 1 %}
-                            <a href="#" class="sector_link disabled">
+                            <a href="{% url 'app:reservation' movie.id session.id hall.number_hall place.id place.id_sector_id %}" class="sector_link disabled">
                                 <p class="sector green_sector"> м/р <br>
                                     {{ place.place_number }} / {{ place.row_number }}
                                 </p>
                             </a>
                             {% endif %}
                             {% if place.id_sector_id == 2 %}
-                            <a href="#" class="sector_link">
+                            <a href="{% url 'app:reservation' movie.id session.id hall.number_hall place.id place.id_sector_id %}" class="sector_link">
                                 <p class="sector orange_sector"> м/р <br>
                                     {{ place.place_number }} / {{ place.row_number }}
                                 </p>
                             </a>
                             {% endif %}
                             {% if place.id_sector_id == 3 %}
-                            <a href="#" class="sector_link">
+                            <a href="{% url 'app:reservation' movie.id session.id hall.number_hall place.id place.id_sector_id %}" class="sector_link">
                                 <p class="sector red_sector"> м/р <br>
                                     {{ place.place_number }} / {{ place.row_number }}
                                 </p>
