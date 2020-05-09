@@ -3,8 +3,9 @@ from django.views.generic.base import View
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 
-from .models import Film, Actor, Session, Time_Sessions, Hall, Place, Sector, Ticket
+from django.core.mail import send_mail
 
+from .models import Film, Actor, Session, Time_Sessions, Hall, Place, Sector, Ticket
 from datetime import datetime, date, time
 import datetime
 import random
@@ -170,6 +171,7 @@ class SessionsListView(View):
             'sessions_sb': sessions_sb,
             'sessions_nd': sessions_nd,
             'sessions_time': sessions_time,
+            'num_week_day': num_week_day,
             # 'sessions_time_pn': sessions_time_pn,
             # 'sessions_time_vt': sessions_time_vt,
             # 'sessions_time_sr': sessions_time_sr,
@@ -191,12 +193,17 @@ class ReserveListView(View):
         movie = Film.objects.get(id=pk_movie)
         session = Session.objects.get(id=pk_session)
 
+        
+        tickets = Ticket.objects.all()
+
         places = Place.objects.filter(id_hall_id=pk_hall)
+        
         context = {
             'hall': hall,
             'movie': movie,
             'session': session,
             'places': places,     
+            'tickets': tickets,
         }
         return render(request, 'app_template/hall.html', context)
     
@@ -237,15 +244,46 @@ class ReservationView(View):
 class ReserveDoneView(View):
     def get(self, request, pk_session, pk_place, total_sum):
 
+        email = str(request.GET['email_input'])
+
+        session      = Session.objects.get(id = pk_session)
+        place        = Place.objects.get(id = pk_place)
+        
+        movie        = Film.objects.get(id = session.id_film_id)
+        session_date = session.session_date
+        time_sess    = Time_Sessions.objects.get(id = session.id_time_session_id)
+        place_num    = place.place_number
+        row_pl       = place.row_number
+        hall_num     = Hall.objects.get(id = session.id_hall_id)
+        sector       = Sector.objects.get( id = place.id_sector_id)
+        
+        # print(movie)
+        # print(session_date)
+        # print(time_sess)
+        # print(hall_num)
+        # print(place_num)
+        # print(row_pl)
+        # print(sector)
+        # print(total_sum)
+
+        messages = "Фільм: " +str(movie.name)+ "\nдата: " +str(session_date)+ "\nчас :" +str(time_sess.time)+ "\nзал №: " +str(hall_num.number_hall)+ "\nмісце: " +str(place_num)+ "\nряд: " +str(row_pl)+ "\nCектор: " +str(sector.name_sector)+ "\nЦіна: " +str(total_sum)+"\nчекаємо вас на сеанс!\n с повагою кінотеатр CINEMAX"
+        # print(messages)
+        send_mail('квиток на фільм',
+            messages,
+            'cinemacount12090@gmail.com',
+            [email],
+            fail_silently=False
+        )
+
         Ticket(id_place_id = pk_place, id_session_id = pk_session, ticket_paid = total_sum).save()
 
         context = {
 
         }
-        
-        return render(request, 'app_template/get_ticket.html')
+    
+        # return render(request, 'app_template/get_ticket.html')
 
-# return HttpResponseRedirect(reverse('app:reserve', args = (pk_hall,pk_movie, pk_session) ))
+        return HttpResponseRedirect(reverse("app:reserve", args = (hall_num.id, movie.id, pk_session) ))
 
 # >>> tod_dict = {                                             
 # ...

@@ -22,16 +22,18 @@
                 </p>
                 <p class="actors"> <strong>Актори</strong> 
                     {% for actor in movie.actor.all %}
-                        <a href="#"> {{ actor.name }}</a>,
+                        <a href="{% url 'app:actor_detail' actor.id %}"> {{ actor.name }}</a>,
                     {% endfor %}
                  </p>
                 <p class="director"> <strong>Режисер:</strong> 
                     {% for director in movie.directors.all %}
-                        <a href="#"> {{ director.name }}</a>
+                        <a href="{% url 'app:actor_detail' director.id %}"> {{ director.name }}</a>
                     {% endfor %}
                 </p>
                 <p class="premiere"> <strong>Прем’єра: </strong> {{ movie.premiere }}</p>
                 <p class="budget"> <strong>Бюджет</strong>  {{ movie.budget }}</p>
+
+                <a href="{% url 'app:sessions' %}" class="btn btn-primary mt-5">Заброювати місце</a>
                
             </div>
         </div>

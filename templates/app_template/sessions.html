@@ -39,19 +39,20 @@
             </div> -->
             <div class="sessions-tabs d-flex align-items-center">
                 <nav class="days d-flex">
-                    <a href="#pn" class="day tabs-item active">пн</a></li>
-                    <a href="#vt" class="day tabs-item">вт</a></li>
-                    <a href="#sr" class="day tabs-item">ср</a></li>
-                    <a href="#ct" class="day tabs-item">чт</a></li>
-                    <a href="#pt" class="day tabs-item">пт</a></li>
-                    <a href="#sb" class="day tabs-item">сб</a></li>
-                    <a href="#nd" class="day tabs-item">нд</a></li>
+
+                    <a href="#pn" class="day tabs-item {% if num_week_day == 0 %} active {% endif %}">пн</a></li>
+                    <a href="#vt" class="day tabs-item {% if num_week_day == 1 %} active {% endif %}">вт</a></li>
+                    <a href="#sr" class="day tabs-item {% if num_week_day == 2 %} active {% endif %}">ср</a></li>
+                    <a href="#ct" class="day tabs-item {% if num_week_day == 3 %} active {% endif %}">чт</a></li>
+                    <a href="#pt" class="day tabs-item {% if num_week_day == 4 %} active {% endif %}">пт</a></li>
+                    <a href="#sb" class="day tabs-item {% if num_week_day == 5 %} active {% endif %}">сб</a></li>
+                    <a href="#nd" class="day tabs-item {% if num_week_day == 6 %} active {% endif %}">нд</a></li>
                 </nav>
                 <span class="line"></span> 
                 
             </div>
             
-            <div id="pn" class="sessions-bottom mt-5 tabs-content visible">
+            <div id="pn" class="sessions-bottom mt-5 tabs-content {% if num_week_day == 0 %} visible {% endif %}">
                 
                 {% for sess in sessions_pn|slice:":1" %}
                     <p class="mb-5">{{ sess.session_date }}</p>
@@ -96,8 +97,7 @@
                     {% endif %}
                 </div>
             </div>
-            
-            <div id="vt" class="sessions-bottom mt-5 tabs-content">
+            <div id="vt" class="sessions-bottom mt-5 tabs-content {% if num_week_day == 1 %} visible {% endif %}">
                 
                 {% for sess in sessions_vt|slice:":1" %}
                     <p class="mb-5">{{ sess.session_date }}</p>
@@ -140,7 +140,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div id="sr" class="sessions-bottom mt-5 tabs-content">
+            <div id="sr" class="sessions-bottom mt-5 tabs-content {% if num_week_day == 2 %} visible {% endif %}">
                 
                 {% for sess in sessions_sr|slice:":1" %}
                     <p class="mb-5">{{ sess.session_date }}</p>
@@ -183,7 +183,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div id="ct" class="sessions-bottom mt-5 tabs-content">
+            <div id="ct" class="sessions-bottom mt-5 tabs-content {% if num_week_day == 3 %} visible {% endif %}">
                 {% for sess in sessions_ct|slice:":1" %}
                     <p class="mb-5">{{ sess.session_date }}</p>
                 {% endfor %}
@@ -225,7 +225,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div id="pt" class="sessions-bottom mt-5 tabs-content">
+            <div id="pt" class="sessions-bottom mt-5 tabs-content {% if num_week_day == 4 %} visible {% endif %}">
                 {% for sess in sessions_pt|slice:":1" %}
                     <p class="mb-5">{{ sess.session_date }}</p>
                 {% endfor %}
@@ -267,7 +267,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div id="sb" class="sessions-bottom mt-5 tabs-content">
+            <div id="sb" class="sessions-bottom mt-5 tabs-content {% if num_week_day == 5 %} visible {% endif %}">
                 {% for sess in sessions_sb|slice:":1" %}
                     <p class="mb-5">{{ sess.session_date }}</p>
                 {% endfor %}
@@ -309,7 +309,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div id="nd" class="sessions-bottom mt-5 tabs-content">
+            <div id="nd" class="sessions-bottom mt-5 tabs-content {% if num_week_day == 6 %} visible {% endif %}">
                 {% for sess in sessions_nd|slice:":1" %}
                     <p class="mb-5">{{ sess.session_date }}</p>
                 {% endfor %}

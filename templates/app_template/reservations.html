@@ -11,30 +11,44 @@
     <div class="container">
         <div class="reservation-info mt-5">
             <p class="movie">
-                Фільм - {{ movie.name }} 
+                <strong>  Фільм </strong> - {{ movie.name }} 
             </p>
             <p class="date">
-                дата - {{ session.session_date }} 
+                <strong>  дата </strong> - {{ session.session_date }} 
             </p>
             <p class="time">
-                час - {{ time_sessions.time }}
+                <strong>  час </strong> - {{ time_sessions.time }}
             </p>
             <p class="hall">
-                зал № - {{ num_hall }}
+                <strong>  зал № </strong> - {{ num_hall }}
             </p>
             <p class="place">
-                місце - {{ place.place_number }}  
+                <strong>  місце </strong> - {{ place.place_number }}  
             </p>
             <p class="place_row">
-                ряд - {{ place.row_number }}
+                <strong>  ряд </strong> - {{ place.row_number }}
             </p>
             
             <p class="sector">
-                Cектор - {{ sector.name_sector }} 
+                <strong>  Cектор </strong> - {{ sector.name_sector }} 
             </p>
-            <p> Ціна - {{ price_total }} </p>
-            <a href="{% url 'app:get_ticket' session.id place.id price_total %}" class="btn btn-primary mt-2">Забронувати</a>
-            <a href="{% url 'app:home' %}" class="btn btn-danger mt-2" >Відміна</a>
+            <p> <strong>  Ціна </strong> - {{ price_total }} </p>
+
+            <form action="{% url 'app:get_ticket' session.id place.id price_total %}" method="get" >
+                
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label class="mr-3"> <strong> Ваш E-mail</strong></label>
+                    <input type="email" name="email_input" class= "input-email" id="formGroupExampleInput" placeholder="example@gmail.com" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Забронювати</button>
+                
+            </form>
+            <!-- <a href="{% url 'app:home' %}" class="btn btn-danger mt-2" >Відміна</a> -->
+            
+            
         </div>
     </div>
 {% endblock  %}

@@ -35,7 +35,10 @@
     background-color: rgb(155, 56, 56);
     color: #fff;
 }
+.sector-reserve{
+    background-color: rgba(97, 97, 97, 0.4);
 
+}
 .sector_link{
     text-decoration: none;
 }
@@ -50,3 +53,9 @@
 /* .sector_link:active .sector{
     background-color: #aaa !important; 
 } */
+.isDisabled {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+  }
