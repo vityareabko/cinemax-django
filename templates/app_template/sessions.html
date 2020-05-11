@@ -62,12 +62,9 @@
                     {% if sessions_pn %}
                     
                         {% for movie in movies %}
-                            <div class="col-md-2">
+                            <div class="col-md-2 mb-5">
                                 <h6>{{ movie.name }}</h6> <br>
-                            </div>
-                        {% endfor %}
-                        {% for movie in movies %}
-                            <div class="col-md-2">  
+
                                 {% for session in sessions_pn %}
                                 
                                     {% if session.id_film_id == movie.id %}
@@ -105,12 +102,9 @@
                 <div class="row text-center">
                     {% if sessions_vt %}
                         {% for movie in movies %}
-                            <div class="col-md-2">
+                            <div class="col-md-2 mb-5">
                                 <h6>{{ movie.name }}</h6> <br>
-                            </div>
-                        {% endfor %}
-                        {% for movie in movies %}
-                            <div class="col-md-2">  
+                    
                                 {% for session in sessions_vt %}
                                     {% if session.id_film_id == movie.id %}
 
@@ -148,12 +142,9 @@
                 <div class="row text-center">
                     {% if sessions_sr %}
                         {% for movie in movies %}
-                            <div class="col-md-2">
+                            <div class="col-md-2 mb-5">
                                 <h6>{{ movie.name }}</h6> <br>
-                            </div>
-                        {% endfor %}
-                        {% for movie in movies %}
-                            <div class="col-md-2">  
+                          
                                 {% for session in sessions_sr %}
                                     {% if session.id_film_id == movie.id %}
 
@@ -190,12 +181,9 @@
                 <div class="row text-center">
                     {% if sessions_ct %}
                         {% for movie in movies %}
-                            <div class="col-md-2">
+                            <div class="col-md-2 mb-5">
                                 <h6>{{ movie.name }}</h6> <br>
-                            </div>
-                        {% endfor %}
-                        {% for movie in movies %}
-                            <div class="col-md-2">  
+                      
                                 {% for session in sessions_ct %}
                                     {% if session.id_film_id == movie.id %}
 
@@ -232,12 +220,9 @@
                 <div class="row text-center">
                     {% if sessions_pt %}
                         {% for movie in movies %}
-                            <div class="col-md-2">
+                            <div class="col-md-2 mb-5">
                                 <h6>{{ movie.name }}</h6> <br>
-                            </div>
-                        {% endfor %}
-                        {% for movie in movies %}
-                            <div class="col-md-2">  
+                        
                                 {% for session in sessions_pt %}
                                     {% if session.id_film_id == movie.id %}
 
@@ -274,12 +259,9 @@
                 <div class="row text-center">
                     {% if sessions_sb %}
                         {% for movie in movies %}
-                            <div class="col-md-2">
+                            <div class="col-md-2 mb-5">
                                 <h6>{{ movie.name }}</h6> <br>
-                            </div>
-                        {% endfor %}
-                        {% for movie in movies %}
-                            <div class="col-md-2">  
+                        
                                 {% for session in sessions_sb %}
                                     {% if session.id_film_id == movie.id %}
 
@@ -316,12 +298,9 @@
                 <div class="row text-center">
                     {% if sessions_nd %}
                         {% for movie in movies %}
-                            <div class="col-md-2">
+                            <div class="col-md-2 mb-5">
                                 <h6>{{ movie.name }}</h6> <br>
-                            </div>
-                        {% endfor %}
-                        {% for movie in movies %}
-                            <div class="col-md-2">  
+                           
                                 {% for session in sessions_nd %}
                                     {% if session.id_film_id == movie.id %}
 
