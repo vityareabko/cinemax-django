@@ -15,239 +15,42 @@
             </h3>
             <div class="sessions-tabs d-flex align-items-center">
                 <nav class="days d-flex">
-                    <a href="#pn" class="day tabs-item {% if num_week_day == 0 %} active {% endif %}">пн</a></li>
-                    <a href="#vt" class="day tabs-item {% if num_week_day == 1 %} active {% endif %}">вт</a></li>
-                    <a href="#sr" class="day tabs-item {% if num_week_day == 2 %} active {% endif %}">ср</a></li>
-                    <a href="#ct" class="day tabs-item {% if num_week_day == 3 %} active {% endif %}">чт</a></li>
-                    <a href="#pt" class="day tabs-item {% if num_week_day == 4 %} active {% endif %}">пт</a></li>
-                    <a href="#sb" class="day tabs-item {% if num_week_day == 5 %} active {% endif %}">сб</a></li>
-                    <a href="#nd" class="day tabs-item {% if num_week_day == 6 %} active {% endif %}">нд</a></li>
+                    
+                    {% for day in week %}
+                        <a href="#{{ day.weekday_en }}" class="day tabs-item {% if day.weekday_en == active_vkladka %} active {% endif %}">{{ day.weekday }}</a></li>
+                    {% endfor %}
                 </nav>
                 <span class="line"></span> 
             </div>
-            
-            <div id="pn" class="sessions-bottom mt-5 tabs-content {% if num_week_day == 0 %} visible {% endif %}">
-                
-                {% for sess in sessions_pn|slice:":1" %}
-                    <p class="mb-5">{{ sess.session_date }}</p>
-                {% endfor %} 
-                <div class="row text-center">
-                    
-                    {% if sessions_pn %}
-                    
-                        {% for movie in movies %}
-                            <div class="col-md-2 mb-5">
-                                <h6>{{ movie.name }}</h6> <br>
-
-                                {% for session in sessions_pn %}
-                                
-                                    {% if session.id_film_id == movie.id %}
-                                        
-                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
-                                            {{ session.id_time_session.time }}
-                                            зал № 
-                                            {{ session.id_hall.number_hall }}
-                                        </a> <br> 
-                                    {% endif %}   
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                    <div class="alert alert-secondary mx-auto" role="alert">
-                        <strong>Сумно !</strong> 
-                        в цей день немає сеансів
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-            <div id="vt" class="sessions-bottom mt-5 tabs-content {% if num_week_day == 1 %} visible {% endif %}">
-                
-                {% for sess in sessions_vt|slice:":1" %}
-                    <p class="mb-5">{{ sess.session_date }}</p>
-                {% endfor %}
-                <div class="row text-center">
-                    {% if sessions_vt %}
-                        {% for movie in movies %}
-                            <div class="col-md-2 mb-5">
-                                <h6>{{ movie.name }}</h6> <br>
-                    
-                                {% for session in sessions_vt %}
-                                    {% if session.id_film_id == movie.id %}
-
-                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
-                                            {{ session.id_time_session.time }}
-                                            зал № 
-                                            {{ session.id_hall.number_hall }}
-                                        </a> <br> 
-
-                                    {% endif %}   
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                    <div class="alert alert-secondary mx-auto" role="alert">
-                        <strong>Сумно !</strong> 
-                        в цей день немає сеансів
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-            <div id="sr" class="sessions-bottom mt-5 tabs-content {% if num_week_day == 2 %} visible {% endif %}">
-                
-                {% for sess in sessions_sr|slice:":1" %}
-                    <p class="mb-5">{{ sess.session_date }}</p>
-                {% endfor %}
-                <div class="row text-center">
-                    {% if sessions_sr %}
-                        {% for movie in movies %}
-                            <div class="col-md-2 mb-5">
-                                <h6>{{ movie.name }}</h6> <br>
-                          
-                                {% for session in sessions_sr %}
-                                    {% if session.id_film_id == movie.id %}
-
-                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
-                                            {{ session.id_time_session.time }}
-                                            зал № 
-                                            {{ session.id_hall.number_hall }}
-                                        </a> <br> 
-                                        
-                                    {% endif %}   
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                    <div class="alert alert-secondary mx-auto" role="alert">
-                        <strong>Сумно !</strong> 
-                        в цей день немає сеансів
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-            <div id="ct" class="sessions-bottom mt-5 tabs-content {% if num_week_day == 3 %} visible {% endif %}">
-                {% for sess in sessions_ct|slice:":1" %}
-                    <p class="mb-5">{{ sess.session_date }}</p>
-                {% endfor %}
-                <div class="row text-center">
-                    {% if sessions_ct %}
-                        {% for movie in movies %}
-                            <div class="col-md-2 mb-5">
-                                <h6>{{ movie.name }}</h6> <br>
-                      
-                                {% for session in sessions_ct %}
-                                    {% if session.id_film_id == movie.id %}
-
-                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
-                                            {{ session.id_time_session.time }}
-                                            зал № 
-                                            {{ session.id_hall.number_hall }}
-                                        </a> <br> 
-                                        
-                                    {% endif %}   
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                    <div class="alert alert-secondary mx-auto" role="alert">
-                        <strong>Сумно !</strong> 
-                        в цей день немає сеансів
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-            <div id="pt" class="sessions-bottom mt-5 tabs-content {% if num_week_day == 4 %} visible {% endif %}">
-                {% for sess in sessions_pt|slice:":1" %}
-                    <p class="mb-5">{{ sess.session_date }}</p>
-                {% endfor %}
-                <div class="row text-center">
-                    {% if sessions_pt %}
-                        {% for movie in movies %}
-                            <div class="col-md-2 mb-5">
-                                <h6>{{ movie.name }}</h6> <br>
+            {% for day in week %}
+                <div id="{{day.weekday_en}}" class="sessions-bottom mt-5 tabs-content {% if day.weekday_en == active_vkladka %} visible {% endif %} ">
+                    <em >{{day.date}}</em> <br>
+                    <div class="row text-center mt-5">
                         
-                                {% for session in sessions_pt %}
-                                    {% if session.id_film_id == movie.id %}
-                                       
-                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
-                                            {{ session.id_time_session.time }}
-                                            зал № 
-                                            {{ session.id_hall.number_hall }}
-                                        </a> <br> 
-                                        
-                                    {% endif %}   
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                    <div class="alert alert-secondary mx-auto" role="alert">
-                        <strong>Сумно !</strong> 
-                        в цей день немає сеансів
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-            <div id="sb" class="sessions-bottom mt-5 tabs-content {% if num_week_day == 5 %} visible {% endif %}">
-                {% for sess in sessions_sb|slice:":1" %}
-                    <p class="mb-5">{{ sess.session_date }}</p>
-                {% endfor %}
-                <div class="row text-center">
-                    {% if sessions_sb %}
                         {% for movie in movies %}
-                            <div class="col-md-2 mb-5">
-                                <h6>{{ movie.name }}</h6> <br>
                         
-                                {% for session in sessions_sb %}
-                                    {% if session.id_film_id == movie.id %}
-
-                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
-                                            {{ session.id_time_session.time }}
-                                            зал № 
-                                            {{ session.id_hall.number_hall }}
-                                        </a> <br> 
-                                        
-                                    {% endif %}   
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                    <div class="alert alert-secondary mx-auto" role="alert">
-                        <strong>Сумно !</strong>
-                        в цей день немає сеансів
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-            <div id="nd" class="sessions-bottom mt-5 tabs-content {% if num_week_day == 6 %} visible {% endif %}">
-                {% for sess in sessions_nd|slice:":1" %}
-                    <p class="mb-5">{{ sess.session_date }}</p>
-                {% endfor %}
-                <div class="row text-center">
-                    {% if sessions_nd %}
-                        {% for movie in movies %}
                             <div class="col-md-2 mb-5">
                                 <h6>{{ movie.name }}</h6> <br>
-                           
-                                {% for session in sessions_nd %}
-                                    {% if session.id_film_id == movie.id %}
+                                {% for sess in sessions %}
+                                    {% if day.date == sess.session_date %}
+                                    
+                                        {% if sess.id_film_id == movie.id %}
+                                            <a href="{% url 'app:reserve' sess.id_hall_id sess.id_film_id sess.id %}" class="mt-2">
+                                                {{ sess.id_time_session.time }}
+                                                зал № 
+                                                {{ sess.id_hall.number_hall }}
+                                            </a> <br> 
+                                        {% endif %}  
 
-                                        <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
-                                            {{ session.id_time_session.time }}
-                                            зал № 
-                                            {{ session.id_hall.number_hall }}
-                                        </a> <br> 
-                                        
-                                    {% endif %}   
+                                    
+                                    {% endif %}
                                 {% endfor %}
                             </div>
+
                         {% endfor %}
-                    {% else %}
-                    <div class="alert alert-secondary mx-auto" role="alert">
-                        <strong>Сумно !</strong>
-                        в цей день немає сеансів
                     </div>
-                    {% endif %}
                 </div>
-            </div>
+            {% endfor %} 
         </div>
       
 

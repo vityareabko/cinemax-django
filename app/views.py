@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from django.core.mail import send_mail
 
-from .models import Film, Actor, Session, Time_Sessions, Hall, Place, Sector, Ticket
+from .models import Film, Actor, Session, Time_Sessions, Hall, Place, Sector, Ticket, Weekday
 from datetime import datetime, date, time
 import datetime
 import random
@@ -157,7 +157,33 @@ class SessionsListView(View):
         sessions_time = Time_Sessions.objects.all()
        
         sessions = Session.objects.all()
+
         
+
+        ##########################################################
+        days = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'нд']
+        k = 0
+        ################################################################################ - баги на сервере может быть потому что этот кусок кода удаляет из таблицы даные и записывает их снова и снова
+        # Weekday.objects.all().delete()
+        for i in range(0, len(days)):
+            try:
+                Weekday.objects.filter(weekday = days[num_week_day + i]).update(date = tday + datetime.timedelta(days=i))
+                # Weekday(weekday = days[num_week_day + i], date = tday + datetime.timedelta(days=i)).save()
+                k += 1
+            except Exception:
+                Weekday.objects.filter(weekday = days[i-k]).update(date = tday + datetime.timedelta(days=i))
+                # Weekday(weekday = days[i-k], date = tday + datetime.timedelta(days=i)).save()
+        
+        active_vkladka = 0
+        for day in Weekday.objects.all():
+            dat = day.date
+            if dat.weekday() == num_week_day:
+                active_vkladka = day.weekday_en
+
+      
+        ############################################################
+        sessions = Session.objects.all()
+        week = Weekday.objects.order_by('-id').all()
         movies = Film.objects.order_by('-id').all()
         halls = Hall.objects.all()
         context = {
@@ -179,9 +205,11 @@ class SessionsListView(View):
             # 'sessions_time_sb': sessions_time_sb,
             # 'sessions_time_nd': sessions_time_nd,     
     
-
+            'active_vkladka': active_vkladka,
+            'sessions': sessions,
             'movies': movies,
-            'halls': halls
+            'halls': halls,
+            'week': week,
         }
         return render(request, 'app_template/sessions.html', context)
 
@@ -193,10 +221,10 @@ class ReserveListView(View):
         movie = Film.objects.get(id=pk_movie)
         session = Session.objects.get(id=pk_session)
 
-        
-        tickets = Ticket.objects.all()
-
         places = Place.objects.filter(id_hall_id=pk_hall)
+        tickets = Ticket.objects.all()
+        
+        
 
         context = {
             'hall': hall,
@@ -204,6 +232,7 @@ class ReserveListView(View):
             'session': session,
             'places': places,     
             'tickets': tickets,
+            
         }
         return render(request, 'app_template/hall.html', context)
     

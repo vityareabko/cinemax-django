@@ -26,7 +26,7 @@
             <div class="places">
                 <div class=" row">
                 
-                {% for place in places %} <!-- places.row_number -->
+                {% for place in places %} <!-- places.row_number tut vnizu esli vse svporeadke tolika esli budet raznyi filme v odno i to je vremea v odnom zale, takoho ne mojet byti no esli takoe je budet, to bilety pri pokupke budet bronirovatsa v odnom zale v tom v kotorom po idei idet v odno vremea dva filma--> 
                     <div class="col-lg-1 col-md-2 col-sm-3 col-12 place_num">
                         <a href="{% for ticket in tickets %} 
                                     {% if ticket.id_place_id == place.id %}

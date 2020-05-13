@@ -101,3 +101,13 @@ class Ticket(TimeStampMixin, models.Model): # билет
     
     def __str__(self):
         return str(self.id_session)
+
+####################################################################
+
+class Weekday(TimeStampMixin, models.Model):
+    weekday = models.CharField(max_length=150)
+    date = models.DateField()
+    weekday_en = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.weekday
