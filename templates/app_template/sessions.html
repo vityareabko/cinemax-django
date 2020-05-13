@@ -12,34 +12,9 @@
         <div class="container">
             <h3 class="sessions-top mt-5">
                 Розклад фільмів в кінотеатрі СINEMAX 
-                
-                
-                
             </h3>
-            
-            <!-- <div class="sessions-all d-flex my-3">
-                <h4 class="sessions-all__title mr-4">
-                    Сеанси
-                </h4>
-                <p class="item mr-3">10:30</p>
-                <p class="item mr-3">12:30</p>
-                <p class="item mr-3">14:20</p>
-                <p class="item mr-3">16:40</p>
-                <p class="item mr-3">18:00</p>
-                <p class="item mr-3">20:00</p>
-                <p class="item">22:10</p>
-            </div>
-            <div class="sessions-halls d-flex ">
-                <h4 class="sessions-halls__title mr-5 text-right">
-                    Зали
-                </h4>
-                <p class="item mr-3">Зал № 1</p>
-                <p class="item mr-3">Зал № 2</p>
-                <p class="item mr-3">Зал № 3</p>
-            </div> -->
             <div class="sessions-tabs d-flex align-items-center">
                 <nav class="days d-flex">
-
                     <a href="#pn" class="day tabs-item {% if num_week_day == 0 %} active {% endif %}">пн</a></li>
                     <a href="#vt" class="day tabs-item {% if num_week_day == 1 %} active {% endif %}">вт</a></li>
                     <a href="#sr" class="day tabs-item {% if num_week_day == 2 %} active {% endif %}">ср</a></li>
@@ -49,7 +24,6 @@
                     <a href="#nd" class="day tabs-item {% if num_week_day == 6 %} active {% endif %}">нд</a></li>
                 </nav>
                 <span class="line"></span> 
-                
             </div>
             
             <div id="pn" class="sessions-bottom mt-5 tabs-content {% if num_week_day == 0 %} visible {% endif %}">
@@ -68,19 +42,11 @@
                                 {% for session in sessions_pn %}
                                 
                                     {% if session.id_film_id == movie.id %}
-
+                                        
                                         <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
-                                            {% for time_s in sessions_time %}
-                                                {% if time_s.id == session.id_time_session_id %}
-                                                    {{ time_s.time }}
-                                                {% endif %}
-                                            {%endfor%}
+                                            {{ session.id_time_session.time }}
                                             зал № 
-                                            {% for i in halls %}
-                                                {% if i.id == session.id_hall_id %}
-                                                    {{ i.number_hall  }} 
-                                                {% endif %}
-                                            {% endfor %}
+                                            {{ session.id_hall.number_hall }}
                                         </a> <br> 
                                     {% endif %}   
                                 {% endfor %}
@@ -109,17 +75,9 @@
                                     {% if session.id_film_id == movie.id %}
 
                                         <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
-                                            {% for time_s in sessions_time %}
-                                                {% if time_s.id == session.id_time_session_id %}
-                                                    {{ time_s.time }}
-                                                {% endif %}
-                                            {%endfor%}
+                                            {{ session.id_time_session.time }}
                                             зал № 
-                                            {% for i in halls %}
-                                                {% if i.id == session.id_hall_id %}
-                                                    {{ i.number_hall  }} 
-                                                {% endif %}
-                                            {% endfor %}
+                                            {{ session.id_hall.number_hall }}
                                         </a> <br> 
 
                                     {% endif %}   
@@ -149,17 +107,9 @@
                                     {% if session.id_film_id == movie.id %}
 
                                         <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
-                                            {% for time_s in sessions_time %}
-                                                {% if time_s.id == session.id_time_session_id %}
-                                                    {{ time_s.time }}
-                                                {% endif %}
-                                            {%endfor%}
+                                            {{ session.id_time_session.time }}
                                             зал № 
-                                            {% for i in halls %}
-                                                {% if i.id == session.id_hall_id %}
-                                                    {{ i.number_hall  }} 
-                                                {% endif %}
-                                            {% endfor %}
+                                            {{ session.id_hall.number_hall }}
                                         </a> <br> 
                                         
                                     {% endif %}   
@@ -188,17 +138,9 @@
                                     {% if session.id_film_id == movie.id %}
 
                                         <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
-                                            {% for time_s in sessions_time %}
-                                                {% if time_s.id == session.id_time_session_id %}
-                                                    {{ time_s.time }}
-                                                {% endif %}
-                                            {%endfor%}
+                                            {{ session.id_time_session.time }}
                                             зал № 
-                                            {% for i in halls %}
-                                                {% if i.id == session.id_hall_id %}
-                                                    {{ i.number_hall  }} 
-                                                {% endif %}
-                                            {% endfor %}
+                                            {{ session.id_hall.number_hall }}
                                         </a> <br> 
                                         
                                     {% endif %}   
@@ -225,19 +167,11 @@
                         
                                 {% for session in sessions_pt %}
                                     {% if session.id_film_id == movie.id %}
-
+                                       
                                         <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
-                                            {% for time_s in sessions_time %}
-                                                {% if time_s.id == session.id_time_session_id %}
-                                                    {{ time_s.time }}
-                                                {% endif %}
-                                            {%endfor%}
+                                            {{ session.id_time_session.time }}
                                             зал № 
-                                            {% for i in halls %}
-                                                {% if i.id == session.id_hall_id %}
-                                                    {{ i.number_hall  }} 
-                                                {% endif %}
-                                            {% endfor %}
+                                            {{ session.id_hall.number_hall }}
                                         </a> <br> 
                                         
                                     {% endif %}   
@@ -266,17 +200,9 @@
                                     {% if session.id_film_id == movie.id %}
 
                                         <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
-                                            {% for time_s in sessions_time %}
-                                                {% if time_s.id == session.id_time_session_id %}
-                                                    {{ time_s.time }}
-                                                {% endif %}
-                                            {%endfor%}
+                                            {{ session.id_time_session.time }}
                                             зал № 
-                                            {% for i in halls %}
-                                                {% if i.id == session.id_hall_id %}
-                                                    {{ i.number_hall  }} 
-                                                {% endif %}
-                                            {% endfor %}
+                                            {{ session.id_hall.number_hall }}
                                         </a> <br> 
                                         
                                     {% endif %}   
@@ -305,17 +231,9 @@
                                     {% if session.id_film_id == movie.id %}
 
                                         <a href="{% url 'app:reserve' session.id_hall_id session.id_film_id session.id %}" class="mt-2">
-                                            {% for time_s in sessions_time %}
-                                                {% if time_s.id == session.id_time_session_id %}
-                                                    {{ time_s.time }}
-                                                {% endif %}
-                                            {%endfor%}
+                                            {{ session.id_time_session.time }}
                                             зал № 
-                                            {% for i in halls %}
-                                                {% if i.id == session.id_hall_id %}
-                                                    {{ i.number_hall  }} 
-                                                {% endif %}
-                                            {% endfor %}
+                                            {{ session.id_hall.number_hall }}
                                         </a> <br> 
                                         
                                     {% endif %}   

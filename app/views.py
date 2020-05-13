@@ -132,8 +132,7 @@ class SessionsListView(View):
             ct = tday + datetime.timedelta(days=5)
             pt = tday + datetime.timedelta(days=6)
             sb = tday + datetime.timedelta(days=0)
-            nd = tday + datetime.timedelta(days=1)
-        
+            nd = tday + datetime.timedelta(days=1)        
         if num_week_day == 6:
             pn = tday + datetime.timedelta(days=1) 
             vt = tday + datetime.timedelta(days=2)
@@ -157,7 +156,7 @@ class SessionsListView(View):
 
         sessions_time = Time_Sessions.objects.all()
        
-
+        sessions = Session.objects.all()
         
         movies = Film.objects.order_by('-id').all()
         halls = Hall.objects.all()
@@ -179,6 +178,7 @@ class SessionsListView(View):
             # 'sessions_time_pt': sessions_time_pt,
             # 'sessions_time_sb': sessions_time_sb,
             # 'sessions_time_nd': sessions_time_nd,     
+    
 
             'movies': movies,
             'halls': halls
@@ -197,7 +197,7 @@ class ReserveListView(View):
         tickets = Ticket.objects.all()
 
         places = Place.objects.filter(id_hall_id=pk_hall)
-        
+
         context = {
             'hall': hall,
             'movie': movie,
