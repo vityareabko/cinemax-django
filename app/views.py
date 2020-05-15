@@ -314,14 +314,3 @@ class ReserveDoneView(View):
 
         return HttpResponseRedirect(reverse("app:reserve", args = (hall_num.id, movie.id, pk_session) ))
 
-# >>> tod_dict = {                                             
-# ...
-# ...
-# ...
-# ...             9: 'утро', 10: 'утро', 11: 'утро',
-# ...             12: 'обед', 13: 'обед', 14: 'обед',
-# ...             15: 'обеда', 16: 'обеда', 17: 'обеда',
-# ...             18: 'вечер', 19: 'вечер', 20: 'вечер',
-# ...             21: 'вечер', 22: 'вечер', 23: 'вечер'
-# ...         }
-# >>> tod_dict[a.hour] 

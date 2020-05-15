@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %} {% load account %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,7 +39,17 @@
                       </li>
                     </ul>
                   </div>
-                  </nav>
+                </nav>
+               
+                
+                {% user_display user as user_display %}
+                  {% if user %}
+                    {% block trans %}
+                      {{ user_display }} has logged in...
+                      {% endblock %}
+                  {% endif %}
+                
+
             </div>
         </div>
 
