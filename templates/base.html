@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock  %}</title>
+    <title>{% block title %}{% endblock  %}{% block head_title %}{% endblock %}</title>
+    
     <link rel="stylesheet" href="{% static 'css/fontawsome.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
@@ -13,56 +14,97 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">  
 </head>
 <body>
+    
     <header class="header">
         <div class="container">
-            <div class="header-wrap">
+
+          <!-- {% if messages %}
+          <div>
+            <strong>Messages:</strong>
+            <ul>
+              {% for message in messages %}
+              <li>{{message}}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %} -->
+      
+            
+            <div class="header-wrap ">
               
             
               
-                <nav class="navbar navbar-expand-lg navbar-dark ">
-                  <button class="navbar-toggler mr-5" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
+                <nav class="navbar navbar-expand-lg navbar-dark w-100">
+                  
                   <h1 class="logo">
                     <span class="line"></span>
                     <a href="{% url 'app:home' %}">Cinemax</a>
                     <span class="line"></span>
                   </h1>
-                  
-                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                      <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'app:home' %}">Головна<span class="sr-only">(current)</span></a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="{% url 'app:sessions' %}">Сеанси</a>
-                      </li>
-                    </ul>
-                  </div>
+                  <button class="navbar-toggler mr-5" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="wrap d-flex justify-content-between align-items-center w-100">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                      <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'app:home' %}">Головна<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'app:sessions' %}">Сеанси</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="auth ml-auto">
+                      {% if user.is_authenticated %}
+                          <div class="dropdown">
+                            <button class="droppdown_main dropdown-toggle"
+                                    type="button" id="dropdownMenu1" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                              {{ user }}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                              <a class="dropdown-item" href="{% url 'account_email' %}">Змінити E-mail</a>
+                              <a class="dropdown-item" href="{% url 'account_change_password' %}">Змінити пароль</a>
+                              <a class="dropdown-item" href="{% url 'account_logout' %}">Sign Out</a>
+                              
+                            </div>
+                          </div>
+                          
+                        {% else %}
+                          <ul class="navbar-nav">
+                            <li class="nav-item">
+                              <a class="nav-link" href="{% url 'account_login' %}">Увійти</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="{% url 'account_signup' %}">Зареєструватися</a>
+                            </li>
+                          </ul>
+                        {% endif %}
+                    </div>
+                </div>
                 </nav>
-               
+              
                 
-                {% user_display user as user_display %}
-                  {% if user %}
-                    {% block trans %}
-                      {{ user_display }} has logged in...
-                      {% endblock %}
-                  {% endif %}
+                
                 
 
             </div>
         </div>
 
-    </header>
-    {% block content %}
-    {% endblock  %}
-
+      </header>
+      {% block content %}
+      {% endblock  %}
+  
+    
     <footer class="footer">
     </footer>
     <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
     {% block js %}{% endblock %}
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    
+    {% block extra_body %}
+    {% endblock %}
     <script src="{% static 'js/main.js' %}"></script>
+    
 </body>
 </html>      
