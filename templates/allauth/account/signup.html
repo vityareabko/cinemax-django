@@ -1,0 +1,38 @@
+{% extends "account/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container w-25  mt-5">
+  
+  <div class="top bg-light py-3 px-3">
+    <h2>{% trans "Sign Up" %}</h2>
+    <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+
+    <form class="form-group signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+      {% csrf_token %}
+        {% for field in form %}
+          <div class="form-group mt-4">
+            <strong><label for="formGroupExampleInput">{{ field.label }}</label></strong>
+            {{ field }}
+          </div>
+        {% endfor %}
+
+      {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      {% endif %}
+      <button class="btn btn-primary form-control mt-2" type="submit">{% trans "Sign Up" %} &raquo;</button>
+    </form>
+  </div>
+  <div class="bottom bg-light mt-2 py-2 px-3 ">
+    <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+  </div>
+
+</div>
+
+
+{% endblock %}

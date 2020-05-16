@@ -1,0 +1,31 @@
+.secondaryAction{
+    text-decoration: none;
+    color:rgb(151, 151, 151);
+    transition: all 0.3s ease;
+
+}
+.secondaryAction:hover{
+    text-decoration: none;
+    color: rgb(77, 77, 77);
+}
+.socialaccount_ballot a{
+    text-decoration: none;
+    font-size: 26px;
+    color: #AAAAAA;
+    transition: all 0.3s ease;
+
+}
+.socialaccount_ballot a:hover{
+    text-decoration: none;
+    font-size: 26px;
+    color: rgb(77, 77, 77);
+}
+body{
+    background-image: url('../img/acc.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+}   
+body .container{
+    
+}

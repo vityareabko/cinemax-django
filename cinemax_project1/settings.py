@@ -161,8 +161,18 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login/'
 
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+ACCOUNT_FORMS = {
+    'login': 'app.forms.MyCustomLoginForm',
+    'signup': 'app.forms.MyCustomSignupForm',
+    'change_password': 'app.forms.MyCustomChangePasswordForm',
+    'set_password': 'app.forms.MyCustomSetPasswordForm',
+    'add_email': 'app.forms.MyCustomAddEmailForm',
+    'reset_password': 'app.forms.MyCustomResetPasswordForm',
+    'reset_password_from_key': 'app.forms.MyCustomResetPasswordKeyForm',
+    }
 
 
 # Provider specific settings

@@ -76,3 +76,27 @@ body{
     background:linear-gradient(46deg, rgb(199, 36, 36) 0%, rgb(19, 49, 116) 80%);
     
 }
+.container {
+    max-width: 1140px !important;
+}
+
+@media (min-width: 1200px){
+    .container {
+        max-width: 1140px;
+    }
+}
+@media (min-width: 992px){
+    .container {
+        max-width: 960px;
+    }
+}
+@media (min-width: 768px){
+    .container {
+        max-width: 720px;
+    }
+}
+@media (min-width: 576px){
+    .container {
+        max-width: 540px;
+    }
+}
