@@ -66,11 +66,11 @@ class MyCustomResetPasswordKeyForm(ResetPasswordKeyForm):
 
 ############################################################
 
-class Comment(ModelForm):
-    class Meta:
-        model = Comments
-        fields = ['comment']
-    # comment = Forms.TextField()
+# class Comment(ModelForm):
+#     class Meta:
+#         model = Comments
+#         fields = ['comment']
+#     # comment = Forms.TextField()
     
 
 

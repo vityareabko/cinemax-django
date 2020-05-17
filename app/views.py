@@ -41,7 +41,7 @@ class MoviesDetailView(View):
    
     def get(self, request, pk):
         movie = Film.objects.get(id=pk)
-        comments = Comments.objects.order_by('-id').all()
+        comments = Comments.objects.order_by('-id').filter(id_film_id=pk)
         
         context = {
             'movie': movie,
@@ -331,3 +331,12 @@ class MovieListComments(View):
         
 
         return HttpResponseRedirect(reverse("app:movie_detail", args = (pk_movie,) ))
+
+# class AccountChange(View):
+#     def get(self, request):
+
+#         context = {
+
+#         }
+
+#         return render(request, 'app_template/account_change.html', context)

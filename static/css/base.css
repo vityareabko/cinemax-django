@@ -79,6 +79,11 @@ body{
 .container {
     max-width: 1140px !important;
 }
+.dropdown .droppdown_main{
+    background: none;
+    border: none;
+    color: #fff;
+}
 
 @media (min-width: 1200px){
     .container {
