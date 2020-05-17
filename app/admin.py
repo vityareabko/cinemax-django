@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Film, Hall, Time_Sessions, Session, Place, Ticket, Sector, Genre, Actor, Weekday
+from .models import Film, Hall, Time_Sessions, Session, Place, Ticket, Sector, Genre, Actor, Weekday, Comments
 
 admin.site.register(Film)
 admin.site.register(Hall)
@@ -12,3 +12,5 @@ admin.site.register(Genre)
 admin.site.register(Actor)
 
 admin.site.register(Weekday)
+
+admin.site.register(Comments)

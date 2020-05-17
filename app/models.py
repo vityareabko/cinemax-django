@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 # AutoField(): хранит целочисленное значение, которое автоматически инкрементируется, обычно применяется для первичных ключей
 # CharField(max_length=N)
 # IntegerField(): хранит значение типа Number
@@ -111,3 +112,12 @@ class Weekday(TimeStampMixin, models.Model):
 
     def __str__(self):
         return self.weekday
+
+class Comments(TimeStampMixin, models.Model):
+    comment = models.TextField()
+    id_film = models.ForeignKey(Film, on_delete = models.CASCADE)
+    id_user = models.ForeignKey(User, on_delete = models.CASCADE)
+
+    def __str__(self):
+        return self.comment
+    

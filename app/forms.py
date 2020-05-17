@@ -1,4 +1,6 @@
+from django.forms import ModelForm, TextInput
 from allauth.account.forms import LoginForm, SignupForm, ChangePasswordForm, SetPasswordForm, AddEmailForm, ResetPasswordForm, ResetPasswordKeyForm
+from .models import Comments
 class MyCustomLoginForm(LoginForm):
 
     def __init__(self, *args, **kwargs):
@@ -45,6 +47,7 @@ class MyCustomAddEmailForm(AddEmailForm):
             field.widget.attrs.update({
                 'class': 'form-control'
         })
+
 class MyCustomResetPasswordForm(ResetPasswordForm):
     def __init__(self, *args, **kwargs):
         super(MyCustomResetPasswordForm, self).__init__(*args, **kwargs)
@@ -60,3 +63,15 @@ class MyCustomResetPasswordKeyForm(ResetPasswordKeyForm):
             field.widget.attrs.update({
                 'class': 'form-control'
         })
+
+############################################################
+
+class Comment(ModelForm):
+    class Meta:
+        model = Comments
+        fields = ['comment']
+    # comment = Forms.TextField()
+    
+
+
+   

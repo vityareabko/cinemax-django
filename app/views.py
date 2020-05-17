@@ -5,7 +5,8 @@ from django.urls import reverse
 
 from django.core.mail import send_mail
 
-from .models import Film, Actor, Session, Time_Sessions, Hall, Place, Sector, Ticket, Weekday
+from .models import Film, Actor, Session, Time_Sessions, Hall, Place, Sector, Ticket, Weekday, Comments
+
 from datetime import datetime, date, time
 import datetime
 import random
@@ -40,7 +41,13 @@ class MoviesDetailView(View):
    
     def get(self, request, pk):
         movie = Film.objects.get(id=pk)
-        return render(request, 'app_template/movie_detail.html', {'movie': movie})
+        comments = Comments.objects.order_by('-id').all()
+        
+        context = {
+            'movie': movie,
+            'comments': comments,
+        }
+        return render(request, 'app_template/movie_detail.html', context)
 
 class ActorDetailView(View):
 
@@ -50,10 +57,6 @@ class ActorDetailView(View):
             'actor': actor,
         }
         return render(request, 'app_template/actor_detail.html', context)
-
-
-
-
 
 class SessionsListView(View):
     
@@ -312,5 +315,19 @@ class ReserveDoneView(View):
     
         # return render(request, 'app_template/get_ticket.html')
 
-        return HttpResponseRedirect(reverse("app:reserve", args = (hall_num.id, movie.id, pk_session) ))
+        return HttpResponseRedirect(reverse('app:reserve', args = (hall_num.id, movie.id, pk_session) ))
 
+class MovieListComments(View):
+    
+    def post(self, request, pk_movie, pk_user):
+        
+        
+        comm = request.POST['comment']
+        print(comm)
+        Comments(comment = comm, id_film_id = pk_movie, id_user_id = pk_user ).save()
+        # print('fffff', form.fields['comment'])
+   
+        
+        
+
+        return HttpResponseRedirect(reverse("app:movie_detail", args = (pk_movie,) ))
