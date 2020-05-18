@@ -1,0 +1,29 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Главная{% endblock %}
+{% block stylesheet %} {% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% for news in news_list %}
+        <div class="card  bg-light mb-3 d-inline-block">
+            <div class="card-body">
+              <h4 class="card-title"><a class="" href="#!">{{ news.title }}</a></h4>
+              
+              <p class="card-text">
+                {{ news.describe }}
+              </p>
+              <a href="#!" class="card-link ">Докладніше</a>
+             
+            </div>
+          </div>
+    
+        
+            
+        {% endfor %}
+    </div>
+
+{% endblock  %}
+    
+{% block js %} {% endblock %}
