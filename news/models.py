@@ -9,10 +9,12 @@ class TimeStampMixin(models.Model):
         abstract = True
 
 class ParseMovieInfo(TimeStampMixin, models.Model):
-    title = models.CharField(max_length = 500)
+    title = models.CharField(max_length = 300)
     date = models.CharField(max_length = 50)
-    describe = models.TextField()
-    url = models.SlugField(max_length = 150)
+    short_describe = models.TextField()
+    full_describe = models.TextField()
+    
+    url = models.SlugField(max_length = 300)
 
     def __str__(self):
         return self.title

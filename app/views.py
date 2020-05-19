@@ -6,13 +6,11 @@ from django.urls import reverse
 from django.core.mail import send_mail
 
 from .models import Film, Actor, Session, Time_Sessions, Hall, Place, Sector, Ticket, Weekday, Comments
-from news.models import ParseMovieInfo
 
 from datetime import datetime, date, time
 import datetime
 import random
-import requests
-from bs4 import BeautifulSoup as BS
+
 class MoviesListView(View):
 
     # model = Film
@@ -20,30 +18,9 @@ class MoviesListView(View):
     # context_object_name = "film_list"
     # template_name = "app_template/homepage.html"
     def get(self, request):
-        ###################################################### parser
-        r = requests.get('https://www.kinonews.ru/news/') 
-        html = BS(r.content, 'html.parser') 
-        # now = datetime.now()
-        # locale.setlocale(locale.LC_ALL, "ru")
-        # print(now.strftime("%d %B %Y"))
-
-        for el in html.select('.block-page-new'):
-            title = el.select('.shiftup10 > .anons-title-new > h3 > a')
-            dat = el.select('.shiftup10 > .anons-date-new')
-            short_describe = el.select('.anons-text')
-            url_more = el.select('.anons-readmore > a')
-            break
-
-        news = ParseMovieInfo.objects.all()
-        for iter in range(0,len(title)):
-            T = True    
-            for obj in news:
-                if obj.title == title[iter].text:
-                    T = False
-            if T:
-                ParseMovieInfo(title = title[iter].text, date = dat[iter].text, describe = short_describe[iter].text, url = url_more[iter].get('href')).save()
+        
     
-        ###################################################### end parser
+        
 
 
 

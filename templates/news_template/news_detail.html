@@ -1,0 +1,24 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Новини{% endblock %}
+{% block stylesheet %} {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h4>{{news.title}}</h4>
+            </div>
+            <div class="card-body">
+                <p>{{ news.full_describe|linebreaksbr }}</p>
+            </div>
+          </div>
+        
+        
+    </div>
+
+{% endblock  %}
+    
+{% block js %} {% endblock %}
+    

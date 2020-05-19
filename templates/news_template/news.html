@@ -5,16 +5,16 @@
 {% block stylesheet %} {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container mt-5">
         {% for news in news_list %}
-        <div class="card  bg-light mb-3 d-inline-block">
+        <div class="card  bg-light mb-3 d-inline-block mt-3">
             <div class="card-body">
-              <h4 class="card-title"><a class="" href="#!">{{ news.title }}</a></h4>
+              <h4 class="card-title"><a class="" href="{% url 'news:news_detail' news.url %}">{{ news.title }}</a></h4>
               
               <p class="card-text">
-                {{ news.describe }}
+                {{ news.short_describe }} 
               </p>
-              <a href="#!" class="card-link ">Докладніше</a>
+              <a href="{% url 'news:news_detail' news.url %}" class="card-link ">Докладніше</a>
              
             </div>
           </div>
