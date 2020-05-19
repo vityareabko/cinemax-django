@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup as BS
 
 # from datetime import datetime
 # import locale
+from googletrans import Translator
 
 class MovieNewsList(View): #### парсить дание в когда час будет 13:00 или вроде того, идет проверка если интервал времени входит в 13:00 до 14:00 до парсит дание только один раз, нужно сделать доп. проверку
     def get(self, request):
@@ -34,6 +35,8 @@ class MovieNewsList(View): #### парсить дание в когда час �
             list_pages_link.append( requests.get('https://www.kinonews.ru/' + str(x.get('href'))) )
             
         
+        
+        trans = Translator()
         for r in list_pages_link:
             full_text = ''
             html = BS(r.content, 'html.parser')
@@ -52,11 +55,14 @@ class MovieNewsList(View): #### парсить дание в когда час �
                 if obj.title == title[iter].text:
                     T = False
             if T:
+                tit = trans.translate(title[iter].text, src = 'ru', dest='uk').text
+                sh_d = trans.translate(short_describe[iter].text, src = 'ru', dest='uk').text
+                full_d = trans.translate(full_content_text[iter], src = 'ru', dest='uk').text
                 ParseMovieInfo(
-                    title = title[iter].text,
+                    title = tit,
                     date = dat[iter].text, 
-                    short_describe = short_describe[iter].text,
-                    full_describe = full_content_text[iter], 
+                    short_describe = sh_d,
+                    full_describe = full_d, 
                     url = str(url_more[iter].get('href')).replace('/', '')
                 ).save()
        
