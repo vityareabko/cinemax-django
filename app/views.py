@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.core.mail import send_mail
 
 from .models import Film, Actor, Session, Time_Sessions, Hall, Place, Sector, Ticket, Weekday, Comments
-
+from news.models import ParseMovieInfo
 from datetime import datetime, date, time
 import datetime
 import random
@@ -48,10 +48,11 @@ class MoviesDetailView(View):
     def get(self, request, pk):
         movie = Film.objects.get(id=pk)
         comments = Comments.objects.order_by('-id').filter(id_film_id=pk)
-        
+        article = ParseMovieInfo.objects.order_by('-id').all()
         context = {
             'movie': movie,
             'comments': comments,
+            'article': article,
         }
         return render(request, 'app_template/movie_detail.html', context)
 
@@ -67,107 +68,9 @@ class ActorDetailView(View):
 class SessionsListView(View):
     
     def get(self, request):
-
-        
-
-        # for i in range(num_week_day, num_week_day + 6):
-        #     if i == 0:
-        #         pn = tday + datetime.timedelta(days=i)
-        #         vt = tday + datetime.timedelta(days=1) #2
-        #         sr = tday + datetime.timedelta(days=2) #3
-        #         ct = tday + datetime.timedelta(days=3) #4
-        #         pt = tday + datetime.timedelta(days=4) #5
-        #         sb = tday + datetime.timedelta(days=5) #6
-        #         nd = tday + datetime.timedelta(days=6) #7
-        
-
-
         tday = date.today()
         num_week_day = date.today().weekday()
-        
-        # for i in range(0,6):
-        #     pn = tday + datetime.timedelta(days=num_week_day-num_week_day) 
-        #     vt = tday + datetime.timedelta(days=num_week_day+1)
-        #     sr = tday + datetime.timedelta(days=num_week_day+2)
-        #     ct = tday + datetime.timedelta(days=num_week_day+3)
-        #     pt = tday + datetime.timedelta(days=num_week_day+4)
-        #     sb = tday + datetime.timedelta(days=num_week_day+5)
-        #     nd = tday + datetime.timedelta(days=num_week_day+6)
-
-        if num_week_day == 0:
-            pn = tday + datetime.timedelta(days=0) 
-            vt = tday + datetime.timedelta(days=1)
-            sr = tday + datetime.timedelta(days=2)
-            ct = tday + datetime.timedelta(days=3)
-            pt = tday + datetime.timedelta(days=4)
-            sb = tday + datetime.timedelta(days=5)
-            nd = tday + datetime.timedelta(days=6)
-        if num_week_day == 1:
-            pn = tday + datetime.timedelta(days=6) 
-            vt = tday + datetime.timedelta(days=0)
-            sr = tday + datetime.timedelta(days=1)
-            ct = tday + datetime.timedelta(days=2)
-            pt = tday + datetime.timedelta(days=3)
-            sb = tday + datetime.timedelta(days=4)
-            nd = tday + datetime.timedelta(days=5)
-        if num_week_day == 2:
-            pn = tday + datetime.timedelta(days=5) 
-            vt = tday + datetime.timedelta(days=6)
-            sr = tday + datetime.timedelta(days=0)
-            ct = tday + datetime.timedelta(days=1)
-            pt = tday + datetime.timedelta(days=2)
-            sb = tday + datetime.timedelta(days=3)
-            nd = tday + datetime.timedelta(days=4)
-        if num_week_day == 3:
-            pn = tday + datetime.timedelta(days=4) 
-            vt = tday + datetime.timedelta(days=5)
-            sr = tday + datetime.timedelta(days=6)
-            ct = tday + datetime.timedelta(days=0)
-            pt = tday + datetime.timedelta(days=1)
-            sb = tday + datetime.timedelta(days=2)
-            nd = tday + datetime.timedelta(days=3)
-        if num_week_day == 4:
-            pn = tday + datetime.timedelta(days=3) 
-            vt = tday + datetime.timedelta(days=4)
-            sr = tday + datetime.timedelta(days=5)
-            ct = tday + datetime.timedelta(days=6)
-            pt = tday + datetime.timedelta(days=0)
-            sb = tday + datetime.timedelta(days=1)
-            nd = tday + datetime.timedelta(days=2)
-        if num_week_day == 5:
-            pn = tday + datetime.timedelta(days=2) 
-            vt = tday + datetime.timedelta(days=3)
-            sr = tday + datetime.timedelta(days=4)
-            ct = tday + datetime.timedelta(days=5)
-            pt = tday + datetime.timedelta(days=6)
-            sb = tday + datetime.timedelta(days=0)
-            nd = tday + datetime.timedelta(days=1)        
-        if num_week_day == 6:
-            pn = tday + datetime.timedelta(days=1) 
-            vt = tday + datetime.timedelta(days=2)
-            sr = tday + datetime.timedelta(days=3)
-            ct = tday + datetime.timedelta(days=4)
-            pt = tday + datetime.timedelta(days=5)
-            sb = tday + datetime.timedelta(days=6)
-            nd = tday + datetime.timedelta(days=0)
-        
-      
-        
-
-        # sessions_td = Session.objects.filter( session_date = today ).all()
-        sessions_pn = Session.objects.filter(session_date = pn ).all()
-        sessions_vt = Session.objects.filter(session_date = vt ).all()
-        sessions_sr = Session.objects.filter(session_date = sr ).all()
-        sessions_ct = Session.objects.filter(session_date = ct ).all()
-        sessions_pt = Session.objects.filter(session_date = pt ).all()
-        sessions_sb = Session.objects.filter(session_date = sb ).all()
-        sessions_nd = Session.objects.filter(session_date = nd ).all()
-
-        sessions_time = Time_Sessions.objects.all()
-       
         sessions = Session.objects.all()
-
-        
 
         ##########################################################
         days = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'нд']
@@ -196,24 +99,7 @@ class SessionsListView(View):
         movies = Film.objects.order_by('-id').all()
         halls = Hall.objects.all()
         context = {
-            
-            'sessions_pn': sessions_pn,
-            'sessions_vt': sessions_vt,
-            'sessions_sr': sessions_sr,
-            'sessions_ct': sessions_ct,
-            'sessions_pt': sessions_pt,
-            'sessions_sb': sessions_sb,
-            'sessions_nd': sessions_nd,
-            'sessions_time': sessions_time,
-            'num_week_day': num_week_day,
-            # 'sessions_time_pn': sessions_time_pn,
-            # 'sessions_time_vt': sessions_time_vt,
-            # 'sessions_time_sr': sessions_time_sr,
-            # 'sessions_time_ct': sessions_time_ct,
-            # 'sessions_time_pt': sessions_time_pt,
-            # 'sessions_time_sb': sessions_time_sb,
-            # 'sessions_time_nd': sessions_time_nd,     
-    
+
             'active_vkladka': active_vkladka,
             'sessions': sessions,
             'movies': movies,

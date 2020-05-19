@@ -72,11 +72,19 @@
                                     
                               
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="position: absolute; transform: translate3d(-100px, 10px, 0px);  will-change: transform;">
+                              {% if user.username == 'admin' %}
+                                <a href="/admin" class="dropdown-item" >адмін управління</a>
+                                <a href="{% url 'news:parse' %}"  class="dropdown-item">парсити дані</a>
+                              {% endif %}
                               <a class="dropdown-item" href="{% url 'account_email' %}">Змінити E-mail</a>
                               <a class="dropdown-item" href="{% url 'account_change_password' %}">Змінити пароль</a>
                               <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logout">Вихiд</a>
                             </div>
+                          </div>
+                          <div class="">
+                         
                           </div>
                           
                         {% else %}

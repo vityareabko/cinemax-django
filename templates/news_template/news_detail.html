@@ -1,6 +1,7 @@
 
 {% extends "base.html" %}
 {% load static %}
+{% load account %}
 {% block title %}Новини{% endblock %}
 {% block stylesheet %} {% endblock %}
 
@@ -12,9 +13,87 @@
             </div>
             <div class="card-body">
                 <p>{{ news.full_describe|linebreaksbr }}</p>
+                <br><hr>
+                <div class="d-flex justify-content-between">
+                    <p>{{ news.created_at }}</p>
+                    <em>коментарiв: {{ quantity }}</em>
+                </div>
             </div>
           </div>
-        
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <h4 class="mb-4">Новини</h4>
+                {% for new in news_list|slice:"3" %}
+                    <div class="card text-white bg-primary mb-3 d-inline-block" >
+                        <div class="card-header">
+                            <a class="text-white" href="{% url 'news:news_detail' new.url %}">{{ new.title }}</a>
+                        </div>
+                        <div class="card-body">
+                            <p>{{ new.short_describe }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-8">
+                <div id="accordion" role="tablist">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingOne">
+                            <h5 class="mb-0">
+                                <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Ваша думка ?
+                                </a>
+                            </h5>
+                        </div>
+                    
+                        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="card-body">
+                                {% user_display user as user_display %}
+                
+                                
+                                <form action="{% if user_display %} {% url 'news:article_comments' news.id user.id %} {% else %} {% url 'news:article_comments' news.id 13 %} {% endif %}" method="POST">
+                                    {% csrf_token %}
+                                    <fieldset disabled>
+                                        <div class="form-group">
+                                            <input type="text" name="comment" id="disabledTextInput" class="form-control" placeholder="{{ user.username }}">
+                                        </div>
+                                    </fieldset>
+                                    <textarea name="comment" id="comment" class="form-control" rows="3" required></textarea>
+                                    <input class="btn btn-primary form-control mt-2" type="submit" value="залишити коментарий">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingTwo">
+                            <h5 class="mb-0">
+                                <a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    коментарi
+                                </a>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="card-body">
+                                {% for comment in comments %}
+                        
+                                        <div class="row d-flex my-3" >
+                                            <div class="col-md-2">
+                                                <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
+                                            </div>
+                                            <div class="col-md-10 comment">
+                                                <strong>{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}</strong> <br>
+                                                <p>{{ comment.comment }}</p>
+                                            </div>
+                                        </div>  
+                                        
+                                    {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+       
         
     </div>
 

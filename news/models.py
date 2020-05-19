@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 class TimeStampMixin(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
@@ -18,3 +18,11 @@ class ParseMovieInfo(TimeStampMixin, models.Model):
 
     def __str__(self):
         return self.title
+
+class ArticleComment(TimeStampMixin, models.Model):
+    comment = models.TextField()
+    id_user = models.ForeignKey(User, on_delete = models.CASCADE)
+    id_article = models.ForeignKey(ParseMovieInfo, on_delete = models.CASCADE)
+
+    def __str__(self):
+        return self.id_article.title ##########################

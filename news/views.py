@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.views.generic.base import View
-from .models import ParseMovieInfo
+
+from django.http import Http404, HttpResponseRedirect
+from django.urls import reverse
+
+from .models import ParseMovieInfo, ArticleComment
 
 import requests
 from bs4 import BeautifulSoup as BS
@@ -9,64 +13,69 @@ from bs4 import BeautifulSoup as BS
 # import locale
 from googletrans import Translator
 
+def Parser(request):
+    ###################################################### parser
+    r = requests.get('https://www.kinonews.ru/news/') 
+    html = BS(r.content, 'html.parser') 
+    # now = datetime.now()
+    # locale.setlocale(locale.LC_ALL, "ru")
+    # print(now.strftime("%d %B %Y"))
+    
+    for el in html.select('.block-page-new'):
+        title = el.select('.shiftup10 > .anons-title-new > h3 > a')
+        dat = el.select('.shiftup10 > .anons-date-new')
+        short_describe = el.select('.anons-text')
+        url_more = el.select('.anons-readmore > a')
+        break
+
+    # full_describe = , source_link= ,
+    news = ParseMovieInfo.objects.all()
+
+    list_pages_link = []
+    full_content_text = []
+    for x in url_more:
+        list_pages_link.append( requests.get('https://www.kinonews.ru/' + str(x.get('href'))) )
+        
+    
+    
+    trans = Translator()
+    for r in list_pages_link:
+        full_text = ''
+        html = BS(r.content, 'html.parser')
+        for el in html.select('.textart'):
+            full_content = el.select('div > p')
+
+        for st in full_content:
+            full_text += st.text + '\n\n'
+        
+        full_content_text.append(full_text)
+        
+    
+    for iter in range(0,len(title)):
+        T = True    
+        for obj in news:
+            tit = trans.translate(title[iter].text, src = 'ru', dest='uk').text
+            if obj.title == tit:
+                T = False
+        if T:
+            tit = trans.translate(title[iter].text, src = 'ru', dest='uk').text
+            sh_d = trans.translate(short_describe[iter].text, src = 'ru', dest='uk').text
+            full_d = trans.translate(full_content_text[iter], src = 'ru', dest='uk').text
+            ParseMovieInfo(
+                title = tit,
+                date = dat[iter].text, 
+                short_describe = sh_d,
+                full_describe = full_d, 
+                url = str(url_more[iter].get('href')).replace('/', '')
+            ).save()
+    
+    return HttpResponseRedirect( reverse('news:movie_news', args=()))
+    ################################################## endpareser
+
 class MovieNewsList(View): #### парсить дание в когда час будет 13:00 или вроде того, идет проверка если интервал времени входит в 13:00 до 14:00 до парсит дание только один раз, нужно сделать доп. проверку
     def get(self, request):
         
-        ###################################################### parser
-        r = requests.get('https://www.kinonews.ru/news/') 
-        html = BS(r.content, 'html.parser') 
-        # now = datetime.now()
-        # locale.setlocale(locale.LC_ALL, "ru")
-        # print(now.strftime("%d %B %Y"))
         
-        for el in html.select('.block-page-new'):
-            title = el.select('.shiftup10 > .anons-title-new > h3 > a')
-            dat = el.select('.shiftup10 > .anons-date-new')
-            short_describe = el.select('.anons-text')
-            url_more = el.select('.anons-readmore > a')
-            break
-
-        # full_describe = , source_link= ,
-        news = ParseMovieInfo.objects.all()
-
-        list_pages_link = []
-        full_content_text = []
-        for x in url_more:
-            list_pages_link.append( requests.get('https://www.kinonews.ru/' + str(x.get('href'))) )
-            
-        
-        
-        trans = Translator()
-        for r in list_pages_link:
-            full_text = ''
-            html = BS(r.content, 'html.parser')
-            for el in html.select('.textart'):
-                full_content = el.select('div > p')
-
-            for st in full_content:
-                full_text += st.text + '\n\n'
-            
-            full_content_text.append(full_text)
-            
-        
-        for iter in range(0,len(title)):
-            T = True    
-            for obj in news:
-                if obj.title == title[iter].text:
-                    T = False
-            if T:
-                tit = trans.translate(title[iter].text, src = 'ru', dest='uk').text
-                sh_d = trans.translate(short_describe[iter].text, src = 'ru', dest='uk').text
-                full_d = trans.translate(full_content_text[iter], src = 'ru', dest='uk').text
-                ParseMovieInfo(
-                    title = tit,
-                    date = dat[iter].text, 
-                    short_describe = sh_d,
-                    full_describe = full_d, 
-                    url = str(url_more[iter].get('href')).replace('/', '')
-                ).save()
-       
-        ################################################## endpareser
 
         news_list = ParseMovieInfo.objects.order_by('-id').all()
     
@@ -78,8 +87,27 @@ class MovieNewsList(View): #### парсить дание в когда час �
 class NewsDetail(View):
     def get(self, request, url_news):
         news = ParseMovieInfo.objects.get(url=url_news)
+        news_list = ParseMovieInfo.objects.order_by('-id').all()
+        comments = ArticleComment.objects.order_by('-id').filter(id_article_id = news.id)
+        # print(len(comments.count))
+        quantity = len(comments)
         
         context = {
             'news': news,
+            'news_list': news_list,
+            'comments': comments,
+            'quantity': quantity
         }
         return render(request, 'news_template/news_detail.html', context)
+
+
+
+class CommentView(View):
+    def post(self, request, pk_article, pk_user):
+        comment = request.POST['comment']
+        # print(comment)
+        ArticleComment(comment = comment, id_user_id = pk_user, id_article_id = pk_article).save()
+        slug_url_article = ParseMovieInfo.objects.get(id=pk_article).url
+
+        
+        return HttpResponseRedirect( reverse('news:news_detail', args=(slug_url_article,)))
