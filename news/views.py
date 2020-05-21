@@ -5,6 +5,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 
 from .models import ParseMovieInfo, ArticleComment
+from .forms import ArticleCommentForm
 
 import requests
 from bs4 import BeautifulSoup as BS
@@ -106,8 +107,17 @@ class CommentView(View):
     def post(self, request, pk_article, pk_user):
         comment = request.POST['comment']
         # print(comment)
-        ArticleComment(comment = comment, id_user_id = pk_user, id_article_id = pk_article).save()
+        # ArticleComment(comment = comment, id_user_id = pk_user, id_article_id = pk_article).save()
         slug_url_article = ParseMovieInfo.objects.get(id=pk_article).url
+
+        form = ArticleCommentForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            if request.POST.get("parent", None):
+                form.id_parent_id = int(request.POST.get("parent"))
+            form.id_article_id = pk_article
+            form.id_user_id = pk_user
+            form.save()
 
         
         return HttpResponseRedirect( reverse('news:news_detail', args=(slug_url_article,)))

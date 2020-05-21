@@ -23,6 +23,10 @@ class ArticleComment(TimeStampMixin, models.Model):
     comment = models.TextField()
     id_user = models.ForeignKey(User, on_delete = models.CASCADE)
     id_article = models.ForeignKey(ParseMovieInfo, on_delete = models.CASCADE)
+    
+    id_parent = models.ForeignKey(
+        'self', on_delete=models.SET_NULL, blank=True, null=True
+    )
 
     def __str__(self):
         return self.id_article.title ##########################
