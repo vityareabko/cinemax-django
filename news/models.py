@@ -15,7 +15,7 @@ class ParseMovieInfo(TimeStampMixin, models.Model):
     full_describe = models.TextField()
     
     url = models.SlugField(max_length = 300)
-
+    
     def __str__(self):
         return self.title
 
@@ -23,10 +23,18 @@ class ArticleComment(TimeStampMixin, models.Model):
     comment = models.TextField()
     id_user = models.ForeignKey(User, on_delete = models.CASCADE)
     id_article = models.ForeignKey(ParseMovieInfo, on_delete = models.CASCADE)
+<<<<<<< HEAD
     
     id_parent = models.ForeignKey(
         'self', on_delete=models.SET_NULL, blank=True, null=True
     )
+=======
+    id_parent = models.ForeignKey(
+        'self', on_delete=models.SET_NULL, blank=True, null=True
+    )
+
+    
+>>>>>>> 272681d7702961f5e24a44442d4934c8df2707e0
 
     def __str__(self):
         return self.id_article.title ##########################

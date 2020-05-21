@@ -89,7 +89,8 @@ class NewsDetail(View):
     def get(self, request, url_news):
         news = ParseMovieInfo.objects.get(url=url_news)
         news_list = ParseMovieInfo.objects.order_by('-id').all()
-        comments = ArticleComment.objects.order_by('-id').filter(id_article_id = news.id)
+        comments = ArticleComment.objects.order_by('-id').filter(id_article_id = news.id, id_parent_id = None)
+        reply_comments = ArticleComment.objects.order_by('-id').filter(id_parent_id = not None)
         # print(len(comments.count))
         quantity = len(comments)
         
@@ -97,6 +98,7 @@ class NewsDetail(View):
             'news': news,
             'news_list': news_list,
             'comments': comments,
+            'reply_comments': reply_comments,
             'quantity': quantity
         }
         return render(request, 'news_template/news_detail.html', context)
@@ -105,6 +107,7 @@ class NewsDetail(View):
 
 class CommentView(View):
     def post(self, request, pk_article, pk_user):
+<<<<<<< HEAD
         comment = request.POST['comment']
         # print(comment)
         # ArticleComment(comment = comment, id_user_id = pk_user, id_article_id = pk_article).save()
@@ -119,5 +122,21 @@ class CommentView(View):
             form.id_user_id = pk_user
             form.save()
 
+=======
+        # comment = request.POST['comment']
+        # # print(comment)
+        # ArticleComment(comment = comment, id_user_id = pk_user, id_article_id = pk_article).save()
+        slug_url_article = ParseMovieInfo.objects.get(id=pk_article).url
+>>>>>>> 272681d7702961f5e24a44442d4934c8df2707e0
         
+
+        form = ArticleCommentForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            if request.POST.get("parent", None):
+                form.id_parent_id = int(request.POST.get("parent"))
+            form.id_article_id = pk_article
+            form.id_user_id = pk_user
+            form.save()
+
         return HttpResponseRedirect( reverse('news:news_detail', args=(slug_url_article,)))
