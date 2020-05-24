@@ -103,40 +103,65 @@ class NewsDetail(View):
         }
         return render(request, 'news_template/news_detail.html', context)
 
+#############################################
+from django.http import JsonResponse
+
+def AjaxReview(request):
+    data = {
+            'is_valid': False,
+    }
+    
+    # slug_url_article = ParseMovieInfo.objects.get(id=pk_article).url
+    if request.is_ajax():
+        print('\n\n1\n\n')
+        message = request.GET.get('comment')
+        data['comment'] = message
+        if message == 'I want an AJAX response':
+            print('###'+message)
+            data.update(is_valid=True)
+
+            
+
+            # form = ArticleCommentForm(request.POST)
+            # if form.is_valid():
+            #     form = form.save(commit=False)
+            #     if request.POST.get("parent", None):
+            #         form.id_parent_id = int(request.POST.get("parent"))
+            #     form.id_article_id = pk_article
+            #     form.id_user_id = pk_user
+            #     form.save()
+            
+
+    return JsonResponse(data)
+
+
+############################################
 
 
 class CommentView(View):
     def post(self, request, pk_article, pk_user):
-<<<<<<< HEAD
-        comment = request.POST['comment']
-        # print(comment)
-        # ArticleComment(comment = comment, id_user_id = pk_user, id_article_id = pk_article).save()
-        slug_url_article = ParseMovieInfo.objects.get(id=pk_article).url
-
-        form = ArticleCommentForm(request.POST)
-        if form.is_valid():
-            form = form.save(commit=False)
-            if request.POST.get("parent", None):
-                form.id_parent_id = int(request.POST.get("parent"))
-            form.id_article_id = pk_article
-            form.id_user_id = pk_user
-            form.save()
-
-=======
         # comment = request.POST['comment']
         # # print(comment)
         # ArticleComment(comment = comment, id_user_id = pk_user, id_article_id = pk_article).save()
         slug_url_article = ParseMovieInfo.objects.get(id=pk_article).url
->>>>>>> 272681d7702961f5e24a44442d4934c8df2707e0
         
-
-        form = ArticleCommentForm(request.POST)
-        if form.is_valid():
-            form = form.save(commit=False)
-            if request.POST.get("parent", None):
-                form.id_parent_id = int(request.POST.get("parent"))
-            form.id_article_id = pk_article
-            form.id_user_id = pk_user
-            form.save()
+        if request.is_ajax():
+            
+            message = request.POST.get('comment')
+            data = {
+                'comment': message
+            }
+            form = ArticleCommentForm(request.POST)
+            if form.is_valid():
+    
+                form = form.save(commit=False)
+                if request.POST.get("parent", None):
+                    form.id_parent_id = int(request.POST.get("parent"))
+                form.id_article_id = pk_article
+                form.id_user_id = pk_user
+                form.save()
+        
+                print('###'+message)
+                return JsonResponse(data)
 
         return HttpResponseRedirect( reverse('news:news_detail', args=(slug_url_article,)))

@@ -13,9 +13,9 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-var csrftoken = getCookie('csrftoken');
+// var csrftoken = getCookie('csrftoken');
 
-// var csrftoken = Cookies.get('csrftoken');
+var csrftoken = Cookies.get('csrftoken');
 
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
@@ -44,20 +44,4 @@ $.ajaxSetup({
         }
        
     }
-});
-
-$(document).ready(function () {
-    
-    
-
-    var tabsItem = $('.tabs-item');
-    
-    tabsItem.on('click', function(e){
-        e.preventDefault();
-        var activContent = $(this).attr('href');
-        $('.active').toggleClass('active');
-        $(this).toggleClass('active');
-        $('.visible').toggleClass('visible');
-        $(activContent).toggleClass('visible');
-    });
 });

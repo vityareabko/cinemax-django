@@ -50,16 +50,31 @@
                                 {% user_display user as user_display %}
                 
                                 
+                                
                                 <form id="formReview" action="{% if user_display %} {% url 'news:article_comments' news.id user.id %} {% else %} {% url 'news:article_comments' news.id 13 %} {% endif %}" method="POST">
                                     {% csrf_token %}
                                     <fieldset disabled>
                                         <div class="form-group">
-                                            <input type="text" name="comment" id="disabledTextInput" class="form-control" placeholder="{{ user.username }}">
+                                            <input type="text" name="name" id="disabledTextInput" class="form-control" placeholder="{{ user.username }}">
                                         </div>
                                     </fieldset>
                                     <textarea name="comment" id="comment" class="form-control" rows="3" required></textarea>
                                     <input class="btn btn-primary form-control mt-2" type="submit" value="залишити коментарий">
                                 </form>
+
+                                {% comment %}
+                                
+                                <!-- <form id="formReview" action="{% url 'news:add_review' %}" method="GET">
+                                    {% csrf_token %}
+                                    <fieldset disabled>
+                                        <div class="form-group">
+                                            <input type="text" name="name" id="disabledTextInput" class="form-control" placeholder="{{ user.username }}">
+                                        </div>
+                                    </fieldset>
+                                    <textarea name="comment" id="comment" class="form-control" rows="3" required></textarea>
+                                    <input class="btn btn-primary form-control mt-2" type="submit" value="залишити коментарий">
+                                </form> -->
+                                {% endcomment %}
                             </div>
                         </div>
                     </div>
@@ -74,113 +89,56 @@
                         <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
                             <div class="card-body">
                                 {% for comment in comments %}
-<<<<<<< HEAD
-                        
-                                        <div class="row d-flex my-3" >
-                                            <div class="col-md-2">
-                                                <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
-                                            </div>
-                                            <div class="col-md-10 comment">
-                                                <strong>{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}</strong> <br>
-                                                <p>{{ comment.comment }}</p>
-                                                <p>
-                                                    <a class="" data-toggle="collapse" href="#{{ comment.id_user.username }}{{forloop.counter}}" aria-expanded="false" aria-controls="collapseExample" onclick="addReview('{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}', '{{forloop.counter}}')">
-                                                        відповісти <i class="fas fa-reply-all"></i>
-                                                    </a>
-                                                    <div class="card">
-                                                        <div class="card-header" role="tab" id="headingTwo">
-                                                            <h5 class="mb-0">
-                                                            <a class="collapsed" style="font-size: 16px;" data-toggle="collapse" href="#{{ comment.id_user.username }}{{forloop.counter}}{{forloop.counter}}" aria-expanded="false" aria-controls="collapseTwo">
-                                                                Показати коментарі <i class="far fa-comment-dots"></i>
-                                                            </a>
-                                                            </h5>
-                                                        </div>
-                                                        <div id="{{ comment.id_user.username }}{{forloop.counter}}{{forloop.counter}}" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                            <div class="card-body">
-                                                                
-                                                                <div class="media row mt-3">
-                                                                    <a class="d-flex col-md-2 pr-3" href="#!">
-                                                                        <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
-                                                                    </a>
-                                                                    <div class="media-body col-md-10">
-                                                                        <h5 class="mt-0">Media heading</h5>
-                                                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-=======
-                                        
-                                            <div class="row d-flex my-3" >
-                                                <div class="col-md-2">
-                                                    <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
-                                                </div>
-                                                <div class="col-md-10 comment">
-                                                    <strong>{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}</strong> <br>
-                                                    <p>{{ comment.comment }}</p>
-                                                    <p>
-                                                        <a class="" data-toggle="collapse" href="#{{ comment.id_user.username }}{{forloop.counter}}" aria-expanded="false" aria-controls="collapseExample" onclick="addReview('{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}', '{{forloop.counter}}')">
-                                                            відповісти <i class="fas fa-reply-all"></i>
+                                    <div class="row d-flex my-3" >
+                                        <div class="col-md-2">
+                                            <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
+                                        </div>
+                                        <div class="col-md-10 comment">
+                                            <strong>{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}</strong> <br>
+                                            <p>{{ comment.comment }}</p>
+                                            
+                                            <p>
+                                                <a class="" data-toggle="collapse" href="#{{ comment.id_user.username }}{{forloop.counter}}" aria-expanded="false" aria-controls="collapseExample" onclick="addReview('{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}', '{{forloop.counter}}')">
+                                                    відповісти <i class="fas fa-reply-all"></i>
+                                                </a>
+                                                <div class="card">
+                                                    <div class="card-header" role="tab" id="headingTwo">
+                                                        <h5 class="mb-0">
+                                                        <a class="collapsed" style="font-size: 16px;" data-toggle="collapse" href="#{{ comment.id_user.username }}{{forloop.counter}}{{forloop.counter}}" aria-expanded="false" aria-controls="collapseTwo">
+                                                            Показати коментарі <i class="far fa-comment-dots"></i>
                                                         </a>
-                                                        <div class="card">
-                                                            <div class="card-header" role="tab" id="headingTwo">
-                                                                <h5 class="mb-0">
-                                                                <a class="collapsed" style="font-size: 16px;" data-toggle="collapse" href="#{{ comment.id_user.username }}{{forloop.counter}}{{forloop.counter}}" aria-expanded="false" aria-controls="collapseTwo">
-                                                                    Показати коментарі <i class="far fa-comment-dots"></i>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="{{ comment.id_user.username }}{{forloop.counter}}{{forloop.counter}}" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                        <div class="card-body">
+                                                            
+                                                            <div class="media row mt-3">
+                                                                <a class="d-flex col-md-2 pr-3" href="#!">
+                                                                    <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
                                                                 </a>
-                                                                </h5>
-                                                            </div>
-                                                            <div id="{{ comment.id_user.username }}{{forloop.counter}}{{forloop.counter}}" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                                <div class="card-body">
-                                                                    
-                                                                    <div class="media row mt-3">
-                                                                        <a class="d-flex col-md-2 pr-3" href="#!">
-                                                                            <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
-                                                                        </a>
-                                                                        <div class="media-body col-md-10">
-                                                                            <h5 class="mt-0">Media heading</h5>
-                                                                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                                                        </div>
->>>>>>> 272681d7702961f5e24a44442d4934c8df2707e0
-                                                                    </div>
+                                                                <div class="media-body col-md-10">
+                                                                    <h5 class="mt-0">Media heading</h5>
+                                                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
                                                                 </div>
                                                             </div>
                                                         </div>
-<<<<<<< HEAD
                                                     </div>
-                                                    
-                                                </p>
-                                               
-                                                <div class="collapse" id="{{ comment.id_user.username }}{{forloop.counter}}">
-                                                    <div class="card card-body">
-                                                        <form id="formReview" action="{% if user_display %} {% url 'news:article_comments' news.id user.id %} {% else %} {% url 'news:article_comments' news.id 13 %} {% endif %}" method="POST">
-                                                            {% csrf_token %}
-                                                            <input type="hidden" name="parent" id="contactparent" value="{{ comment.id_user_id }}" >
-                                                            
-                                                            <textarea name="comment" id="comment_reply{{forloop.counter}}" class="form-control" rows="3" required></textarea>
-                                                            <input class="btn btn-primary form-control mt-2" type="submit" value="відповісти">
-                                                        </form>
-                                                    </div>
+                                                </div>
+                                            </p>
+                                            <div class="collapse" id="{{ comment.id_user.username }}{{forloop.counter}}">
+                                                <div class="card card-body">
+                                                    <form id="formReview" action="{% if user_display %} {% url 'news:article_comments' news.id user.id %} {% else %} {% url 'news:article_comments' news.id 13 %} {% endif %}" method="POST">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="parent" id="contactparent" value="{{ comment.id_user_id }}" >
+                                                        
+                                                        <textarea name="comment" id="comment_reply{{forloop.counter}}" class="form-control" rows="3" required></textarea>
+                                                        <input class="btn btn-primary form-control mt-2" type="submit" value="відповісти">
+                                                    </form>
                                                 </div>
                                             </div>
-                                        </div>  
-=======
-                                                        
-                                                    </p>
-                                                   
-                                                    <div class="collapse" id="{{ comment.id_user.username }}{{forloop.counter}}">
-                                                        <div class="card card-body">
-                                                            <form id="formReview" action="{% if user_display %} {% url 'news:article_comments' news.id user.id %} {% else %} {% url 'news:article_comments' news.id 13 %} {% endif %}" method="POST">
-                                                                {% csrf_token %}
-                                                                <input type="hidden" name="parent" id="contactparent" value="{{ comment.id_user_id }}" >
-                                                                
-                                                                <textarea name="comment" id="comment_reply{{forloop.counter}}" class="form-control" rows="3" required></textarea>
-                                                                <input class="btn btn-primary form-control mt-2" type="submit" value="відповісти">
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> 
-                                      
->>>>>>> 272681d7702961f5e24a44442d4934c8df2707e0
-                                        
-                                    {% endfor %}
+                                        </div>
+                                    </div> 
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -188,17 +146,52 @@
             </div>
         </div>
         </div>
-       
+       <div class="test">
+asdsadasd
+       </div>
         
     </div>
-    <script>
-        function addReview( name, forloop_counter){
-           
-            document.getElementById('comment_reply'+forloop_counter).innerText = `${name}, `
-        }
-    </script>
+    
 
 {% endblock  %}
     
-{% block js %} {% endblock %}
+{% block js %}
+<script>
+    const formID = 'form#formReview';
+    
+    
+    // console.log({ news });
+    $(formID).on('submit', (e) => {
+        e.preventDefault();
+        
+        
+        $.ajax({
+            
+            url: '/news/news_detail/comment/{{news.id}}/{{user.id}}/', // /news/add_review/
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                comment: $(formID + ' #comment').val()
+            },
+            success: function (data) {
+                // var order_data = response.order_data;
+                console.log(data)
+                $(formID + ' #comment').val('');
+            
+                $('.card-body').append(
+                    
+                   
+                );
+            }
+        })
+        
+    })
+
+    function addReview( name, forloop_counter){
+       
+        document.getElementById('comment_reply'+forloop_counter).innerText = `${name}, `
+    }
+</script>
+
+{% endblock %}
     

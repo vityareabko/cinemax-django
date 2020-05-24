@@ -215,7 +215,7 @@ class MovieListComments(View):
         
         
         comm = request.POST['comment']
-        print(comm)
+        
         Comments(comment = comm, id_film_id = pk_movie, id_user_id = pk_user ).save()
         # print('fffff', form.fields['comment'])
    
