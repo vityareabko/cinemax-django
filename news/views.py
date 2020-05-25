@@ -93,13 +93,17 @@ class NewsDetail(View):
         reply_comments = ArticleComment.objects.order_by('-id').filter(id_parent_id = not None)
         # print(len(comments.count))
         quantity = len(comments)
+
+        lasted_id = int(ParseMovieInfo.objects.latest('id').id) + 1
+        print(lasted_id)
         
         context = {
             'news': news,
             'news_list': news_list,
             'comments': comments,
             'reply_comments': reply_comments,
-            'quantity': quantity
+            'quantity': quantity,
+            'lasted_id': lasted_id,
         }
         return render(request, 'news_template/news_detail.html', context)
 

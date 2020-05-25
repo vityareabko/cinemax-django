@@ -83,12 +83,15 @@
                             <h5 class="mb-0">
                                 <a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     коментарi
-                                </a>
+                                </a> 
                             </h5>
                         </div>
                         <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-                            <div class="card-body">
+                            <div class="card-body_comment">
+                                
                                 {% for comment in comments %}
+                                    
+                                   
                                     <div class="row d-flex my-3" >
                                         <div class="col-md-2">
                                             <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
@@ -96,20 +99,19 @@
                                         <div class="col-md-10 comment">
                                             <strong>{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}</strong> <br>
                                             <p>{{ comment.comment }}</p>
-                                            
                                             <p>
-                                                <a class="" data-toggle="collapse" href="#{{ comment.id_user.username }}{{forloop.counter}}" aria-expanded="false" aria-controls="collapseExample" onclick="addReview('{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}', '{{forloop.counter}}')">
+                                                <a class="" data-toggle="collapse" href="#{{ comment.id_article_id }}{{ comment.id }}{{ comment.id_user.username }}" aria-expanded="false" aria-controls="collapseExample" onclick="addReview('{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}', '{{ comment.id }}')">
                                                     відповісти <i class="fas fa-reply-all"></i>
                                                 </a>
                                                 <div class="card">
                                                     <div class="card-header" role="tab" id="headingTwo">
                                                         <h5 class="mb-0">
-                                                        <a class="collapsed" style="font-size: 16px;" data-toggle="collapse" href="#{{ comment.id_user.username }}{{forloop.counter}}{{forloop.counter}}" aria-expanded="false" aria-controls="collapseTwo">
+                                                        <a class="collapsed" style="font-size: 16px;" data-toggle="collapse" href="#{{ comment.id_article_id }}{{ comment.id }}" aria-expanded="false" aria-controls="collapseTwo">
                                                             Показати коментарі <i class="far fa-comment-dots"></i>
                                                         </a>
                                                         </h5>
                                                     </div>
-                                                    <div id="{{ comment.id_user.username }}{{forloop.counter}}{{forloop.counter}}" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                    <div id="{{ comment.id_article_id }}{{ comment.id }}" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
                                                         <div class="card-body">
                                                             
                                                             <div class="media row mt-3">
@@ -125,19 +127,21 @@
                                                     </div>
                                                 </div>
                                             </p>
-                                            <div class="collapse" id="{{ comment.id_user.username }}{{forloop.counter}}">
+                                            <div class="collapse" id="{{ comment.id_article_id }}{{ comment.id }}{{ comment.id_user.username }}">
                                                 <div class="card card-body">
                                                     <form id="formReview" action="{% if user_display %} {% url 'news:article_comments' news.id user.id %} {% else %} {% url 'news:article_comments' news.id 13 %} {% endif %}" method="POST">
                                                         {% csrf_token %}
                                                         <input type="hidden" name="parent" id="contactparent" value="{{ comment.id_user_id }}" >
                                                         
-                                                        <textarea name="comment" id="comment_reply{{forloop.counter}}" class="form-control" rows="3" required></textarea>
+                                                        <textarea name="comment" id="comment_reply{{ comment.id }}" class="form-control" rows="3" required></textarea>
                                                         <input class="btn btn-primary form-control mt-2" type="submit" value="відповісти">
                                                     </form>
                                                 </div>
                                             </div>
+                                            
                                         </div>
                                     </div> 
+                                    
                                 {% endfor %}
                             </div>
                         </div>
@@ -167,7 +171,7 @@ asdsadasd
         
         $.ajax({
             
-            url: '/news/news_detail/comment/{{news.id}}/{{user.id}}/', // /news/add_review/
+            url: '/news/news_detail/comment/{{news.id}}/{% if user.is_anonymous %}13{% else %}{{ user.id }}{% endif %}/', // /news/add_review/
             type: 'POST',
             dataType: 'json',
             data: {
@@ -177,9 +181,59 @@ asdsadasd
                 // var order_data = response.order_data;
                 console.log(data)
                 $(formID + ' #comment').val('');
-            
-                $('.card-body').append(
-                    
+                
+                $('.card-body_comment').prepend(
+                   `
+                   <div class="row d-flex my-3" >
+                        <div class="col-md-2">
+                            <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
+                        </div>
+                        <div class="col-md-10 comment">
+                            <strong>{% if user.is_anonymous %}Гiсть{% else %}{% if comment.id_user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}{% endif %}</strong> <br>
+                            <p>` +data['comment']+ `</p>
+                            <p>
+                                <a class="" data-toggle="collapse" href="#{{ news.id }}{{ lasted_id }}{% if user.is_anonymous %}guest{% else %}{{ user.username }}{% endif %}" aria-expanded="false" aria-controls="collapseExample" onclick="addReview('{% if user.is_anonymous %}Гiсть{% else %}{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}{% endif %}', '{{ lasted_id }}')">
+                                    відповісти <i class="fas fa-reply-all"></i>
+                                </a>
+                                <div class="card">
+                                    <div class="card-header" role="tab" id="headingTwo">
+                                        <h5 class="mb-0">
+                                        <a class="collapsed" style="font-size: 16px;" data-toggle="collapse" href="#{{ news.id }}{{ lasted_id }}" aria-expanded="false" aria-controls="collapseTwo">
+                                            Показати коментарі <i class="far fa-comment-dots"></i>
+                                        </a>
+                                        </h5>
+                                    </div>
+                                    <div id="{{ news.id }}{{ lasted_id }}" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                        <div class="card-body">
+                                            
+                                            <div class="media row mt-3">
+                                                <a class="d-flex col-md-2 pr-3" href="#!">
+                                                    <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
+                                                </a>
+                                                <div class="media-body col-md-10">
+                                                    <h5 class="mt-0">Media heading</h5>
+                                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p>
+                            <div class="collapse" id="{{ news.id }}{{ lasted_id }}{% if user.is_anonymous %}guest{% else %}{{ user.username }}{% endif %}">
+                                <div class="card card-body">
+                                    <form id="formReview" action="{% if user_display %} {% url 'news:article_comments' news.id user.id %} {% else %} {% url 'news:article_comments' news.id 13 %} {% endif %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="parent" id="contactparent" value="{{ comment.id_user_id }}" >
+                                        
+                                        <textarea name="comment" id="comment_reply{{ lasted_id }}" class="form-control" rows="3" required></textarea>
+                                        <input class="btn btn-primary form-control mt-2" type="submit" value="відповісти">
+                                    </form>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div> 
+                    `
                    
                 );
             }
