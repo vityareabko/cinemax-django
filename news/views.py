@@ -95,7 +95,7 @@ class NewsDetail(View):
         quantity = len(comments)
 
         lasted_id = int(ParseMovieInfo.objects.latest('id').id) + 1
-        print(lasted_id)
+      
         
         context = {
             'news': news,

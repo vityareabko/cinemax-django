@@ -163,7 +163,7 @@ asdsadasd
 <script>
     const formID = 'form#formReview';
     
-    
+    var counter = Number({{ lasted_id }});
     // console.log({ news });
     $(formID).on('submit', (e) => {
         e.preventDefault();
@@ -192,18 +192,18 @@ asdsadasd
                             <strong>{% if user.is_anonymous %}Гiсть{% else %}{% if comment.id_user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}{% endif %}</strong> <br>
                             <p>` +data['comment']+ `</p>
                             <p>
-                                <a class="" data-toggle="collapse" href="#{{ news.id }}{{ lasted_id }}{% if user.is_anonymous %}guest{% else %}{{ user.username }}{% endif %}" aria-expanded="false" aria-controls="collapseExample" onclick="addReview('{% if user.is_anonymous %}Гiсть{% else %}{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}{% endif %}', '{{ lasted_id }}')">
+                                <a class="" data-toggle="collapse" href="#{{ news.id }}` +counter+ `{% if user.is_anonymous %}guest{% else %}{{ user.username }}{% endif %}" aria-expanded="false" aria-controls="collapseExample" onclick="addReview('{% if user.is_anonymous %}Гiсть{% else %}{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}{% endif %}', '`+counter+`')">
                                     відповісти <i class="fas fa-reply-all"></i>
                                 </a>
                                 <div class="card">
                                     <div class="card-header" role="tab" id="headingTwo">
                                         <h5 class="mb-0">
-                                        <a class="collapsed" style="font-size: 16px;" data-toggle="collapse" href="#{{ news.id }}{{ lasted_id }}" aria-expanded="false" aria-controls="collapseTwo">
+                                        <a class="collapsed" style="font-size: 16px;" data-toggle="collapse" href="#{{ news.id }}` +counter+ `" aria-expanded="false" aria-controls="collapseTwo">
                                             Показати коментарі <i class="far fa-comment-dots"></i>
                                         </a>
                                         </h5>
                                     </div>
-                                    <div id="{{ news.id }}{{ lasted_id }}" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                    <div id="{{ news.id }}` +counter+ `" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
                                         <div class="card-body">
                                             
                                             <div class="media row mt-3">
@@ -219,13 +219,13 @@ asdsadasd
                                     </div>
                                 </div>
                             </p>
-                            <div class="collapse" id="{{ news.id }}{{ lasted_id }}{% if user.is_anonymous %}guest{% else %}{{ user.username }}{% endif %}">
+                            <div class="collapse" id="{{ news.id }}` +counter+ `{% if user.is_anonymous %}guest{% else %}{{ user.username }}{% endif %}">
                                 <div class="card card-body">
                                     <form id="formReview" action="{% if user_display %} {% url 'news:article_comments' news.id user.id %} {% else %} {% url 'news:article_comments' news.id 13 %} {% endif %}" method="POST">
                                         {% csrf_token %}
                                         <input type="hidden" name="parent" id="contactparent" value="{{ comment.id_user_id }}" >
                                         
-                                        <textarea name="comment" id="comment_reply{{ lasted_id }}" class="form-control" rows="3" required></textarea>
+                                        <textarea name="comment" id="comment_reply`+counter+`" class="form-control" rows="3" required></textarea>
                                         <input class="btn btn-primary form-control mt-2" type="submit" value="відповісти">
                                     </form>
                                 </div>
@@ -236,6 +236,7 @@ asdsadasd
                     `
                    
                 );
+                counter += 1;
             }
         })
         
