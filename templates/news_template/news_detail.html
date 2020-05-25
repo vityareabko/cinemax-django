@@ -113,23 +113,28 @@
                                                     </div>
                                                     <div id="{{ comment.id_article_id }}{{ comment.id }}" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
                                                         <div class="card-body">
-                                                            
-                                                            <div class="media row mt-3">
-                                                                <a class="d-flex col-md-2 pr-3" href="#!">
-                                                                    <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
-                                                                </a>
-                                                                <div class="media-body col-md-10">
-                                                                    <h5 class="mt-0">Media heading</h5>
-                                                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                                                </div>
-                                                            </div>
+                                                            {% for com_r in reply_comments %}
+                                                        
+                                                              
+                                                       
+                                                                    <div class="media row mt-3">
+                                                                        <a class="d-flex col-md-2 pr-3" href="#!">
+                                                                            <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
+                                                                        </a>
+                                                                        <div class="media-body col-md-10">
+                                                                            <h5 class="mt-0">{{ comment.id_user.username }}</h5>
+                                                                            {{ comment.comment }}
+                                                                        </div>
+                                                                    </div>
+                                                    
+                                                            {% endfor %}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </p>
                                             <div class="collapse" id="{{ comment.id_article_id }}{{ comment.id }}{{ comment.id_user.username }}">
                                                 <div class="card card-body">
-                                                    <form id="formReview" action="{% if user_display %} {% url 'news:article_comments' news.id user.id %} {% else %} {% url 'news:article_comments' news.id 13 %} {% endif %}" method="POST">
+                                                    <form id="formReview_reply" action="{% if user_display %} {% url 'news:article_comments' news.id user.id %} {% else %} {% url 'news:article_comments' news.id 13 %} {% endif %}" method="POST">
                                                         {% csrf_token %}
                                                         <input type="hidden" name="parent" id="contactparent" value="{{ comment.id_user_id }}" >
                                                         
@@ -162,9 +167,17 @@ asdsadasd
 {% block js %}
 <script>
     const formID = 'form#formReview';
-    
+    const formID_reply = 'form#formReview_reply';
     var counter = Number({{ lasted_id }});
     // console.log({ news });
+    form_id_reply = 0
+    function addReview( name, forloop_counter){
+        form_id_reply = forloop_counter;
+        // console.log(form_id_reply)
+        document.getElementById('comment_reply'+forloop_counter).innerText = `${name}, `
+
+    }
+    console.log("dsSD",form_id_reply);
     $(formID).on('submit', (e) => {
         e.preventDefault();
         
@@ -175,7 +188,7 @@ asdsadasd
             type: 'POST',
             dataType: 'json',
             data: {
-                comment: $(formID + ' #comment').val()
+                comment: $(formID + ' #comment').val(),
             },
             success: function (data) {
                 // var order_data = response.order_data;
@@ -189,7 +202,7 @@ asdsadasd
                             <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
                         </div>
                         <div class="col-md-10 comment">
-                            <strong>{% if user.is_anonymous %}Гiсть{% else %}{% if comment.id_user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}{% endif %}</strong> <br>
+                            <strong>{% if user.is_anonymous %}Гiсть{% else %}{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}{% endif %}</strong> <br>
                             <p>` +data['comment']+ `</p>
                             <p>
                                 <a class="" data-toggle="collapse" href="#{{ news.id }}` +counter+ `{% if user.is_anonymous %}guest{% else %}{{ user.username }}{% endif %}" aria-expanded="false" aria-controls="collapseExample" onclick="addReview('{% if user.is_anonymous %}Гiсть{% else %}{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}{% endif %}', '`+counter+`')">
@@ -221,7 +234,7 @@ asdsadasd
                             </p>
                             <div class="collapse" id="{{ news.id }}` +counter+ `{% if user.is_anonymous %}guest{% else %}{{ user.username }}{% endif %}">
                                 <div class="card card-body">
-                                    <form id="formReview" action="{% if user_display %} {% url 'news:article_comments' news.id user.id %} {% else %} {% url 'news:article_comments' news.id 13 %} {% endif %}" method="POST">
+                                    <form id="formReview" action="{% if user.is_anonymous %}  {% url 'news:article_comments' news.id 13 %} {% else %} {% url 'news:article_comments' news.id user.id %}  {% endif %}" method="POST">
                                         {% csrf_token %}
                                         <input type="hidden" name="parent" id="contactparent" value="{{ comment.id_user_id }}" >
                                         
@@ -241,11 +254,27 @@ asdsadasd
         })
         
     })
+  
+    $(formID_reply).on('submit', (e) => {
+        e.preventDefault();
+        $.ajax({
+            url: '/news/news_detail/comment/{{news.id}}/{% if user.is_anonymous %}13{% else %}{{ user.id }}{% endif %}/', // /news/add_review/
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                dd: 'dd',
+                comment: $(formID_reply + ` #comment_reply`+form_id_reply).val(),
+                parent: $(formID_reply + ` input[name=parent]`).val(),
+            },
+            success: function (data) {
+                // тут мы должны добавить тег с коментом которые написали ;)
+                console.log('success');
+                console.log(data);
+            }
+        })
+    })
 
-    function addReview( name, forloop_counter){
-       
-        document.getElementById('comment_reply'+forloop_counter).innerText = `${name}, `
-    }
+    
 </script>
 
 {% endblock %}

@@ -149,11 +149,18 @@ class CommentView(View):
         # ArticleComment(comment = comment, id_user_id = pk_user, id_article_id = pk_article).save()
         slug_url_article = ParseMovieInfo.objects.get(id=pk_article).url
         
+     
         if request.is_ajax():
             
-            message = request.POST.get('comment')
+            message = request.POST.get('comment') #
+            message_r = request.POST.get('comment')
+            parent = request.POST.get('parent')
+            print(parent)
             data = {
-                'comment': message
+                'comment': message,
+                'comment_r': message_r,
+                'parent': parent
+                
             }
             form = ArticleCommentForm(request.POST)
             if form.is_valid():
