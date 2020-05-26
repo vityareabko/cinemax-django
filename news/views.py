@@ -89,21 +89,19 @@ class NewsDetail(View):
     def get(self, request, url_news):
         news = ParseMovieInfo.objects.get(url=url_news)
         news_list = ParseMovieInfo.objects.order_by('-id').all()
-        comments = ArticleComment.objects.order_by('-id').filter(id_article_id = news.id, id_parent_id = None)
-        reply_comments = ArticleComment.objects.order_by('-id').filter(id_parent_id = not None)
+        comments = ArticleComment.objects.order_by('-id').filter(id_article_id = news.id)
         # print(len(comments.count))
         quantity = len(comments)
 
-        lasted_id = int(ParseMovieInfo.objects.latest('id').id) + 1
+
       
         
         context = {
             'news': news,
             'news_list': news_list,
             'comments': comments,
-            'reply_comments': reply_comments,
             'quantity': quantity,
-            'lasted_id': lasted_id,
+
         }
         return render(request, 'news_template/news_detail.html', context)
 
@@ -153,12 +151,13 @@ class CommentView(View):
         if request.is_ajax():
             
             message = request.POST.get('comment') #
-            message_r = request.POST.get('comment')
+            
             parent = request.POST.get('parent')
+            id_user_reply = request.POST.get('id_user_reply')
             print(parent)
             data = {
                 'comment': message,
-                'comment_r': message_r,
+                'id_user_reply': id_user_reply,
                 'parent': parent
                 
             }
@@ -170,6 +169,8 @@ class CommentView(View):
                     form.id_parent_id = int(request.POST.get("parent"))
                 form.id_article_id = pk_article
                 form.id_user_id = pk_user
+                if request.POST.get('id_user_reply', None):
+                    form.id_article_reply_comment = id_user_reply
                 form.save()
         
                 print('###'+message)
