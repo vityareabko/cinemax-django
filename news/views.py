@@ -91,10 +91,7 @@ class NewsDetail(View):
         news_list = ParseMovieInfo.objects.order_by('-id').all()
         comments = ArticleComment.objects.order_by('-id').filter(id_article_id = news.id)
         # print(len(comments.count))
-        quantity = len(comments)
-
-
-      
+        quantity = len(comments)      
         
         context = {
             'news': news,
