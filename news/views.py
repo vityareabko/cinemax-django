@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.base import View
 
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 from .models import ParseMovieInfo, ArticleComment
@@ -152,15 +152,13 @@ class CommentView(View):
             parent = request.POST.get('parent')
             id_user_reply = request.POST.get('id_user_reply')
             print(parent)
-            data = {
-                'comment': message,
-                'id_user_reply': id_user_reply,
-                'parent': parent
-                
-            }
+            
             form = ArticleCommentForm(request.POST)
+            
+            # ArticleComment(comment = comment, id_user_id = pk_user, id_article_id = pk_article).save()
+
             if form.is_valid():
-    
+                
                 form = form.save(commit=False)
                 if request.POST.get("parent", None):
                     form.id_parent_id = int(request.POST.get("parent"))
@@ -169,8 +167,42 @@ class CommentView(View):
                 if request.POST.get('id_user_reply', None):
                     form.id_article_reply_comment = id_user_reply
                 form.save()
+                
+                id_comment = ArticleComment.objects.order_by('-id').filter(comment=message, id_user_id = pk_user)
+                data = {
+                    'id_comment': int(id_comment[0].id),
+                    'comment': message,
+                    'id_user_reply': id_user_reply,
+                    'parent': parent,
+                    
+                }
+                
+                
         
                 print('###'+message)
                 return JsonResponse(data)
+                
 
         return HttpResponseRedirect( reverse('news:news_detail', args=(slug_url_article,)))
+
+# class DeleteReview(View):
+
+#     def get(self, request, pk_review, pk_article):
+#         slug_url_article = ParseMovieInfo.objects.get(id=pk_article).url
+
+#         ArticleComment.objects.get(id = pk_review).delete()
+
+#         return HttpResponseRedirect( reverse('news:news_detail', args=(slug_url_article,)))
+
+
+
+
+class Delete_Review(View):
+    def get(self, request):
+        id_review = request.GET.get('id_review', None)
+        ArticleComment.objects.get(id = id_review).delete()
+
+        data = {
+            'deleted': True,
+        }
+        return JsonResponse(data)
