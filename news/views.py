@@ -206,3 +206,17 @@ class Delete_Review(View):
             'deleted': True,
         }
         return JsonResponse(data)
+
+class UpdateReview(View):
+    def post(self, request):
+        message_edited = request.POST.get('review_edited');
+        id_review = request.POST.get('id_review');
+        update_review = ArticleComment.objects.get(id = id_review)
+        update_review.comment = message_edited
+        update_review.save()
+        data = {
+            'id_review': id_review,
+            'review_edited': message_edited,
+        }
+        print(data)
+        return JsonResponse(data)

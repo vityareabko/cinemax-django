@@ -12,5 +12,6 @@ urlpatterns = [
     # path('news_detail/delete_review/<int:pk_review>/<int:pk_article>', news_views.DeleteReview.as_view(), name="delete_review"),
 
     path('delete_review/', news_views.Delete_Review.as_view(), name="ajax_delete"),
+    path('update_review/', news_views.UpdateReview.as_view(), name="update_review"),
     
 ]
