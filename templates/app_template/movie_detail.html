@@ -56,6 +56,11 @@
                 
                     <form action="{% if user_display %} {% url 'app:movie_comment' movie.id user.id %} {% else %} {% url 'app:movie_comment' movie.id 13 %} {% endif %}" method="POST">
                         {% csrf_token %}
+                        <fieldset disabled>
+                            <div class="form-group">
+                                <input type="text" name="name" id="disabledTextInput" class="form-control" placeholder="{{ user.username }}">
+                            </div>
+                        </fieldset>
                         <textarea name="comment" id="comment" class="form-control" rows="3" required></textarea>
                         <input class="btn btn-primary form-control mt-2" type="submit" value="залишити коментарий">
                     </form>
