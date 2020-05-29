@@ -101,9 +101,9 @@
                                                 {% if not user.is_anonymous %}
 
                                                 <div class="d-flex justify-content-between">
-                                                    <div>
-                                                        <a class="text-muted" href="#"><i class="fas fa-heart mr-1"></i></a>
-                                                        <a class="text-muted" href="#"><i class="fas fa-heart-broken mr-1"></i></a>
+                                                    <div class="d-flex">
+                                                        <a id="liked_review" class="text-muted" onclick="like_review(`{{ comment.id }}`, event)" href="#!"><i class="fas fa-thumbs-up {% if user in comment.liked.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0"> {{ comment.liked.all.count }}</p></div>  
+                                                        <a id="dislike_review" class="text-muted" onclick="dislike_review(`{{ comment.id }}`, event)" href="#!"><i class="fas fa-thumbs-down ml-2 {% if user in comment.dislike.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0"> {{ comment.dislike.all.count }}</p></div>
                                                     </div>
                                                     <div class="btn-gtoup dropleft">
                                                         <button class="btn dropdown-toggle" style="background: none;"
@@ -119,9 +119,9 @@
                                                         </div>
                                                 </div>
                                                 {% else %}
-                                                    <div>
-                                                        <a class="text-muted" href="#"><i class="fas fa-heart mr-1"></i></a>
-                                                        <a class="text-muted" href="#"><i class="fas fa-heart-broken mr-1"></i></a>
+                                                    <div class="d-flex">
+                                                        <a id="liked_review" class="text-muted" onclick="like_review(`{{ comment.id }}`, event)" href="#!"><i class="fas fa-thumbs-up {% if user in comment.liked.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0"> {{ comment.liked.all.count }}</p></div>
+                                                        <a id="dislike_review" class="text-muted" onclick="dislike_review(`{{ comment.id }}`, event)" href="#!"><i class="fas fa-thumbs-down ml-2 {% if user in comment.dislike.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0"> {{ comment.dislike.all.count }}</p></div>
                                                     </div>
                                                 {% endif %}
                                                 
@@ -219,9 +219,9 @@
                     {% if not user.is_anonymous %}
 
                     <div class="d-flex justify-content-between">
-                        <div>
-                            <a class="text-muted" href="#"><i class="fas fa-heart mr-1"></i></a>
-                            <a class="text-muted" href="#"><i class="fas fa-heart-broken mr-1"></i></a>
+                        <div class="d-flex">
+                            <a id="liked_review" class="text-muted" onclick="like_review(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-up {% if user in comment.liked.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0">`+data.count_liked+`</p></div>  
+                            <a id="dislike_review" class="text-muted" onclick="dislike_review(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-down ml-2 {% if user in comment.dislike.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0">`+data.count_dislike+`</p></div>
                         </div>
                         <div class="btn-gtoup dropleft">
                             <button class="btn dropdown-toggle" style="background: none;"
@@ -237,9 +237,9 @@
                             </div>
                     </div>
                     {% else %}
-                        <div>
-                            <a class="text-muted" href="#"><i class="fas fa-heart mr-1"></i></a>
-                            <a class="text-muted" href="#"><i class="fas fa-heart-broken mr-1"></i></a>
+                        <div class="d-flex">
+                            <a id="liked_review" class="text-muted" onclick="like_review(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-up {% if user in comment.liked.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0">`+data.count_liked+`</p></div>
+                            <a id="dislike_review" class="text-muted" onclick="dislike_review(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-down ml-2 {% if user in comment.dislike.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0">`+data.count_dislike+`</p></div>
                         </div>
                     {% endif %}
                 </div>
@@ -301,6 +301,57 @@
                 }
             });
         }
+    }
+    function like_review(id_review, e){
+        e.preventDefault();
+        $.ajax({
+            url: '{% url "app:liked_review" %}',
+            data: {
+                'id_article': `{{ news.id }}`,
+                'id_review': id_review 
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log('success like');
+                console.log(data);
+                $('.review-' +data.id_review+ ' .count_dislike_review p').text(data.conut_dislike);
+                $('.review-' +data.id_review+ ' .count_liked_review p').text(data.count_like);
+
+                if (data.user_liked){
+                    $('.review-' +data.id_review+ ' #dislike_review i').removeClass('text-primary');
+                    $('.review-' +data.id_review+ ' #liked_review i').addClass('text-primary');
+                    
+                }else{
+                    $('.review-' +data.id_review+ ' #liked_review i').removeClass('text-primary');
+                }
+                
+            }
+        });
+    }
+    function dislike_review(id_review, e){
+        e.preventDefault();
+        $.ajax({
+            url: '{% url "app:dislike_review" %}',
+            data: {
+                'id_article': `{{ news.id }}`,
+                'id_review': id_review 
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log('success dislike');
+                console.log(data);
+                $('.review-' +data.id_review+ ' .count_dislike_review p').text(data.conut_dislike);
+                $('.review-' +data.id_review+ ' .count_liked_review p').text(data.count_like);
+
+                if (data.user_dislike){
+                    $('.review-' +data.id_review+ ' #liked_review i').removeClass('text-primary');
+                    $('.review-' +data.id_review+ ' #dislike_review i').addClass('text-primary');
+                }else{
+                    $('.review-' +data.id_review+ ' #dislike_review i').removeClass('text-primary')
+                }
+                
+            }
+        });
     }
 </script>
     

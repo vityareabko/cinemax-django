@@ -114,41 +114,41 @@ class Weekday(TimeStampMixin, models.Model):
     def __str__(self):
         return self.weekday
 
-# LIKE_CHOICES = (
-#     ('Like', 'Like'),
-#     ('Unlike', 'Unlike'),
-# )
+LIKE_CHOICES = (
+    ('Like', 'Like'),
+    ('Unlike', 'Unlike'),
+)
 class Comments(TimeStampMixin, models.Model):
     comment = models.TextField()
     id_film = models.ForeignKey(Film, on_delete = models.CASCADE)
     id_user = models.ForeignKey(User, on_delete = models.CASCADE)
 
-    # liked = models.ManyToManyField(User, default = None, blank = True, related_name = 'liked_movie_review')
-    # dislike = models.ManyToManyField(User, default = None, blank = True, related_name = 'dislike_movie_review')
+    liked = models.ManyToManyField(User, default = None, blank = True, related_name = 'liked_movie_review')
+    dislike = models.ManyToManyField(User, default = None, blank = True, related_name = 'dislike_movie_review')
 
-    # @property
-    # def num_likes_review(self):
-    #     return self.liked.all().count()
+    @property
+    def num_likes_review(self):
+        return self.liked.all().count()
 
-    # @property
-    # def num_dislikes_review(self):
-    #     return self.dislike.all().count()
+    @property
+    def num_dislikes_review(self):
+        return self.dislike.all().count()
 
     def __str__(self):
         return self.comment
 
-# class LikeReviewMovie(TimeStampMixin, models.Model):
-#     id_user = models.ForeignKey(User, on_delete = models.CASCADE)
-#     id_review = models.ForeignKey(Comments, on_delete = models.CASCADE)
-#     value = models.CharField(choices=LIKE_CHOICES, default='Like', max_length = 20)
+class LikeReviewMovie(TimeStampMixin, models.Model):
+    id_user = models.ForeignKey(User, on_delete = models.CASCADE)
+    id_review = models.ForeignKey(Comments, on_delete = models.CASCADE)
+    value = models.CharField(choices=LIKE_CHOICES, default='Like', max_length = 20)
 
-#     def __str__(self):
-#         return str(self.id_review)
+    def __str__(self):
+        return str(self.id_review)
         
-# class DislikeReviewMovie(TimeStampMixin, models.Model):
-#     id_user = models.ForeignKey(User, on_delete = models.CASCADE)
-#     id_review = models.ForeignKey(Comments, on_delete = models.CASCADE)
-#     value = models.CharField(choices=LIKE_CHOICES, default='Like', max_length = 20)
+class DislikeReviewMovie(TimeStampMixin, models.Model):
+    id_user = models.ForeignKey(User, on_delete = models.CASCADE)
+    id_review = models.ForeignKey(Comments, on_delete = models.CASCADE)
+    value = models.CharField(choices=LIKE_CHOICES, default='Like', max_length = 20)
 
-#     def __str__(self):
-#         return str(self.id_review)
+    def __str__(self):
+        return str(self.id_review)
