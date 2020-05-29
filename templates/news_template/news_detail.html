@@ -19,8 +19,10 @@
                     <div class="d-flex">
                         
                         {% if not user.is_anonymous %}
-                            <a id="like" class="text-muted" href="#!" onclick="liked_post(event)"><i class="fas fa-thumbs-up"></i></a><div class="ml-2 count_liked "><p class="m-0 p-0"> {{ news.liked.all.count }}</p></div>
-                            <a id="dislike" class="text-muted" href="#!" onclick="dislike_post(event)"><i class="fas fa-thumbs-down ml-2"></i></a><div class="ml-2 count_dislike"><p class="m-0 p-0"> {{ news.dislike.all.count }}</p></div>
+                            
+                            
+                            <a id="like" class="text-muted" href="#!" onclick="liked_post(event)"><i class="fas fa-thumbs-up {% if user in news.liked.all %} text-primary {% endif %} "></i></a><div class="ml-2 count_liked "><p class="m-0 p-0"> {{ news.liked.all.count }}</p></div>
+                            <a id="dislike" class="text-muted" href="#!" onclick="dislike_post(event)"><i class="fas fa-thumbs-down ml-2 {% if user in news.dislike.all %} text-primary {% endif %} "></i></a><div class="ml-2 count_dislike"><p class="m-0 p-0"> {{ news.dislike.all.count }}</p></div>
                         {% endif %}
                     </div>
                     <div class="d-flex">
@@ -353,8 +355,19 @@ function liked_post(e){
             console.log(data);
             $('.count_dislike p').text(data.conut_dislike);
             $('.count_liked p').text(data.count_like);
-
-        }
+            
+            if (data.user_liked){
+                $('#dislike i').removeClass('text-primary');
+                $('#like i').addClass('text-primary');
+            }else{
+                $('#like i').removeClass('text-primary');
+            }
+                
+         
+                // $('#like i').removeClass('text-primary');
+           
+            
+        }   
     });
 }
 
@@ -371,6 +384,13 @@ function dislike_post(e){
             console.log(data);
             $('.count_dislike p').text(data.conut_dislike);
             $('.count_liked p').text(data.count_like);
+
+            if (data.user_dislike){
+                $('#like i').removeClass('text-primary');
+                $('#dislike i').addClass('text-primary');
+            }else{
+                $('#dislike i').removeClass('text-primary');
+            }
         }
     });
 }

@@ -172,6 +172,7 @@ class UpdateReview(View):
 class Liked_Article(View):
     def get(self, request):
         user = request.user
+        
 
         id_article = request.GET.get('id_article')
         article_like_upd = ParseMovieInfo.objects.get(id = id_article)
@@ -185,12 +186,19 @@ class Liked_Article(View):
         else:
             article_like_upd.liked.remove(user)
      
-        print(article_like_upd.liked.all().count())
-        print(article_like_upd.dislike.all().count())
+        # print(article_like_upd.liked.all().count())
+        # print(article_like_upd.dislike.all().count())
+        if user in article_like_upd.liked.all():
+            user_liked = True
+        else:
+            user_liked = False
+
         data={
             'count_like': article_like_upd.liked.all().count(),
             'conut_dislike': article_like_upd.dislike.all().count(),
+            'user_liked': user_liked
         }
+        print(data)
         
         return JsonResponse(data)
 
@@ -215,12 +223,17 @@ class Dislike_Article(View):
             article_dislike_upd.dislike.remove(user)
             # data['not_dislike'] = True # труе потому что мы просто хотим убрать лайк и все
 
-        print(article_dislike_upd.liked.all().count())
-        print(article_dislike_upd.dislike.all().count())
+        if user in article_dislike_upd.dislike.all():
+            user_disliked = True
+        else:
+            user_disliked = False
+
         data={
             'count_like': article_dislike_upd.liked.all().count(),
             'conut_dislike': article_dislike_upd.dislike.all().count(),
+            'user_dislike': user_disliked,
         }
+        print(data)
 
         
         return JsonResponse(data)
