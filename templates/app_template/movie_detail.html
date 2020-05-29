@@ -52,13 +52,12 @@
         <div class="row">
             <div class="col-md-4">
                 {% user_display user as user_display %}
-                
-                
-                    <form action="{% if user_display %} {% url 'app:movie_comment' movie.id user.id %} {% else %} {% url 'app:movie_comment' movie.id 13 %} {% endif %}" method="POST">
+
+                    <form id="formReview" action="" method="POST">
                         {% csrf_token %}
                         <fieldset disabled>
                             <div class="form-group">
-                                <input type="text" name="name" id="disabledTextInput" class="form-control" placeholder="{{ user.username }}">
+                                <input type="text" name="name" id="disabledTextInput" class="form-control" placeholder="{% if not user.is_anonymous %}{{ user.username }}{% else %}Гiсть{% endif %}">
                             </div>
                         </fieldset>
                         <textarea name="comment" id="comment" class="form-control" rows="3" required></textarea>
@@ -90,18 +89,43 @@
                                 </h5>
                             </div>
                             <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-                                <div class="card-body">
+                                <div class="card-body_comment">
                                     {% for comment in comments %}
-                                        <div class="row d-flex my-3" >
+                                        <div class="row d-flex p-3 my-3 review-{{comment.id}}" >
                                             <div class="col-md-2">
                                                 <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
                                             </div>
                                             <div class="col-md-10 comment">
-                                                <strong>{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}</strong>
-                                                <!-- <a href="#" type="button" class="close" aria-label="Close"> 
-                                                    <span aria-hidden="true">&times;</span>
-                                                </a><br> -->
-                                                <p>{{ comment.comment }}</p>
+                                                <strong>{% if user.is_anonymous %}Гiсть{% else %}{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}{% endif %}</strong> <br>
+                                                <p id="review_for_page">{{ comment.comment }}</p>
+                                                {% if not user.is_anonymous %}
+
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <a class="text-muted" href="#"><i class="fas fa-heart mr-1"></i></a>
+                                                        <a class="text-muted" href="#"><i class="fas fa-heart-broken mr-1"></i></a>
+                                                    </div>
+                                                    <div class="btn-gtoup dropleft">
+                                                        <button class="btn dropdown-toggle" style="background: none;"
+                                                                type="button" id="dropdownMenu1" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false">
+                                                            <i class="fas fa-ellipsis-h"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenu1" >
+                                                            
+                                                            <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review" onclick="puttext_review_and_put_id_review('{{comment.comment}}', `{{comment.id}}`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
+                                                            <a class="dropdown-item text-danger" href="#" onClick="deleteReview(`{{ comment.id }}`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
+                                                        </div>
+                                                        </div>
+                                                </div>
+                                                {% else %}
+                                                    <div>
+                                                        <a class="text-muted" href="#"><i class="fas fa-heart mr-1"></i></a>
+                                                        <a class="text-muted" href="#"><i class="fas fa-heart-broken mr-1"></i></a>
+                                                    </div>
+                                                {% endif %}
+                                                
+
                                             </div>
                                             
                                             
@@ -125,10 +149,159 @@
             </div> 
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="edit_review" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Редагування</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="EditReview_form" action="" method="POST">
+                    <input type="hidden" id="id_review" value="">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <textarea name="edit_review" id="edit_review" class="form-control" rows="5" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Відміна</button>
+                        <button type="submit" class="btn btn-primary">Зберегти</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     
 {% endblock %}
 
 {% block js %} 
+<script> 
+
+    const formID = 'form#formReview';
+    const formID_edit = 'form#EditReview_form';
+
+    $(formID).on('submit', (e) => {
+        e.preventDefault();
+        $.ajax({
+            
+            url: "{% if not user.is_anonymous %}{% url 'app:movie_comment' movie.id user.id %}{% else %}{% url 'app:movie_comment' movie.id 13 %}{% endif %}", // /news/add_review/
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                comment: $(formID + ' #comment').val(),
+            },
+            success: function (data) {
+                // var order_data = response.order_data;
+                console.log(data)
+                CreateReview(data);
+                $(formID + ' #comment').val('');
+                
+                
+            }
+        });
+        
+    });
     
+    function CreateReview(data){
+        
+        $('.card-body_comment').prepend(
+            `
+            <div class="row d-flex p-3 my-3 review-`+data.id_comment+`" >
+                <div class="col-md-2">
+                    <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
+                </div>
+                <div class="col-md-10 comment">
+                    <strong>{% if user.is_anonymous %}Гiсть{% else %}{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}{% endif %}</strong> <br>
+                    <p id="review_for_page">` +data['comment']+ `</p>
+                    {% if not user.is_anonymous %}
+
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <a class="text-muted" href="#"><i class="fas fa-heart mr-1"></i></a>
+                            <a class="text-muted" href="#"><i class="fas fa-heart-broken mr-1"></i></a>
+                        </div>
+                        <div class="btn-gtoup dropleft">
+                            <button class="btn dropdown-toggle" style="background: none;"
+                                    type="button" id="dropdownMenu1" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu1" >
+                                
+                                <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review" onclick="puttext_review_and_put_id_review('`+data.comment+`', `+data.id_comment+`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
+                                <a class="dropdown-item text-danger" href="#" onClick="deleteReview(`+data.id_comment+`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
+                            </div>
+                            </div>
+                    </div>
+                    {% else %}
+                        <div>
+                            <a class="text-muted" href="#"><i class="fas fa-heart mr-1"></i></a>
+                            <a class="text-muted" href="#"><i class="fas fa-heart-broken mr-1"></i></a>
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div> 
+            `
+        );
+        console.log('success added')
+    }
+    
+    $(formID_edit).on('submit', (e) => {
+        e.preventDefault();
+        $.ajax({
+            url: "{% url 'app:update_review' %}",
+            type: 'POST',
+            datatype:'json',
+            data: {
+                'id_review': $(formID_edit + ' #id_review').val(),
+                'review_edited': $(formID_edit + ' #edit_review').val(),
+            },
+            success: function(data){
+                
+                update_review_in_this_page(data);
+                $(formID_edit).trigger("reset");
+                $('#edit_review').modal('hide');
+                console.log('success edited');
+            }
+        });
+    });
+
+     function update_review_in_this_page(data){
+        var value = data.review_edited
+        $('.review-'+data.id_review+' #review_for_page').text(value);
+        
+    }
+
+    function puttext_review_and_put_id_review(txt_review, id_review){
+        $(formID_edit + ' #edit_review').val(txt_review);
+        $(formID_edit + ' #id_review').val(id_review);
+    }
+
+    function deleteReview(id_review, e) {
+        var action = confirm("Ви впевнені що хочете видалити коментар?");
+        e.preventDefault();
+        if (action != false) {
+            $.ajax({
+                url: '{% url "app:ajax_delete" %}',
+                data: {
+                    'id_review': id_review,
+                },
+                dataType: 'json',
+                success: function (data) {
+                    
+                    if (data.deleted) {
+                        
+                        $(".card-body_comment .review-" + id_review).remove();
+                        
+                    }
+                }
+            });
+        }
+    }
+</script>
     
 {% endblock %}

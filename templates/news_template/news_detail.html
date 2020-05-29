@@ -206,135 +206,139 @@
 {% endblock  %}
     
 {% block js %}
-<script>
-    const formID = 'form#formReview';
-    const formID_edit = 'form#EditReview_form'
 
-    $(formID).on('submit', (e) => {
-        e.preventDefault();
-        $.ajax({
+<script> 
+        
+const formID = 'form#formReview';
+const formID_edit = 'form#EditReview_form';
+
+$(formID).on('submit', (e) => {
+    e.preventDefault();
+    $.ajax({
+        
+        url: "{% if not user.is_anonymous %}{% url 'news:add_review' news.id user.id %}{% else %}{% url 'news:add_review' news.id 13 %}{% endif %}", // /news/add_review/
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            comment: $(formID + ' #comment').val(),
+        },
+        success: function (data) {
+            // var order_data = response.order_data;
+            console.log(data)
+            CreateReview(data);
+            $(formID + ' #comment').val('');
             
-            url: '/news/news_detail/comment/{{news.id}}/{% if user.is_anonymous %}13{% else %}{{ user.id }}{% endif %}/', // /news/add_review/
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                comment: $(formID + ' #comment').val(),
-            },
-            success: function (data) {
-                // var order_data = response.order_data;
-                console.log(data)
-                CreateReview(data);
-                $(formID + ' #comment').val('');
-                
-                
-            }
-        });
-        
-    });
-    function CreateReview(data){
-        
-        $('.card-body_comment').prepend(
-            `
-            <div class="row d-flex p-3 my-3 review-`+data.id_comment+`" >
-                <div class="col-md-2">
-                    <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
-                </div>
-                <div class="col-md-10 comment">
-                    <strong>{% if user.is_anonymous %}Гiсть{% else %}{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}{% endif %}</strong> <br>
-                    <p id="review_for_page">` +data['comment']+ `</p>
-                    {% if not user.is_anonymous %}
-
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <a class="text-muted" href="#"><i class="fas fa-heart mr-1"></i></a>
-                            <a class="text-muted" href="#"><i class="fas fa-heart-broken mr-1"></i></a>
-                        </div>
-                        <div class="btn-gtoup dropleft">
-                            <button class="btn dropdown-toggle" style="background: none;"
-                                    type="button" id="dropdownMenu1" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-h"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenu1" >
-                                
-                                <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review" onclick="puttext_review_and_put_id_review('`+data.comment+`', `+data.id_comment+`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
-                                <a class="dropdown-item text-danger" href="#" onClick="deleteReview(`+data.id_comment+`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
-                            </div>
-                            </div>
-                    </div>
-                    {% else %}
-                        <div>
-                            <a class="text-muted" href="#"><i class="fas fa-heart mr-1"></i></a>
-                            <a class="text-muted" href="#"><i class="fas fa-heart-broken mr-1"></i></a>
-                        </div>
-                    {% endif %}
-                </div>
-
-            </div> 
-            `
-        );
-        console.log('success added')
-    }
-    $(formID_edit).on('submit', (e) => {
-        e.preventDefault();
-        $.ajax({
-            url: "{% url 'news:update_review' %}",
-            type: 'POST',
-            datatype:'json',
-            data: {
-                'id_review': $(formID_edit + ' #id_review').val(),
-                'review_edited': $(formID_edit + ' #edit_review').val(),
-            },
-            success: function(data){
-                
-                update_review_in_this_page(data);
-                $(formID_edit).trigger("reset");
-                $('#edit_review').modal('hide');
-                console.log('success edited');
-            }
-        });
-    });
-
-    
-
-
-
-
-    // Delete Django Ajax Call
-    function deleteReview(id_review, e) {
-        var action = confirm("Are you sure you want to delete this user?");
-        e.preventDefault();
-        if (action != false) {
-            $.ajax({
-                url: '{% url "news:ajax_delete" %}',
-                data: {
-                    'id_review': id_review,
-                },
-                dataType: 'json',
-                success: function (data) {
-                    
-                    if (data.deleted) {
-                        
-                        $(".card-body_comment .review-" + id_review).remove();
-                        
-                    }
-                }
-            });
+            
         }
-    }
-
-    function update_review_in_this_page(data){
-        var value = data.review_edited
-        $('.review-'+data.id_review+' #review_for_page').text(value);
-        
-    }
-
-    ///////////////////////////
-    function puttext_review_and_put_id_review(txt_review, id_review){
-        $(formID_edit + ' #edit_review').val(txt_review);
-        $(formID_edit + ' #id_review').val(id_review);
-    }
+    });
     
+});
+function CreateReview(data){
+    
+    $('.card-body_comment').prepend(
+        `
+        <div class="row d-flex p-3 my-3 review-`+data.id_comment+`" >
+            <div class="col-md-2">
+                <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
+            </div>
+            <div class="col-md-10 comment">
+                <strong>{% if user.is_anonymous %}Гiсть{% else %}{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}{% endif %}</strong> <br>
+                <p id="review_for_page">` +data['comment']+ `</p>
+                {% if not user.is_anonymous %}
+
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <a class="text-muted" href="#"><i class="fas fa-heart mr-1"></i></a>
+                        <a class="text-muted" href="#"><i class="fas fa-heart-broken mr-1"></i></a>
+                    </div>
+                    <div class="btn-gtoup dropleft">
+                        <button class="btn dropdown-toggle" style="background: none;"
+                                type="button" id="dropdownMenu1" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu1" >
+                            
+                            <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review" onclick="puttext_review_and_put_id_review('`+data.comment+`', `+data.id_comment+`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
+                            <a class="dropdown-item text-danger" href="#" onClick="deleteReview(`+data.id_comment+`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
+                        </div>
+                        </div>
+                </div>
+                {% else %}
+                    <div>
+                        <a class="text-muted" href="#"><i class="fas fa-heart mr-1"></i></a>
+                        <a class="text-muted" href="#"><i class="fas fa-heart-broken mr-1"></i></a>
+                    </div>
+                {% endif %}
+            </div>
+
+        </div> 
+        `
+    );
+    console.log('success added')
+}
+$(formID_edit).on('submit', (e) => {
+    e.preventDefault();
+    $.ajax({
+        url: "{% url 'news:update_review' %}",
+        type: 'POST',
+        datatype:'json',
+        data: {
+            'id_review': $(formID_edit + ' #id_review').val(),
+            'review_edited': $(formID_edit + ' #edit_review').val(),
+        },
+        success: function(data){
+            
+            update_review_in_this_page(data);
+            $(formID_edit).trigger("reset");
+            $('#edit_review').modal('hide');
+            console.log('success edited');
+        }
+    });
+});
+
+// Delete Django Ajax Call
+function deleteReview(id_review, e) {
+    var action = confirm("Ви впевнені що хочете видалити коментар?");
+    e.preventDefault();
+    if (action != false) {
+        $.ajax({
+            url: '{% url "news:ajax_delete" %}',
+            data: {
+                'id_review': id_review,
+            },
+            dataType: 'json',
+            success: function (data) {
+                
+                if (data.deleted) {
+                    
+                    $(".card-body_comment .review-" + id_review).remove();
+                    
+                }
+            }
+        });
+    }
+}
+
+function update_review_in_this_page(data){
+    var value = data.review_edited
+    $('.review-'+data.id_review+' #review_for_page').text(value);
+    
+}
+
+///////////////////////////
+function puttext_review_and_put_id_review(txt_review, id_review){
+    $(formID_edit + ' #edit_review').val(txt_review);
+    $(formID_edit + ' #id_review').val(id_review);
+}
+
+
+
+
+
+
+
+
 </script>
 
 {% endblock %}

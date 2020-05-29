@@ -48,6 +48,7 @@ class Film(TimeStampMixin, models.Model): # Фильм
     budget = models.PositiveIntegerField()
     image = models.ImageField(upload_to = 'posters/')
     url_trailer = models.CharField(max_length=200)
+    
     def __str__(self):
         return self.name
 

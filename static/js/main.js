@@ -1,3 +1,6 @@
+
+
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -47,6 +50,7 @@ $.ajaxSetup({
 });
 
 
+include("csrf.js")
 
 
 $(document).ready(function () {
@@ -64,3 +68,4 @@ $(document).ready(function () {
         $(activContent).toggleClass('visible');
     });
 });
+

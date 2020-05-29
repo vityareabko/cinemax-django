@@ -1,12 +1,12 @@
-from django import forms
+# from django import forms
 
-from .models import ArticleComment
+# from .models import ArticleComment
 
 
-class ArticleCommentForm(forms.ModelForm):
+# class ArticleCommentForm(forms.ModelForm):
     
-    class Meta:
-        model = ArticleComment
-        fields = ("comment",)
+#     class Meta:
+#         model = ArticleComment
+#         fields = ("comment",)
 
     

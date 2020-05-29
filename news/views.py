@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.views.generic.base import View
 
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 
 from .models import ParseMovieInfo, ArticleComment
-from .forms import ArticleCommentForm
+# from .forms import ArticleCommentForm
 
 import requests
 from bs4 import BeautifulSoup as BS
@@ -102,42 +102,8 @@ class NewsDetail(View):
         }
         return render(request, 'news_template/news_detail.html', context)
 
-#############################################
-from django.http import JsonResponse
 
-def AjaxReview(request):
-    data = {
-            'is_valid': False,
-    }
-    
-    # slug_url_article = ParseMovieInfo.objects.get(id=pk_article).url
-    if request.is_ajax():
-        print('\n\n1\n\n')
-        message = request.GET.get('comment')
-        data['comment'] = message
-        if message == 'I want an AJAX response':
-            print('###'+message)
-            data.update(is_valid=True)
-
-            
-
-            # form = ArticleCommentForm(request.POST)
-            # if form.is_valid():
-            #     form = form.save(commit=False)
-            #     if request.POST.get("parent", None):
-            #         form.id_parent_id = int(request.POST.get("parent"))
-            #     form.id_article_id = pk_article
-            #     form.id_user_id = pk_user
-            #     form.save()
-            
-
-    return JsonResponse(data)
-
-
-############################################
-
-
-class CommentView(View):
+class CommentArticleView(View):
     def post(self, request, pk_article, pk_user):
         # comment = request.POST['comment']
         # # print(comment)
@@ -148,40 +114,22 @@ class CommentView(View):
         if request.is_ajax():
             
             message = request.POST.get('comment') #
-            
-            parent = request.POST.get('parent')
-            id_user_reply = request.POST.get('id_user_reply')
-            print(parent)
-            
-            form = ArticleCommentForm(request.POST)
-            
-            # ArticleComment(comment = comment, id_user_id = pk_user, id_article_id = pk_article).save()
 
-            if form.is_valid():
+            ArticleComment(comment = message, id_user_id = pk_user, id_article_id = pk_article).save()
+
+
+            id_comment = ArticleComment.objects.order_by('-id').filter(comment=message, id_user_id = pk_user)
+            data = {
+                'id_comment': int(id_comment[0].id),
+                'comment': message,
+               
+            }
                 
-                form = form.save(commit=False)
-                if request.POST.get("parent", None):
-                    form.id_parent_id = int(request.POST.get("parent"))
-                form.id_article_id = pk_article
-                form.id_user_id = pk_user
-                if request.POST.get('id_user_reply', None):
-                    form.id_article_reply_comment = id_user_reply
-                form.save()
-                
-                id_comment = ArticleComment.objects.order_by('-id').filter(comment=message, id_user_id = pk_user)
-                data = {
-                    'id_comment': int(id_comment[0].id),
-                    'comment': message,
-                    'id_user_reply': id_user_reply,
-                    'parent': parent,
-                    
-                }
-                
-                
-        
-                print('###'+message)
-                return JsonResponse(data)
-                
+            
+    
+            print('###'+message)
+            return JsonResponse(data)
+            
 
         return HttpResponseRedirect( reverse('news:news_detail', args=(slug_url_article,)))
 

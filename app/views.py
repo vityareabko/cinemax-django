@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.base import View
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 
 from django.core.mail import send_mail
@@ -212,23 +212,53 @@ class ReserveDoneView(View):
 class MovieListComments(View):
     
     def post(self, request, pk_movie, pk_user):
+
+
         
-        
-        comm = request.POST['comment']
-        
-        Comments(comment = comm, id_film_id = pk_movie, id_user_id = pk_user ).save()
+        if request.is_ajax():
+            
+            message = request.POST.get('comment') #
+
+            Comments( comment = message, id_film_id = pk_movie, id_user_id = pk_user ).save()
+
+
+            id_comment = Comments.objects.order_by('-id').filter(comment=message, id_user_id = pk_user)
+            
+            data = {
+                'id_comment': int(id_comment[0].id),
+                'comment': message,       
+        }
+    
+            print('###'+message)
+            return JsonResponse(data)
+
+        # comm = request.POST['comment']
+        # Comments(comment = comm, id_film_id = pk_movie, id_user_id = pk_user ).save()
         # print('fffff', form.fields['comment'])
-   
-        
-        
 
         return HttpResponseRedirect(reverse("app:movie_detail", args = (pk_movie,) ))
 
-# class AccountChange(View):
-#     def get(self, request):
 
-#         context = {
+class UpdateReview(View):
+    def post(self, request):
+        message_edited = request.POST.get('review_edited');
+        id_review = request.POST.get('id_review');
+        update_review = Comments.objects.get(id = id_review)
+        update_review.comment = message_edited
+        update_review.save()
+        data = {
+            'id_review': id_review,
+            'review_edited': message_edited,
+        }
+        print(data)
+        return JsonResponse(data)
 
-#         }
+class Delete_Review(View):
+    def get(self, request):
+        id_review = request.GET.get('id_review')
+        Comments.objects.get(id = id_review).delete()
 
-#         return render(request, 'app_template/account_change.html', context)
+        data = {
+            'deleted': True,
+        }
+        return JsonResponse(data)
