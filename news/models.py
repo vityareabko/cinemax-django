@@ -54,8 +54,34 @@ class ArticleComment(TimeStampMixin, models.Model):
     id_user = models.ForeignKey(User, on_delete = models.CASCADE)
     id_article = models.ForeignKey(ParseMovieInfo, on_delete = models.CASCADE)
     
-
+    liked = models.ManyToManyField(User, default = None, blank = True, related_name = 'liked_review')
+    dislike = models.ManyToManyField(User, default = None, blank = True, related_name = 'dislike_review')
     
 
     def __str__(self):
-        return self.id_article.title ##########################
+        return self.id_article.title 
+
+    @property
+    def num_likes_review(self):
+        return self.liked.all().count()
+
+    @property
+    def num_dislikes_review(self):
+        return self.dislike.all().count()
+
+
+class LikeReview(TimeStampMixin, models.Model):
+    id_user = models.ForeignKey(User, on_delete = models.CASCADE)
+    id_review = models.ForeignKey(ArticleComment, on_delete = models.CASCADE)
+    value = models.CharField(choices=LIKE_CHOICES, default='Like', max_length = 20)
+
+    def __str__(self):
+        return str(self.id_review)
+        
+class DislikeReview(TimeStampMixin, models.Model):
+    id_user = models.ForeignKey(User, on_delete = models.CASCADE)
+    id_review = models.ForeignKey(ArticleComment, on_delete = models.CASCADE)
+    value = models.CharField(choices=LIKE_CHOICES, default='Like', max_length = 20)
+
+    def __str__(self):
+        return str(self.id_review)

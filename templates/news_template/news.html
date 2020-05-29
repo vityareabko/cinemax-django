@@ -9,13 +9,17 @@
         {% for news in news_list %}
         <div class="card  bg-light mb-3 d-inline-block mt-3">
             <div class="card-body">
-              <h4 class="card-title"><a class="" href="{% url 'news:news_detail' news.url %}">{{ news.title }}</a></h4>
+              <div class="card-title d-flex justify-content-between">
+                <h4 class="title">
+                  <a class="" href="{% url 'news:news_detail' news.url %}">{{ news.title }}</a>
+                </h4>
+              </div>
               
               <p class="card-text">
                 {{ news.short_describe }} 
               </p>
-              <a href="{% url 'news:news_detail' news.url %}" class="card-link ">Докладніше</a>
-             
+              <a href="{% url 'news:news_detail' news.url %}" class="card-link ">Докладніше</a> <br>
+              
             </div>
           </div>
     

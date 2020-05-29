@@ -16,6 +16,8 @@ urlpatterns = [
 
     path('liked_post/', news_views.Liked_Article.as_view(), name="liked_post"),
     path('dislike_post/', news_views.Dislike_Article.as_view(), name="dislike_post"),
-    
+
+    path('liked_review/', news_views.Liked_Review.as_view(), name="liked_review"),
+    path('dislike_review/', news_views.Dislike_Review.as_view(), name="dislike_review"),
     
 ]

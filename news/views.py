@@ -75,13 +75,10 @@ def Parser(request):
 
 class MovieNewsList(View): #### парсить дание в когда час будет 13:00 или вроде того, идет проверка если интервал времени входит в 13:00 до 14:00 до парсит дание только один раз, нужно сделать доп. проверку
     def get(self, request):
-        
-        
-
         news_list = ParseMovieInfo.objects.order_by('-id').all()
-    
         context = {
             'news_list': news_list,
+            
         }
         return render(request, 'news_template/news.html', context)
 
@@ -117,9 +114,13 @@ class CommentArticleView(View):
 
             ArticleComment(comment = message, id_user_id = pk_user, id_article_id = pk_article).save()
 
-
+            
             id_comment = ArticleComment.objects.order_by('-id').filter(comment=message, id_user_id = pk_user)
+
             data = {
+                'count_liked': id_comment[0].liked.all().count(),
+                'count_dislike': id_comment[0].dislike.all().count(),
+
                 'id_comment': int(id_comment[0].id),
                 'comment': message,
                
@@ -236,4 +237,72 @@ class Dislike_Article(View):
         print(data)
 
         
+        return JsonResponse(data)
+
+
+class Liked_Review(View):
+    def get(self, request):
+        user = request.user
+        # print(request.GET.get('id_article'))
+        # print(request.GET.get('id_review'))
+
+        review = ArticleComment.objects.get(id = request.GET.get('id_review'))
+
+        if user not in review.liked.all():
+            if user in review.dislike.all():
+                review.dislike.remove(user)
+                # data['like'] = True # тут пользователь біл в лайках и мы его удалили из лайком и поэтому труе - потому что нужно изминить в шаблоне (убрать этот лайк)
+
+            review.liked.add(user)
+            
+            # data['dislike'] = True # труе потому что нам нужно добавить измениния в дизлайков 
+        else:
+            review.liked.remove(user)
+
+        if user in review.liked.all():
+            user_liked = True
+        else:
+            user_liked = False
+
+        data={
+            'id_review': request.GET.get('id_review'),
+            'count_like': review.liked.all().count(),
+            'conut_dislike': review.dislike.all().count(),
+            'user_liked': user_liked,
+        }
+        
+        
+        print(data)
+        return JsonResponse(data)
+
+
+class Dislike_Review(View):
+    def get(self, request):
+        user = request.user
+
+        review = ArticleComment.objects.get(id = request.GET.get('id_review'))
+        if user not in review.dislike.all():
+            if user in review.liked.all():
+                review.liked.remove(user)
+                # data['like'] = True # тут пользователь біл в лайках и мы его удалили из лайком и поэтому труе - потому что нужно изминить в шаблоне (убрать этот лайк)
+
+            review.dislike.add(user)
+            
+            # data['dislike'] = True # труе потому что нам нужно добавить измениния в дизлайков 
+        else:
+            review.dislike.remove(user)
+
+        if user in review.dislike.all():
+            user_disliked = True
+        else:
+            user_disliked = False
+
+        data={
+            'id_review': request.GET.get('id_review'),
+            'count_like': review.liked.all().count(),
+            'conut_dislike': review.dislike.all().count(),
+            'user_dislike': user_disliked,
+        }
+        
+        print(data)
         return JsonResponse(data)
