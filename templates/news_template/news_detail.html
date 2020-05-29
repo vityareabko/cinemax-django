@@ -10,13 +10,22 @@
         <div class="card mt-5">
             <div class="card-header">
                 <h4>{{news.title}}</h4>
+                <p class="mr-5">{{ news.created_at }}</p>
             </div>
             <div class="card-body">
                 <p>{{ news.full_describe|linebreaksbr }}</p>
                 <br><hr>
-                <div class="d-flex justify-content-between">
-                    <p>{{ news.created_at }}</p>
-                    <em>коментарiв: {{ quantity }}</em>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex">
+                        
+                        {% if not user.is_anonymous %}
+                            <a id="like" class="text-muted" href="#!" onclick="liked_post(event)"><i class="fas fa-thumbs-up"></i></a><div class="ml-2 count_liked "><p class="m-0 p-0"> {{ news.liked.all.count }}</p></div>
+                            <a id="dislike" class="text-muted" href="#!" onclick="dislike_post(event)"><i class="fas fa-thumbs-down ml-2"></i></a><div class="ml-2 count_dislike"><p class="m-0 p-0"> {{ news.dislike.all.count }}</p></div>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex">
+                        <p>коментарiв: {{ quantity }}</p>
+                    </div>
                 </div>
             </div>
           </div>
@@ -86,8 +95,8 @@
                                                 {% if comment.id_user_id == user.id %}
                                                     <div class="d-flex justify-content-between">
                                                         <div>
-                                                            <a class="text-muted" href="#">підтримую<i class="fas fa-heart mr-1"></i></a>
-                                                            <a class="text-muted" href="#">не підтримую<i class="fas fa-heart-broken mr-1"></i></a>
+                                                            <a class="text-muted" href="#"><i class="fas fa-thumbs-up"></i></a>  1
+                                                            <a class="text-muted" href="#"><i class="fas fa-thumbs-down ml-2"></i></a> 3
                                                         </div>
                                                         <div class="btn-gtoup dropleft">
                                                             <button class="btn dropdown-toggle" style="background: none;"
@@ -326,16 +335,45 @@ function update_review_in_this_page(data){
     
 }
 
-///////////////////////////
 function puttext_review_and_put_id_review(txt_review, id_review){
     $(formID_edit + ' #edit_review').val(txt_review);
     $(formID_edit + ' #id_review').val(id_review);
 }
 
+function liked_post(e){
+    e.preventDefault();
+    $.ajax({
+        url: '{% url "news:liked_post" %}',
+        data: {
+            'id_article': `{{ news.id }}`,
+        },
+        dataType: 'json',
+        success: function (data) {
+            console.log('success liked');
+            console.log(data);
+            $('.count_dislike p').text(data.conut_dislike);
+            $('.count_liked p').text(data.count_like);
 
+        }
+    });
+}
 
-
-
+function dislike_post(e){
+    e.preventDefault();
+    $.ajax({
+        url: '{% url "news:dislike_post" %}',
+        data: {
+            'id_article': `{{ news.id }}`,
+        },
+        dataType: 'json',
+        success: function (data) {
+            console.log('success dislike');
+            console.log(data);
+            $('.count_dislike p').text(data.conut_dislike);
+            $('.count_liked p').text(data.count_like);
+        }
+    });
+}
 
 
 

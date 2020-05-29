@@ -168,3 +168,59 @@ class UpdateReview(View):
         }
         print(data)
         return JsonResponse(data)
+
+class Liked_Article(View):
+    def get(self, request):
+        user = request.user
+
+        id_article = request.GET.get('id_article')
+        article_like_upd = ParseMovieInfo.objects.get(id = id_article)
+        
+        if user not in article_like_upd.liked.all(): 
+            if user in article_like_upd.dislike.all():
+                article_like_upd.dislike.remove(user)
+
+            article_like_upd.liked.add(user)
+
+        else:
+            article_like_upd.liked.remove(user)
+     
+        print(article_like_upd.liked.all().count())
+        print(article_like_upd.dislike.all().count())
+        data={
+            'count_like': article_like_upd.liked.all().count(),
+            'conut_dislike': article_like_upd.dislike.all().count(),
+        }
+        
+        return JsonResponse(data)
+
+class Dislike_Article(View):
+    def get(self, request):
+        
+
+        user = request.user
+        id_article = request.GET.get('id_article')
+        article_dislike_upd = ParseMovieInfo.objects.get(id = id_article)
+
+      
+        if user not in article_dislike_upd.dislike.all():
+            if user in article_dislike_upd.liked.all():
+                article_dislike_upd.liked.remove(user)
+                # data['like'] = True # тут пользователь біл в лайках и мы его удалили из лайком и поэтому труе - потому что нужно изминить в шаблоне (убрать этот лайк)
+
+            article_dislike_upd.dislike.add(user)
+            
+            # data['dislike'] = True # труе потому что нам нужно добавить измениния в дизлайков 
+        else:
+            article_dislike_upd.dislike.remove(user)
+            # data['not_dislike'] = True # труе потому что мы просто хотим убрать лайк и все
+
+        print(article_dislike_upd.liked.all().count())
+        print(article_dislike_upd.dislike.all().count())
+        data={
+            'count_like': article_dislike_upd.liked.all().count(),
+            'conut_dislike': article_dislike_upd.dislike.all().count(),
+        }
+
+        
+        return JsonResponse(data)

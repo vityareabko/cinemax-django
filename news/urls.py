@@ -13,5 +13,9 @@ urlpatterns = [
 
     path('delete_review/', news_views.Delete_Review.as_view(), name="ajax_delete"),
     path('update_review/', news_views.UpdateReview.as_view(), name="update_review"),
+
+    path('liked_post/', news_views.Liked_Article.as_view(), name="liked_post"),
+    path('dislike_post/', news_views.Dislike_Article.as_view(), name="dislike_post"),
+    
     
 ]

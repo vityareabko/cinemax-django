@@ -50,7 +50,7 @@ $.ajaxSetup({
 });
 
 
-include("csrf.js")
+
 
 
 $(document).ready(function () {
