@@ -83,7 +83,7 @@
                         <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
                             <div class="card-body_comment">
                                 
-                                {% for comment in comments %}
+                                {% for comment in comments%}
                                     
                                    
                                     <div class="row d-flex p-3 my-3 review-{{comment.id}}" >
@@ -99,6 +99,10 @@
                                                         <div class="d-flex">
                                                             <a id="liked_review" class="text-muted" onclick="like_review(`{{ comment.id }}`, event)" href="#!"><i class="fas fa-thumbs-up {% if user in comment.liked.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0"> {{ comment.liked.all.count }}</p></div>  
                                                             <a id="dislike_review" class="text-muted" onclick="dislike_review(`{{ comment.id }}`, event)" href="#!"><i class="fas fa-thumbs-down ml-2 {% if user in comment.dislike.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0"> {{ comment.dislike.all.count }}</p></div>
+                                                            <a class="ml-2" data-toggle="collapse" href="#reply-{{ comment.id }}" aria-expanded="false" aria-controls="collapseExample" onclick="replyReview('{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}', '{{ comment.id }}')">
+                                                                відповісти <i class="fas fa-reply-all"></i>
+                                                            </a> 
+                                                            
                                                         </div>
                                                         <div class="btn-gtoup dropleft">
                                                             <button class="btn dropdown-toggle" style="background: none;"
@@ -118,23 +122,29 @@
                                                     <div class="d-flex">
                                                         <a id="liked_review" class="text-muted" onclick="like_review(`{{ comment.id }}`, event)" href="#!"><i class="fas fa-thumbs-up {% if user in comment.liked.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0"> {{ comment.liked.all.count }}</p></div>
                                                         <a id="dislike_review" class="text-muted" onclick="dislike_review(`{{ comment.id }}`, event)" href="#!"><i class="fas fa-thumbs-down ml-2 {% if user in comment.dislike.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0"> {{ comment.dislike.all.count }}</p></div>
+                                                        <a class="ml-2" data-toggle="collapse" href="#reply-{{ comment.id }}" aria-expanded="false" aria-controls="collapseExample" onclick="replyReview('{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}', '{{ comment.id }}')">
+                                                            відповісти <i class="fas fa-reply-all"></i>
+                                                        </a>
                                                     </div>
                                                 {% endif %}
                                                 
 
                                             {% else %}
                                                 <div class="d-flex">
-                                                    
                                                     <a id="liked_review" class="text-muted" href="{% url 'account_login' %}"><i class="fas fa-thumbs-up"></i></a><div class="ml-2 count_liked_review "><p class="m-0 p-0"> {{ comment.liked.all.count }}</p></div>
                                                     <a id="dislike_review" class="text-muted" href="{% url 'account_login' %}"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0"> {{ comment.dislike.all.count }}</p></div>
                                                 </div>
                                             {% endif %}
                                             
-                                            {% comment %}
-                                            <!-- <p>
-                                                <a class="" data-toggle="collapse" href="#{{ comment.id_article_id }}{{ comment.id }}{{ comment.id_user.username }}" aria-expanded="false" aria-controls="collapseExample" onclick="addReview('{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}', '{{ comment.id }}')">
-                                                    відповісти <i class="fas fa-reply-all"></i>
-                                                </a>
+                                            
+
+
+
+                                            
+
+
+                                            <p>
+                                                
                                                 <div class="card">
                                                     <div class="card-header" role="tab" id="headingTwo">
                                                         <h5 class="mb-0">
@@ -144,36 +154,99 @@
                                                         </h5>
                                                     </div>
                                                     <div id="{{ comment.id_article_id }}{{ comment.id }}" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                        <div class="card-body">
+                                                        <div class="card-body_reply">
                                                             
-                                                            
-                                                                <div class="media row mt-3">
-                                                                    <a class="d-flex col-md-2 pr-3" href="#!">
-                                                                        <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
-                                                                    </a>
-                                                                    <div class="media-body col-md-10">
-                                                                        <h5 class="mt-0">username</h5>
-                                                                        comment
+                                                            {% for rev in comments_r %}
+                                                                {% if comment.id == rev.id_parent_id %}
+                                                                    <div class="media row mt-3">
+                                                                        <a class="d-flex col-md-2 pr-3" href="#!">
+                                                                            <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
+                                                                        </a>
+                                                                        <div class="media-body col-md-10">
+                                                                            <h5 class="mt-0">{% if not user.is_anonymous %}{% if rev.id_user.first_name %}{{ rev.id_user.first_name }}{% else %}{{ rev.id_user.username }}{% endif %}{% else %}Гiсть{% endif %}</h5>
+                                                                            <p id="review_for_page">{{ rev.comment }}</p>
+                                                                            {% if not user.is_anonymous %}
+                                                                                {% if comment.id_user_id == user.id %}
+                                                                                    <div class="d-flex justify-content-between">
+                                                                                        <div class="d-flex">
+                                                                                            <a id="liked_review" class="text-muted" onclick="like_review(`{{ rev.id }}`, event)" href="#!"><i class="fas fa-thumbs-up {% if user in rev.liked.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0"> {{ rev.liked.all.count }}</p></div>  
+                                                                                            <a id="dislike_review" class="text-muted" onclick="dislike_review(`{{ rev.id }}`, event)" href="#!"><i class="fas fa-thumbs-down ml-2 {% if user in rev.dislike.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0"> {{ rev.dislike.all.count }}</p></div>
+                                                                                            {% comment %}
+                                                                                            <!-- <a class="ml-2" data-toggle="collapse" href="#reply-{{ rev.id }}" aria-expanded="false" aria-controls="collapseExample" onclick="replyReview('{% if rev.id_user.first_name %}{{ rev.id_user.first_name }}{% else %}{{ rev.id_user.username }}{% endif %}', '{{ rev.id }}')">
+                                                                                                відповісти <i class="fas fa-reply-all"></i>
+                                                                                            </a>  -->
+                                                                                            {% endcomment %}
+                                                                                        </div>
+                                                                                        <div class="btn-gtoup dropleft">
+                                                                                            <button class="btn dropdown-toggle" style="background: none;"
+                                                                                                    type="button" id="dropdownMenu1" data-toggle="dropdown"
+                                                                                                    aria-haspopup="true" aria-expanded="false">
+                                                                                                <i class="fas fa-ellipsis-h"></i>
+                                                                                            </button>
+                                                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenu1" >
+                                                                                            
+                                                                                                <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review" onclick="puttext_review_and_put_id_review(`{{rev.comment}}`, `{{rev.id}}`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
+                                                                                                <a class="dropdown-item text-danger" href="#" onclick="deleteReview(`{{rev.id}}`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!-- onclick="updateReview(`{{ comment.id }}`, event)" -->
+                                                                                    </div>
+                                                                                {% else %}
+                                                                                    <div class="d-flex">
+                                                                                        <a id="liked_review" class="text-muted" onclick="like_review(`{{ rev.id }}`, event)" href="#!"><i class="fas fa-thumbs-up {% if user in rev.liked.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0"> {{ rev.liked.all.count }}</p></div>
+                                                                                        <a id="dislike_review" class="text-muted" onclick="dislike_review(`{{ rev.id }}`, event)" href="#!"><i class="fas fa-thumbs-down ml-2 {% if user in rev.dislike.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0"> {{ rev.dislike.all.count }}</p></div>
+                                                                                        {% comment %}
+                                                                                        <!-- <a class="ml-2" data-toggle="collapse" href="#reply-{{ rev.id }}" aria-expanded="false" aria-controls="collapseExample" onclick="replyReview('{% if rev.id_user.first_name %}{{ rev.id_user.first_name }}{% else %}{{ rev.id_user.username }}{% endif %}', '{{ rev.id }}')">
+                                                                                            відповісти <i class="fas fa-reply-all"></i>
+                                                                                        </a> -->
+                                                                                        {% endcomment %}
+                                                                                    </div>
+                                                                                {% endif %}
+                                                                                
+
+                                                                            {% else %}
+                                                                                <div class="d-flex">
+                                                                                    <a id="liked_review" class="text-muted" href="{% url 'account_login' %}"><i class="fas fa-thumbs-up"></i></a><div class="ml-2 count_liked_review "><p class="m-0 p-0"> {{ rev.liked.all.count }}</p></div>
+                                                                                    <a id="dislike_review" class="text-muted" href="{% url 'account_login' %}"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0"> {{ rev.dislike.all.count }}</p></div>
+                                                                                </div>
+                                                                            {% endif %}
+                                                                        </div>
                                                                     </div>
-                                                                </div>
+                                                                {% endif %}
+                                                                {% comment %}
+                                                                <!-- <div class="collapse" id="reply-{{ rev.id }}">
+                                                                    <div class="card card-body">
+                                                                        <form id="formReview_reply" action="{% if not user.is_anonymous %}{% url 'news:add_review' news.id user.id %}{% else %}{% url 'news:add_review' news.id 13 %}{% endif %}" method="POST">
+                                                                            {% csrf_token %}
+                                                                            <input type="hidden" name="parent" id="contactparent" value="{{ rev.id }}" >
+                                                                            <input type="hidden" name="id_reply_user" value="{{ rev.id }}" >
+                    
+                                                                            <textarea name="comment" id="comment_reply-{{ rev.id }}" class="form-control" rows="3" required></textarea>
+                                                                            <input class="btn btn-primary form-control mt-2" type="submit" value="відповісти">
+                                                                        </form>
+                                                                    </div>
+                                                                </div> -->
+                                                                {% endcomment %}
+                                                                
+                                                            {% endfor %}
                                                                
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </p> -->
-                                            <!-- <div class="collapse" id="{{ comment.id_article_id }}{{ comment.id }}{{ comment.id_user.username }}">
+                                            </p>
+                                           <div class="collapse" id="reply-{{ comment.id }}">
                                                 <div class="card card-body">
-                                                    <form id="formReview_reply" action="{% if user_display %} {% url 'news:article_comments' news.id user.id %} {% else %} {% url 'news:article_comments' news.id 13 %} {% endif %}" method="POST">
+                                                    <form id="formReview_reply" action="" method="POST">
                                                         {% csrf_token %}
-                                                        <input type="hidden" name="parent" id="contactparent" value="{{ comment.id_user_id }}" >
+                                                        <input type="hidden" name="parent" id="contactparent" value="" >
                                                         <input type="hidden" name="id_reply_user" value="{{ comment.id }}" >
 
-                                                        <textarea name="comment" id="comment_reply{{ comment.id }}" class="form-control" rows="3" required></textarea>
+                                                        <textarea name="comment" id="comment_reply-{{ comment.id }}" class="form-control comment_reply" rows="3" required></textarea>
                                                         <input class="btn btn-primary form-control mt-2" type="submit" value="відповісти">
                                                     </form>
                                                 </div>
-                                            </div> -->
-                                            {% endcomment %}
+                                            </div>
+                                            
                                             
                                         </div>
                                     </div> 
@@ -220,10 +293,44 @@
 {% block js %}
 
 <script> 
-        
+ 
 const formID = 'form#formReview';
+const formID_reply = 'form#formReview_reply';
 const formID_edit = 'form#EditReview_form';
 
+
+function replyReview(name_user, id_review){
+    // console.log(id_review)
+    $(formID_reply + ' #contactparent').val(id_review);
+    $(formID_reply + ' #comment_reply-'+id_review).val(name_user+', ');
+}
+
+$(formID_reply).on('submit', (e) => {
+    e.preventDefault();
+    
+    var formID_rep = '#reply-'+String($(formID_reply + ' #contactparent').val());
+    console.log(formID_rep);
+    $.ajax({
+        
+        url: "{% if not user.is_anonymous %}{% url 'news:add_review' news.id user.id %}{% else %}{% url 'news:add_review' news.id 13 %}{% endif %}", // /news/add_review/
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            'comment': $(formID_rep + ' '+ formID_reply + ' .comment_reply').val(),
+            'parent': $(formID_reply + ' #contactparent').val(),
+        },
+        success: function (data) {
+            // var order_data = response.order_data;
+            console.log(data)
+            console.log('success')
+            CreateReview_reply(data);
+            $(formID_reply + ' .comment_reply').val('');
+            
+            
+        }
+    });
+});
+       
 $(formID).on('submit', (e) => {
     e.preventDefault();
     $.ajax({
@@ -232,7 +339,7 @@ $(formID).on('submit', (e) => {
         type: 'POST',
         dataType: 'json',
         data: {
-            comment: $(formID + ' #comment').val(),
+            'comment': $(formID + ' #comment').val(),
         },
         success: function (data) {
             // var order_data = response.order_data;
@@ -245,6 +352,42 @@ $(formID).on('submit', (e) => {
     });
     
 });
+function CreateReview_reply(data){
+    $('.card-body_reply').append(
+        `
+        <div class="media row mt-3">
+        <a class="d-flex col-md-2 pr-3" href="#!">
+            <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
+        </a>
+        <div class="media-body col-md-10">
+            <h5 class="mt-0">{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</h5>
+            <p id="review_for_page">`+data.comment+`</p>
+            <div class="d-flex justify-content-between">
+                <div class="d-flex">
+                    <a id="liked_review" class="text-muted" onclick="like_review(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-up"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0">`+data.count_liked+`</p></div>  
+                    <a id="dislike_review" class="text-muted" onclick="dislike_review(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0">`+data.count_dislike+`</p></div>
+                </div>
+                <div class="btn-gtoup dropleft">
+                    <button class="btn dropdown-toggle" style="background: none;"
+                            type="button" id="dropdownMenu1" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu1" >
+                    
+                        <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review" onclick="puttext_review_and_put_id_review(`+data.comment+`, `+data.id_comment+`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
+                        <a class="dropdown-item text-danger" href="#" onclick="deleteReview(`+data.id_comment+`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
+                    </div>
+                </div>
+                
+            </div>
+                
+        </div>
+        
+        
+        `
+    );
+};
 function CreateReview(data){
     
     $('.card-body_comment').prepend(
@@ -263,6 +406,7 @@ function CreateReview(data){
                         <div class="d-flex">
                             <a id="liked_review" class="text-muted" onclick="like_review(` +data.id_comment+ `, event)" href="#!"><i class="fas fa-thumbs-up "></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0"> `+ data.count_liked +`</p></div>
                             <a id="dislike_review" class="text-muted" onclick="dislike_review(` +data.id_comment+ `, event)" href="#!"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0">`+ data.count_dislike +`</p></div>
+                            
                         </div>
                     </div>
                     <div class="btn-gtoup dropleft">
@@ -287,6 +431,7 @@ function CreateReview(data){
             </div>
 
         </div> 
+        
         `
     );
     console.log('success added')

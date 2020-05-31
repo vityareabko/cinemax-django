@@ -20,6 +20,7 @@ class ParseMovieInfo(TimeStampMixin, models.Model):
     def __str__(self):
         return self.title
 
+
     @property
     def num_likes(self):
         return self.liked.all().count()
@@ -53,13 +54,17 @@ class ArticleComment(TimeStampMixin, models.Model):
     comment = models.TextField()
     id_user = models.ForeignKey(User, on_delete = models.CASCADE)
     id_article = models.ForeignKey(ParseMovieInfo, on_delete = models.CASCADE)
-    
+    id_parent = models.ForeignKey(
+        'self', verbose_name="Родитель", on_delete = models.SET_NULL, blank=True, null=True
+    )
+
+
     liked = models.ManyToManyField(User, default = None, blank = True, related_name = 'liked_review')
     dislike = models.ManyToManyField(User, default = None, blank = True, related_name = 'dislike_review')
     
 
     def __str__(self):
-        return self.id_article.title 
+        return self.comment
 
     @property
     def num_likes_review(self):

@@ -86,14 +86,16 @@ class NewsDetail(View):
     def get(self, request, url_news):
         news = ParseMovieInfo.objects.get(url=url_news)
         news_list = ParseMovieInfo.objects.order_by('-id').all()
-        comments = ArticleComment.objects.order_by('-id').filter(id_article_id = news.id)
-        # print(len(comments.count))
+        comments = ArticleComment.objects.order_by('-id').filter(id_article_id = news.id, id_parent_id = None)
+        comments_r = ArticleComment.objects.filter(id_article_id = news.id, id_parent_id__isnull=False)
+        print(len(comments_r))
         quantity = len(comments)      
-        
+       
         context = {
             'news': news,
             'news_list': news_list,
             'comments': comments,
+            'comments_r': comments_r,
             'quantity': quantity,
 
         }
@@ -106,21 +108,23 @@ class CommentArticleView(View):
         # # print(comment)
         # ArticleComment(comment = comment, id_user_id = pk_user, id_article_id = pk_article).save()
         slug_url_article = ParseMovieInfo.objects.get(id=pk_article).url
+   
         
-     
+        
         if request.is_ajax():
             
             message = request.POST.get('comment') #
-
-            ArticleComment(comment = message, id_user_id = pk_user, id_article_id = pk_article).save()
-
+            if request.POST.get('parent'):
+                ArticleComment(comment = message, id_user_id = pk_user, id_article_id = pk_article, id_parent_id = request.POST.get('parent')).save()
+            else:
+                ArticleComment(comment = message, id_user_id = pk_user, id_article_id = pk_article).save()
             
             id_comment = ArticleComment.objects.order_by('-id').filter(comment=message, id_user_id = pk_user)
 
             data = {
                 'count_liked': id_comment[0].liked.all().count(),
                 'count_dislike': id_comment[0].dislike.all().count(),
-
+                
                 'id_comment': int(id_comment[0].id),
                 'comment': message,
                
