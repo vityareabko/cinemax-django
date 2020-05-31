@@ -445,7 +445,7 @@
                             <div class="d-flex">
                                 <a id="liked_review" class="text-muted" onclick="like_review(` +data.id_comment+ `, event)" href="#!"><i class="fas fa-thumbs-up "></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0"> `+ data.count_liked +`</p></div>
                                 <a id="dislike_review" class="text-muted" onclick="dislike_review(` +data.id_comment+ `, event)" href="#!"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0">`+ data.count_dislike +`</p></div>
-                                <a class="ml-2" data-toggle="collapse" href="#reply-` +data.id_comment+ `" aria-expanded="false" aria-controls="collapseExample" onclick="replyReview('{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}', '` +data.id_comment+ `')">
+                                <a class="ml-2" href="#reply-` +data.id_comment+ `" onclick="window.location.reload();">
                                     відповісти <i class="fas fa-reply-all"></i>
                                 </a> 
                             </div>
@@ -485,19 +485,7 @@
                             </div>
                         </div>
                     </p>
-                    <div class="collapse" id="reply-`+data.id_comment+`">
-                        <div class="card card-body">
-                            <form id="formReview_reply" action="" method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="parent" id="contactparent" value="" >
-                                <input type="hidden" name="id_reply_user" value="`+data.id_comment+`" >
-
-                                <textarea name="comment" id="comment_reply-`+data.id_comment+`" class="form-control comment_reply" rows="3" required></textarea>
-                                <input class="btn btn-primary form-control mt-2" type="submit" value="відповісти">
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                    
 
 
 
