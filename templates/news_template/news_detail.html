@@ -135,12 +135,6 @@
                                                     <a id="dislike_review" class="text-muted" href="{% url 'account_login' %}"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0"> {{ comment.dislike.all.count }}</p></div>
                                                 </div>
                                             {% endif %}
-                                            
-                                            
-
-
-
-                                            
 
 
                                             <p>
@@ -173,8 +167,14 @@
                                                                                 {% if comment.id_user_id == user.id %}
                                                                                     <div class="d-flex justify-content-between">
                                                                                         <div class="d-flex">
-                                                                                            <a id="liked_review" class="text-muted" onclick="like_review(`{{ rev.id }}`, event)" href="#!"><i class="fas fa-thumbs-up {% if user in rev.liked.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0"> {{ rev.liked.all.count }}</p></div>  
-                                                                                            <a id="dislike_review" class="text-muted" onclick="dislike_review(`{{ rev.id }}`, event)" href="#!"><i class="fas fa-thumbs-down ml-2 {% if user in rev.dislike.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0"> {{ rev.dislike.all.count }}</p></div>
+                                                                                            <a id="liked_review" class="text-muted" onclick="like_review_reply(`{{ rev.id }}`, event)" href="#!">
+                                                                                                <i class="fas fa-thumbs-up {% if user in rev.liked.all %} text-primary {% endif %}"></i>
+                                                                                            </a> 
+                                                                                            <div class="ml-2 count_liked_review "><p class="m-0 p-0"> {{ rev.liked.all.count }}</p></div>  
+                                                                                            <a id="dislike_review" class="text-muted" onclick="dislike_review_reply(`{{ rev.id }}`, event)" href="#!">
+                                                                                                <i class="fas fa-thumbs-down ml-2 {% if user in rev.dislike.all %} text-primary {% endif %}"></i>
+                                                                                            </a> 
+                                                                                            <div class="ml-2 count_dislike_review"><p class="m-0 p-0"> {{ rev.dislike.all.count }}</p></div>
                                                                                             {% comment %}
                                                                                             <!-- <a class="ml-2" data-toggle="collapse" href="#reply-{{ rev.id }}" aria-expanded="false" aria-controls="collapseExample" onclick="replyReview('{% if rev.id_user.first_name %}{{ rev.id_user.first_name }}{% else %}{{ rev.id_user.username }}{% endif %}', '{{ rev.id }}')">
                                                                                                 відповісти <i class="fas fa-reply-all"></i>
@@ -189,8 +189,8 @@
                                                                                             </button>
                                                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenu1" >
                                                                                             
-                                                                                                <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review" onclick="puttext_review_and_put_id_review(`{{rev.comment}}`, `{{rev.id}}`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
-                                                                                                <a class="dropdown-item text-danger" href="#" onclick="deleteReview(`{{rev.id}}`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
+                                                                                                <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review_reply" onclick="puttext_review_reply_and_put_id_review(`{{rev.comment}}`, `{{rev.id}}`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
+                                                                                                <a class="dropdown-item text-danger" href="#" onclick="deleteReview_reply(`{{rev.id}}`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
                                                                                             </div>
                                                                                         </div>
                                                                                         <!-- onclick="updateReview(`{{ comment.id }}`, event)" -->
@@ -292,93 +292,163 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="edit_review_reply" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Редагування</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="EditReview_reply_form" action="" method="POST">
+                    <input type="hidden" id="id_review" value="">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <textarea name="edit_review" id="edit_review" class="form-control" rows="5" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Відміна</button>
+                        <button type="submit" class="btn btn-primary">Зберегти</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock  %}
     
 {% block js %}
 
 <script> 
  
-const formID = 'form#formReview';
-const formID_reply = 'form#formReview_reply';
-const formID_edit = 'form#EditReview_form';
+    const formID = 'form#formReview';
+    const formID_reply = 'form#formReview_reply';
+    const formID_edit = 'form#EditReview_form';
+    const formID_edit_reply = 'form#EditReview_reply_form';
 
+    function replyReview(name_user, id_review){
+        console.log(id_review)
+        $(formID_reply + ' #contactparent').val(id_review);
+        $(formID_reply + ' #comment_reply-'+id_review).val(name_user+', ');
+    }
 
-function replyReview(name_user, id_review){
-    console.log(id_review)
-    $(formID_reply + ' #contactparent').val(id_review);
-    $(formID_reply + ' #comment_reply-'+id_review).val(name_user+', ');
-}
-
-$(formID_reply).on('submit', (e) => {
-    e.preventDefault();
-    
-    var formID_rep = '#reply-'+String($(formID_reply + ' #contactparent').val());
-    console.log(formID_rep);
-    $.ajax({
+    $(formID_reply).on('submit', (e) => {
+        e.preventDefault();
         
-        url: "{% if not user.is_anonymous %}{% url 'news:add_review' news.id user.id %}{% else %}{% url 'news:add_review' news.id 13 %}{% endif %}", // /news/add_review/
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            'comment': $(formID_rep + ' '+ formID_reply + ' .comment_reply').val(),
-            'parent': $(formID_reply + ' #contactparent').val(),
-        },
-        success: function (data) {
-            // var order_data = response.order_data;
-            console.log(data)
-            console.log('success')
-            CreateReview_reply(data);
-            $(formID_reply + ' .comment_reply').val('');
+        var formID_rep = '#reply-'+String($(formID_reply + ' #contactparent').val());
+        console.log(formID_rep);
+        $.ajax({
             
-            
-        }
+            url: "{% if not user.is_anonymous %}{% url 'news:add_review' news.id user.id %}{% else %}{% url 'news:add_review' news.id 13 %}{% endif %}", // /news/add_review/
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                'comment': $(formID_rep + ' '+ formID_reply + ' .comment_reply').val(),
+                'parent': $(formID_reply + ' #contactparent').val(),
+            },
+            success: function (data) {
+                // var order_data = response.order_data;
+                console.log(data)
+                console.log('success')
+                CreateReview_reply(data);
+                $(formID_reply + ' .comment_reply').val('');
+                
+                
+            }
+        });
     });
-});
-       
-$(formID).on('submit', (e) => {
-    e.preventDefault();
-    $.ajax({
         
-        url: "{% if not user.is_anonymous %}{% url 'news:add_review' news.id user.id %}{% else %}{% url 'news:add_review' news.id 13 %}{% endif %}", // /news/add_review/
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            'comment': $(formID + ' #comment').val(),
-        },
-        success: function (data) {
-            // var order_data = response.order_data;
-            console.log(data)
-            CreateReview(data);
-            $(formID + ' #comment').val('');
+    $(formID).on('submit', (e) => {
+        e.preventDefault();
+        $.ajax({
             
-            
-        }
+            url: "{% if not user.is_anonymous %}{% url 'news:add_review' news.id user.id %}{% else %}{% url 'news:add_review' news.id 13 %}{% endif %}", // /news/add_review/
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                'comment': $(formID + ' #comment').val(),
+            },
+            success: function (data) {
+                // var order_data = response.order_data;
+                console.log(data)
+                CreateReview(data);
+                $(formID + ' #comment').val('');
+                
+                
+            }
+        });
+        
     });
-    
-});
-function CreateReview_reply(data){
-    console.log('crrep: ',data.id_comment)
-    console.log('newsid: ', `{{ news.id }}`);
-    console.log('ccc: ', $(formID_reply + ' #contactparent').val())
-    var id_comment_not_id_reply = $(formID_reply + ' #contactparent').val();
-    var id_article = `{{ news.id }}`;
-    console.log(id_article+id_comment_not_id_reply)
-    
-    $('#'+id_article+id_comment_not_id_reply).append(
-        `
-            <div class="card-body_reply">
-                <div class="media row mt-3 review_rep-`+data.id_comment+`">
-                <a class="d-flex col-md-2 pr-3" href="#!">
+    function CreateReview_reply(data){
+
+        var id_comment_not_id_reply = $(formID_reply + ' #contactparent').val();
+        var id_article = `{{ news.id }}`;
+
+        
+        $('#'+id_article+id_comment_not_id_reply).append(
+            `
+                <div class="card-body_reply">
+                    <div class="media row mt-3 review_rep-`+data.id_comment+`">
+                    <a class="d-flex col-md-2 pr-3" href="#!">
+                        <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
+                    </a>
+                    <div class="media-body col-md-10">
+                    
+                        <h5 class="mt-0">{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</h5>
+                        <p id="review_for_page">`+data.comment+`</p>
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex">
+                                <a id="liked_review" class="text-muted" onclick="like_review_reply(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-up"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0">`+data.count_liked+`</p></div>  
+                                <a id="dislike_review" class="text-muted" onclick="dislike_review_reply(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0">`+data.count_dislike+`</p></div>
+                            </div>
+                            <div class="btn-gtoup dropleft">
+                                <button class="btn dropdown-toggle" style="background: none;"
+                                        type="button" id="dropdownMenu1" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu1" >
+                                
+                                    <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review_reply" onclick="puttext_review_reply_and_put_id_review('`+data.comment+`', `+data.id_comment+`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
+                                    <a class="dropdown-item text-danger" href="#" onclick="deleteReview_reply(`+data.id_comment+`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                            
+                    </div>
+                </div>
+            </div>
+            
+            
+            `
+        );
+    };
+    function CreateReview(data){
+        
+        $('.card-body_comment').prepend(
+            `
+            <div class="row d-flex p-3 my-3 review-`+data.id_comment+`" >
+                <div class="col-md-2">
                     <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
-                </a>
-                <div class="media-body col-md-10">
-                  
-                    <h5 class="mt-0">{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</h5>
-                    <p id="review_for_page">`+data.comment+`</p>
+                </div>
+                <div class="col-md-10 comment">
+                    <strong>{% if user.is_anonymous %}Гiсть{% else %}{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}{% endif %}</strong> <br>
+                    <p id="review_for_page">` +data['comment']+ `</p>
+                    {% if not user.is_anonymous %}
+
                     <div class="d-flex justify-content-between">
-                        <div class="d-flex">
-                            <a id="liked_review" class="text-muted" onclick="like_review(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-up"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0">`+data.count_liked+`</p></div>  
-                            <a id="dislike_review" class="text-muted" onclick="dislike_review(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0">`+data.count_dislike+`</p></div>
+                        <div>
+                            <div class="d-flex">
+                                <a id="liked_review" class="text-muted" onclick="like_review(` +data.id_comment+ `, event)" href="#!"><i class="fas fa-thumbs-up "></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0"> `+ data.count_liked +`</p></div>
+                                <a id="dislike_review" class="text-muted" onclick="dislike_review(` +data.id_comment+ `, event)" href="#!"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0">`+ data.count_dislike +`</p></div>
+                                <a class="ml-2" data-toggle="collapse" href="#reply-` +data.id_comment+ `" aria-expanded="false" aria-controls="collapseExample" onclick="replyReview('{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}', '` +data.id_comment+ `')">
+                                    відповісти <i class="fas fa-reply-all"></i>
+                                </a> 
+                            </div>
                         </div>
                         <div class="btn-gtoup dropleft">
                             <button class="btn dropdown-toggle" style="background: none;"
@@ -387,229 +457,327 @@ function CreateReview_reply(data){
                                 <i class="fas fa-ellipsis-h"></i>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu1" >
-                            
-                                <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review" onclick="puttext_review_and_put_id_review(`+data.comment+`, `+data.id_comment+`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
-                                <a class="dropdown-item text-danger" href="#" onclick="deleteReview(`+data.id_comment+`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
+                                
+                                <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review" onclick="puttext_review_and_put_id_review('`+data.comment+`', `+data.id_comment+`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
+                                <a class="dropdown-item text-danger" href="#" onClick="deleteReview(`+data.id_comment+`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
+                            </div>
+                            </div>
+                    </div>
+                    {% else %}
+                        <div class="d-flex">
+                            <a id="liked_review" class="text-muted" href="{% url 'account_login' %}"><i class="fas fa-thumbs-up"></i></a><div class="ml-2 count_liked_review "><p class="m-0 p-0">`+ data.count_liked +`</p></div>
+                            <a id="dislike_review" class="text-muted" href="{% url 'account_login' %}"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0">`+ data.count_dislike +`</p></div>
+                        </div>
+                    {% endif %}
+
+                    <p>
+                        <div class="card">
+                            <div class="card-header" role="tab" id="headingTwo">
+                                <h5 class="mb-0">
+                                <a class="collapsed" style="font-size: 16px;" data-toggle="collapse" href="#{{news.id}}`+data.id_comment+`" aria-expanded="false" aria-controls="collapseTwo">
+                                    Показати коментарі <i class="far fa-comment-dots"></i>
+                                </a>
+                                </h5>
+                            </div>
+                            <div id="{{news.id}}`+data.id_comment+`" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="card-body_reply">
+                                </div>
                             </div>
                         </div>
-                        
-                    </div>
-                        
-                </div>
-            </div>
-        </div>
-        
-        
-        `
-    );
-};
-function CreateReview(data){
-    
-    $('.card-body_comment').prepend(
-        `
-        <div class="row d-flex p-3 my-3 review-`+data.id_comment+`" >
-            <div class="col-md-2">
-                <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
-            </div>
-            <div class="col-md-10 comment">
-                <strong>{% if user.is_anonymous %}Гiсть{% else %}{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}{% endif %}</strong> <br>
-                <p id="review_for_page">` +data['comment']+ `</p>
-                {% if not user.is_anonymous %}
+                    </p>
+                    <div class="collapse" id="reply-`+data.id_comment+`">
+                        <div class="card card-body">
+                            <form id="formReview_reply" action="" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="parent" id="contactparent" value="" >
+                                <input type="hidden" name="id_reply_user" value="`+data.id_comment+`" >
 
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <div class="d-flex">
-                            <a id="liked_review" class="text-muted" onclick="like_review(` +data.id_comment+ `, event)" href="#!"><i class="fas fa-thumbs-up "></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0"> `+ data.count_liked +`</p></div>
-                            <a id="dislike_review" class="text-muted" onclick="dislike_review(` +data.id_comment+ `, event)" href="#!"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0">`+ data.count_dislike +`</p></div>
-                            
+                                <textarea name="comment" id="comment_reply-`+data.id_comment+`" class="form-control comment_reply" rows="3" required></textarea>
+                                <input class="btn btn-primary form-control mt-2" type="submit" value="відповісти">
+                            </form>
                         </div>
                     </div>
-                    <div class="btn-gtoup dropleft">
-                        <button class="btn dropdown-toggle" style="background: none;"
-                                type="button" id="dropdownMenu1" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-h"></i>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu1" >
-                            
-                            <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review" onclick="puttext_review_and_put_id_review('`+data.comment+`', `+data.id_comment+`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
-                            <a class="dropdown-item text-danger" href="#" onClick="deleteReview(`+data.id_comment+`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
-                        </div>
-                        </div>
                 </div>
-                {% else %}
-                    <div class="d-flex">
-                        <a id="liked_review" class="text-muted" href="{% url 'account_login' %}"><i class="fas fa-thumbs-up"></i></a><div class="ml-2 count_liked_review "><p class="m-0 p-0">`+ data.count_liked +`</p></div>
-                        <a id="dislike_review" class="text-muted" href="{% url 'account_login' %}"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0">`+ data.count_dislike +`</p></div>
-                    </div>
-                {% endif %}
-            </div>
 
-        </div> 
-        
-        `
-    );
-    console.log('success added')
-}
-$(formID_edit).on('submit', (e) => {
-    e.preventDefault();
-    $.ajax({
-        url: "{% url 'news:update_review' %}",
-        type: 'POST',
-        datatype:'json',
-        data: {
-            'id_review': $(formID_edit + ' #id_review').val(),
-            'review_edited': $(formID_edit + ' #edit_review').val(),
-        },
-        success: function(data){
+
+
+                
+
+
+
+            </div> 
             
-            update_review_in_this_page(data);
-            $(formID_edit).trigger("reset");
-            $('#edit_review').modal('hide');
-            console.log('success edited');
-        }
-    });
-});
-
-// Delete Django Ajax Call
-function deleteReview(id_review, e) {
-    var action = confirm("Ви впевнені що хочете видалити коментар?");
-    e.preventDefault();
-    if (action != false) {
+            `
+        );
+        console.log('success added')
+    }
+    $(formID_edit).on('submit', (e) => {
+        e.preventDefault();
         $.ajax({
-            url: '{% url "news:ajax_delete" %}',
+            url: "{% url 'news:update_review' %}",
+            type: 'POST',
+            datatype:'json',
             data: {
-                'id_review': id_review,
+                'id_review': $(formID_edit + ' #id_review').val(),
+                'review_edited': $(formID_edit + ' #edit_review').val(),
+            },
+            success: function(data){
+                
+                update_review_in_this_page(data);
+                $(formID_edit).trigger("reset");
+                $('#edit_review').modal('hide');
+                console.log('success edited');
+            }
+        });
+    });
+
+    $(formID_edit_reply).on('submit', (e) => {
+        e.preventDefault();
+        $.ajax({
+            url: "{% url 'news:update_review' %}",
+            type: 'POST',
+            datatype:'json',
+            data: {
+                'id_review': $(formID_edit_reply + ' #id_review').val(),
+                'review_edited': $(formID_edit_reply + ' #edit_review').val(),
+            },
+            success: function(data){
+                
+                update_review_reply_in_this_page(data);
+                $(formID_edit_reply).trigger("reset");
+                $('#edit_review_reply').modal('hide');
+                console.log('success edited');
+            }
+        });
+    });
+    
+
+    // Delete Django Ajax Call
+    function deleteReview(id_review, e) {
+        var action = confirm("Ви впевнені що хочете видалити коментар?");
+        e.preventDefault();
+        if (action != false) {
+            $.ajax({
+                url: '{% url "news:ajax_delete" %}',
+                data: {
+                    'id_review': id_review,
+                },
+                dataType: 'json',
+                success: function (data) {
+                    
+                    if (data.deleted) {
+                        
+                        $(".card-body_comment .review-" + id_review).remove();
+                        
+                    }
+                }
+            });
+        }
+    }
+
+    function deleteReview_reply(id_review, e) {
+        var action = confirm("Ви впевнені що хочете видалити коментар?");
+        e.preventDefault();
+        if (action != false) {
+            $.ajax({
+                url: '{% url "news:ajax_delete" %}',
+                data: {
+                    'id_review': id_review,
+                },
+                dataType: 'json',
+                success: function (data) {
+                    
+                    if (data.deleted) {
+                        
+                        $(".card-body_comment .review_rep-" + id_review).remove();
+                        
+                    }
+                    console.log('success deleted')
+                }
+            });
+        }
+    }
+    
+    function update_review_reply_in_this_page(data){
+        var value = data.review_edited;
+        $('.review_rep-'+data.id_review+' #review_for_page').text(value);
+        
+    }
+    function update_review_in_this_page(data){
+        var value = data.review_edited
+        $('.review-'+data.id_review+' #review_for_page').text(value);
+        
+    }
+
+    function puttext_review_and_put_id_review(txt_review, id_review){
+        $(formID_edit + ' #edit_review').val(txt_review);
+        $(formID_edit + ' #id_review').val(id_review);
+    }
+    function puttext_review_reply_and_put_id_review(txt_review, id_review){
+        $(formID_edit_reply + ' #edit_review').val(txt_review);
+        $(formID_edit_reply + ' #id_review').val(id_review);
+    }
+
+    function liked_post(e){
+        e.preventDefault();
+        $.ajax({
+            url: '{% url "news:liked_post" %}',
+            data: {
+                'id_article': `{{ news.id }}`,
             },
             dataType: 'json',
             success: function (data) {
                 
-                if (data.deleted) {
-                    
-                    $(".card-body_comment .review-" + id_review).remove();
-                    
+                
+                $('.count_dislike p').text(data.conut_dislike);
+                $('.count_liked p').text(data.count_like);
+                
+                if (data.user_liked){
+                    $('#dislike i').removeClass('text-primary');
+                    $('#like i').addClass('text-primary');
+                }else{
+                    $('#like i').removeClass('text-primary');
                 }
+                console.log('success liked');
+                    
+            
+                    // $('#like i').removeClass('text-primary');
+            
+                
+            }   
+        });
+    }
+
+    function dislike_post(e){
+        e.preventDefault();
+        $.ajax({
+            url: '{% url "news:dislike_post" %}',
+            data: {
+                'id_article': `{{ news.id }}`,
+            },
+            dataType: 'json',
+            success: function (data) {
+                
+                
+                $('.count_dislike p').text(data.conut_dislike);
+                $('.count_liked p').text(data.count_like);
+
+                if (data.user_dislike){
+                    $('#like i').removeClass('text-primary');
+                    $('#dislike i').addClass('text-primary');
+                }else{
+                    $('#dislike i').removeClass('text-primary');
+                }
+                console.log('success dislike');
             }
         });
     }
-}
-
-function update_review_in_this_page(data){
-    var value = data.review_edited
-    $('.review-'+data.id_review+' #review_for_page').text(value);
-    
-}
-
-function puttext_review_and_put_id_review(txt_review, id_review){
-    $(formID_edit + ' #edit_review').val(txt_review);
-    $(formID_edit + ' #id_review').val(id_review);
-}
-
-function liked_post(e){
-    e.preventDefault();
-    $.ajax({
-        url: '{% url "news:liked_post" %}',
-        data: {
-            'id_article': `{{ news.id }}`,
-        },
-        dataType: 'json',
-        success: function (data) {
-            console.log('success liked');
-            console.log(data);
-            $('.count_dislike p').text(data.conut_dislike);
-            $('.count_liked p').text(data.count_like);
-            
-            if (data.user_liked){
-                $('#dislike i').removeClass('text-primary');
-                $('#like i').addClass('text-primary');
-            }else{
-                $('#like i').removeClass('text-primary');
-            }
+    function like_review(id_review, e){
+        e.preventDefault();
+        $.ajax({
+            url: '{% url "news:liked_review" %}',
+            data: {
+                'id_article': `{{ news.id }}`,
+                'id_review': id_review 
+            },
+            dataType: 'json',
+            success: function (data) {
                 
-         
-                // $('#like i').removeClass('text-primary');
-           
-            
-        }   
-    });
-}
-
-function dislike_post(e){
-    e.preventDefault();
-    $.ajax({
-        url: '{% url "news:dislike_post" %}',
-        data: {
-            'id_article': `{{ news.id }}`,
-        },
-        dataType: 'json',
-        success: function (data) {
-            console.log('success dislike');
-            console.log(data);
-            $('.count_dislike p').text(data.conut_dislike);
-            $('.count_liked p').text(data.count_like);
-
-            if (data.user_dislike){
-                $('#like i').removeClass('text-primary');
-                $('#dislike i').addClass('text-primary');
-            }else{
-                $('#dislike i').removeClass('text-primary');
-            }
-        }
-    });
-}
-function like_review(id_review, e){
-    e.preventDefault();
-    $.ajax({
-        url: '{% url "news:liked_review" %}',
-        data: {
-            'id_article': `{{ news.id }}`,
-            'id_review': id_review 
-        },
-        dataType: 'json',
-        success: function (data) {
-            console.log('success like');
-            console.log(data);
-            $('.review-' +data.id_review+ ' .count_dislike_review p').text(data.conut_dislike);
-            $('.review-' +data.id_review+ ' .count_liked_review p').text(data.count_like);
-
-            if (data.user_liked){
-                $('.review-' +data.id_review+ ' #dislike_review i').removeClass('text-primary');
-                $('.review-' +data.id_review+ ' #liked_review i').addClass('text-primary');
                 
-            }else{
-                $('.review-' +data.id_review+ ' #liked_review i').removeClass('text-primary');
+                $('.review-' +data.id_review+ ' .count_dislike_review p').text(data.conut_dislike);
+                $('.review-' +data.id_review+ ' .count_liked_review p').text(data.count_like);
+
+                if (data.user_liked){
+                    $('.review-' +data.id_review+ ' #dislike_review i').removeClass('text-primary');
+                    $('.review-' +data.id_review+ ' #liked_review i').addClass('text-primary');
+                    
+                }else{
+                    $('.review-' +data.id_review+ ' #liked_review i').removeClass('text-primary');
+                }
+                console.log('success like');
+                
             }
-            
-        }
-    });
-}
-function dislike_review(id_review, e){
-    e.preventDefault();
-    $.ajax({
-        url: '{% url "news:dislike_review" %}',
-        data: {
-            'id_article': `{{ news.id }}`,
-            'id_review': id_review 
-        },
-        dataType: 'json',
-        success: function (data) {
-            console.log('success dislike');
-            console.log(data);
-            $('.review-' +data.id_review+ ' .count_dislike_review p').text(data.conut_dislike);
-            $('.review-' +data.id_review+ ' .count_liked_review p').text(data.count_like);
+        });
+    }
+    function dislike_review(id_review, e){
+        e.preventDefault();
+        $.ajax({
+            url: '{% url "news:dislike_review" %}',
+            data: {
+                'id_article': `{{ news.id }}`,
+                'id_review': id_review 
+            },
+            dataType: 'json',
+            success: function (data) {
+                
+          
+                $('.review-' +data.id_review+ ' .count_dislike_review p').text(data.conut_dislike);
+                $('.review-' +data.id_review+ ' .count_liked_review p').text(data.count_like);
 
-            if (data.user_dislike){
-                $('.review-' +data.id_review+ ' #liked_review i').removeClass('text-primary');
-                $('.review-' +data.id_review+ ' #dislike_review i').addClass('text-primary');
-            }else{
-                $('.review-' +data.id_review+ ' #dislike_review i').removeClass('text-primary')
+                if (data.user_dislike){
+                    $('.review-' +data.id_review+ ' #liked_review i').removeClass('text-primary');
+                    $('.review-' +data.id_review+ ' #dislike_review i').addClass('text-primary');
+                }else{
+                    $('.review-' +data.id_review+ ' #dislike_review i').removeClass('text-primary')
+                }
+                console.log('success dislike');
+                
             }
-            
-        }
-    });
-}
+        });
+    }
 
+    function like_review_reply(id_review, e){
+        e.preventDefault();
+        $.ajax({
+            url: '{% url "news:liked_review" %}',
+            data: {
+                'id_article': `{{ news.id }}`,
+                'id_review': id_review 
+            },
+            dataType: 'json',
+            success: function (data) {
+                
+        
+                $('.review_rep-' +data.id_review+ ' .count_dislike_review p').text(data.conut_dislike);
+                $('.review_rep-' +data.id_review+ ' .count_liked_review p').text(data.count_like);
 
+                if (data.user_liked){
+                    $('.review_rep-' +data.id_review+ ' #dislike_review i').removeClass('text-primary');
+                    $('.review_rep-' +data.id_review+ ' #liked_review i').addClass('text-primary');
+                    
+                }else{
+                    $('.review_rep-' +data.id_review+ ' #liked_review i').removeClass('text-primary');
+                }
+                console.log('success like');
+                
+            }
+        });
+    }
+    function dislike_review_reply(id_review, e){
+        e.preventDefault();
+        $.ajax({
+            url: '{% url "news:dislike_review" %}',
+            data: {
+                'id_article': `{{ news.id }}`,
+                'id_review': id_review 
+            },
+            dataType: 'json',
+            success: function (data) {
+                
+                
+                $('.review_rep-' +data.id_review+ ' .count_dislike_review p').text(data.conut_dislike);
+                $('.review_rep-' +data.id_review+ ' .count_liked_review p').text(data.count_like);
+
+                if (data.user_dislike){
+                    $('.review_rep-' +data.id_review+ ' #liked_review i').removeClass('text-primary');
+                    $('.review_rep-' +data.id_review+ ' #dislike_review i').addClass('text-primary');
+                }else{
+                    $('.review_rep-' +data.id_review+ ' #dislike_review i').removeClass('text-primary')
+                }
+                console.log('success dislike');
+            }
+        });
+    }
 
 
 
