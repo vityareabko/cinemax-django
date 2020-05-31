@@ -55,7 +55,7 @@ class ArticleComment(TimeStampMixin, models.Model):
     id_user = models.ForeignKey(User, on_delete = models.CASCADE)
     id_article = models.ForeignKey(ParseMovieInfo, on_delete = models.CASCADE)
     id_parent = models.ForeignKey(
-        'self', verbose_name="Родитель", on_delete = models.SET_NULL, blank=True, null=True
+        'self', verbose_name="Родитель", on_delete = models.CASCADE, blank=True, null=True
     )
 
 

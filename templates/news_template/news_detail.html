@@ -156,14 +156,18 @@
                                                     <div id="{{ comment.id_article_id }}{{ comment.id }}" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
                                                         <div class="card-body_reply">
                                                             
+                                                            
+                                                            
                                                             {% for rev in comments_r %}
                                                                 {% if comment.id == rev.id_parent_id %}
-                                                                    <div class="media row mt-3">
+                                                                    <div class="media row mt-3 review_rep-{{rev.id}}">
+                                                                        
                                                                         <a class="d-flex col-md-2 pr-3" href="#!">
                                                                             <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
                                                                         </a>
                                                                         <div class="media-body col-md-10">
                                                                             <h5 class="mt-0">{% if not user.is_anonymous %}{% if rev.id_user.first_name %}{{ rev.id_user.first_name }}{% else %}{{ rev.id_user.username }}{% endif %}{% else %}Гiсть{% endif %}</h5>
+                                                                            
                                                                             <p id="review_for_page">{{ rev.comment }}</p>
                                                                             {% if not user.is_anonymous %}
                                                                                 {% if comment.id_user_id == user.id %}
@@ -300,7 +304,7 @@ const formID_edit = 'form#EditReview_form';
 
 
 function replyReview(name_user, id_review){
-    // console.log(id_review)
+    console.log(id_review)
     $(formID_reply + ' #contactparent').val(id_review);
     $(formID_reply + ' #comment_reply-'+id_review).val(name_user+', ');
 }
@@ -353,35 +357,46 @@ $(formID).on('submit', (e) => {
     
 });
 function CreateReview_reply(data){
-    $('.card-body_reply').append(
+    console.log('crrep: ',data.id_comment)
+    console.log('newsid: ', `{{ news.id }}`);
+    console.log('ccc: ', $(formID_reply + ' #contactparent').val())
+    var id_comment_not_id_reply = $(formID_reply + ' #contactparent').val();
+    var id_article = `{{ news.id }}`;
+    console.log(id_article+id_comment_not_id_reply)
+    
+    $('#'+id_article+id_comment_not_id_reply).append(
         `
-        <div class="media row mt-3">
-        <a class="d-flex col-md-2 pr-3" href="#!">
-            <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
-        </a>
-        <div class="media-body col-md-10">
-            <h5 class="mt-0">{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</h5>
-            <p id="review_for_page">`+data.comment+`</p>
-            <div class="d-flex justify-content-between">
-                <div class="d-flex">
-                    <a id="liked_review" class="text-muted" onclick="like_review(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-up"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0">`+data.count_liked+`</p></div>  
-                    <a id="dislike_review" class="text-muted" onclick="dislike_review(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0">`+data.count_dislike+`</p></div>
-                </div>
-                <div class="btn-gtoup dropleft">
-                    <button class="btn dropdown-toggle" style="background: none;"
-                            type="button" id="dropdownMenu1" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-ellipsis-h"></i>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu1" >
-                    
-                        <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review" onclick="puttext_review_and_put_id_review(`+data.comment+`, `+data.id_comment+`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
-                        <a class="dropdown-item text-danger" href="#" onclick="deleteReview(`+data.id_comment+`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
+            <div class="card-body_reply">
+                <div class="media row mt-3 review_rep-`+data.id_comment+`">
+                <a class="d-flex col-md-2 pr-3" href="#!">
+                    <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
+                </a>
+                <div class="media-body col-md-10">
+                  
+                    <h5 class="mt-0">{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</h5>
+                    <p id="review_for_page">`+data.comment+`</p>
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex">
+                            <a id="liked_review" class="text-muted" onclick="like_review(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-up"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0">`+data.count_liked+`</p></div>  
+                            <a id="dislike_review" class="text-muted" onclick="dislike_review(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0">`+data.count_dislike+`</p></div>
+                        </div>
+                        <div class="btn-gtoup dropleft">
+                            <button class="btn dropdown-toggle" style="background: none;"
+                                    type="button" id="dropdownMenu1" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu1" >
+                            
+                                <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review" onclick="puttext_review_and_put_id_review(`+data.comment+`, `+data.id_comment+`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
+                                <a class="dropdown-item text-danger" href="#" onclick="deleteReview(`+data.id_comment+`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
+                            </div>
+                        </div>
+                        
                     </div>
+                        
                 </div>
-                
             </div>
-                
         </div>
         
         
