@@ -386,7 +386,6 @@
 
         var id_comment_not_id_reply = $(formID_reply + ' #contactparent').val();
         var id_article = `{{ news.id }}`;
-
         
         $('#'+id_article+id_comment_not_id_reply).append(
             `
@@ -664,8 +663,7 @@
             dataType: 'json',
             success: function (data) {
                 
-                console.log('.review-' +data.id_review+ ' .count_dislike_review p')
-                console.log('.review-' +data.id_review+ ' .count_liked_review p')
+                
                 $('.review-' +data.id_review+ ' .count_dislike_review p').text(data.conut_dislike);
                 $('.review-' +data.id_review+ ' .count_liked_review p').text(data.count_like);
 

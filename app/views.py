@@ -47,7 +47,7 @@ class MoviesDetailView(View):
    
     def get(self, request, pk):
         movie = Film.objects.get(id=pk)
-        comments = Comments.objects.order_by('-id').filter(id_film_id=pk)
+        comments = Comments.objects.order_by('-id').filter(id_film_id=pk, id_parent_id = None)
         comments_r = Comments.objects.filter(id_film_id = movie.id, id_parent_id__isnull=False)
         article = ParseMovieInfo.objects.order_by('-id').all()
         context = {
@@ -220,9 +220,10 @@ class MovieListComments(View):
         if request.is_ajax():
             
             message = request.POST.get('comment') #
-
-            Comments( comment = message, id_film_id = pk_movie, id_user_id = pk_user ).save()
-
+            if request.POST.get('parent'):
+                Comments( comment = message, id_film_id = pk_movie, id_user_id = pk_user, id_parent_id = request.POST.get('parent') ).save()
+            else:
+                Comments( comment = message, id_film_id = pk_movie, id_user_id = pk_user ).save()
 
             id_comment = Comments.objects.order_by('-id').filter(comment=message, id_user_id = pk_user)
             

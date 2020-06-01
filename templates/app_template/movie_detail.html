@@ -147,13 +147,13 @@
                                                     <div class="card">
                                                         <div class="card-header" role="tab" id="headingTwo">
                                                             <h5 class="mb-0">
-                                                            <a class="collapsed" style="font-size: 16px;" data-toggle="collapse" href="#{{ comment.id_article_id }}{{ comment.id }}" aria-expanded="false" aria-controls="collapseTwo">
+                                                            <a class="collapsed" style="font-size: 16px;" data-toggle="collapse" href="#{{ comment.id_film_id }}{{ comment.id }}" aria-expanded="false" aria-controls="collapseTwo">
                                                                 Показати коментарі <i class="far fa-comment-dots"></i>
                                                             </a>
                                                             </h5>
                                                         </div>
-                                                        <div id="{{ comment.id_article_id }}{{ comment.id }}" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                            <div class="card-body_reply">
+                                                        <div id="{{ comment.id_film_id }}{{ comment.id }}" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                            <div class="card-body_reply p-2">
                                                                 
                                                                 
                                                                 
@@ -172,14 +172,14 @@
                                                                                     {% if comment.id_user_id == user.id %}
                                                                                         <div class="d-flex justify-content-between">
                                                                                             <div class="d-flex">
-                                                                                                <a id="liked_review" class="text-muted" onclick="like_review_reply(`{{ rev.id }}`, event)" href="#!">
+                                                                                                <a id="liked_review_reply" class="text-muted" onclick="like_review_reply(`{{ rev.id }}`, event)" href="#!">
                                                                                                     <i class="fas fa-thumbs-up {% if user in rev.liked.all %} text-primary {% endif %}"></i>
                                                                                                 </a> 
-                                                                                                <div class="ml-2 count_liked_review "><p class="m-0 p-0"> {{ rev.liked.all.count }}</p></div>  
-                                                                                                <a id="dislike_review" class="text-muted" onclick="dislike_review_reply(`{{ rev.id }}`, event)" href="#!">
+                                                                                                <div class="ml-2 count_liked_review_reply "><p class="m-0 p-0"> {{ rev.liked.all.count }}</p></div>  
+                                                                                                <a id="dislike_review_reply" class="text-muted" onclick="dislike_review_reply(`{{ rev.id }}`, event)" href="#!">
                                                                                                     <i class="fas fa-thumbs-down ml-2 {% if user in rev.dislike.all %} text-primary {% endif %}"></i>
                                                                                                 </a> 
-                                                                                                <div class="ml-2 count_dislike_review"><p class="m-0 p-0"> {{ rev.dislike.all.count }}</p></div>
+                                                                                                <div class="ml-2 count_dislike_review_reply"><p class="m-0 p-0"> {{ rev.dislike.all.count }}</p></div>
                                                                                                 {% comment %}
                                                                                                 <!-- <a class="ml-2" data-toggle="collapse" href="#reply-{{ rev.id }}" aria-expanded="false" aria-controls="collapseExample" onclick="replyReview('{% if rev.id_user.first_name %}{{ rev.id_user.first_name }}{% else %}{{ rev.id_user.username }}{% endif %}', '{{ rev.id }}')">
                                                                                                     відповісти <i class="fas fa-reply-all"></i>
@@ -202,8 +202,8 @@
                                                                                         </div>
                                                                                     {% else %}
                                                                                         <div class="d-flex">
-                                                                                            <a id="liked_review" class="text-muted" onclick="like_review(`{{ rev.id }}`, event)" href="#!"><i class="fas fa-thumbs-up {% if user in rev.liked.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0"> {{ rev.liked.all.count }}</p></div>
-                                                                                            <a id="dislike_review" class="text-muted" onclick="dislike_review(`{{ rev.id }}`, event)" href="#!"><i class="fas fa-thumbs-down ml-2 {% if user in rev.dislike.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0"> {{ rev.dislike.all.count }}</p></div>
+                                                                                            <a id="liked_review_reply" class="text-muted" onclick="like_review_reply(`{{ rev.id }}`, event)" href="#!"><i class="fas fa-thumbs-up {% if user in rev.liked.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_liked_review_reply "><p class="m-0 p-0"> {{ rev.liked.all.count }}</p></div>
+                                                                                            <a id="dislike_review_reply" class="text-muted" onclick="dislike_review_reply(`{{ rev.id }}`, event)" href="#!"><i class="fas fa-thumbs-down ml-2 {% if user in rev.dislike.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_dislike_review_reply"><p class="m-0 p-0"> {{ rev.dislike.all.count }}</p></div>
                                                                                             {% comment %}
                                                                                             <!-- <a class="ml-2" data-toggle="collapse" href="#reply-{{ rev.id }}" aria-expanded="false" aria-controls="collapseExample" onclick="replyReview('{% if rev.id_user.first_name %}{{ rev.id_user.first_name }}{% else %}{{ rev.id_user.username }}{% endif %}', '{{ rev.id }}')">
                                                                                                 відповісти <i class="fas fa-reply-all"></i>
@@ -212,11 +212,11 @@
                                                                                         </div>
                                                                                     {% endif %}
                                                                                     
-    
+
                                                                                 {% else %}
                                                                                     <div class="d-flex">
-                                                                                        <a id="liked_review" class="text-muted" href="{% url 'account_login' %}"><i class="fas fa-thumbs-up"></i></a><div class="ml-2 count_liked_review "><p class="m-0 p-0"> {{ rev.liked.all.count }}</p></div>
-                                                                                        <a id="dislike_review" class="text-muted" href="{% url 'account_login' %}"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0"> {{ rev.dislike.all.count }}</p></div>
+                                                                                        <a id="liked_review" class="text-muted" href="{% url 'account_login' %}"><i class="fas fa-thumbs-up"></i></a><div class="ml-2 count_liked_review_reply "><p class="m-0 p-0"> {{ rev.liked.all.count }}</p></div>
+                                                                                        <a id="dislike_review" class="text-muted" href="{% url 'account_login' %}"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review_reply"><p class="m-0 p-0"> {{ rev.dislike.all.count }}</p></div>
                                                                                     </div>
                                                                                 {% endif %}
                                                                             </div>
@@ -236,14 +236,14 @@
                                                                         </div>
                                                                     </div> -->
                                                                     {% endcomment %}
-                                                                    
+                                                                
                                                                 {% endfor %}
                                                                    
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </p>
-                                               <div class="collapse" id="reply-{{ comment.id }}">
+                                                <div class="collapse" id="reply-{{ comment.id }}">
                                                     <div class="card card-body">
                                                         <form id="formReview_reply" action="" method="POST">
                                                             {% csrf_token %}
@@ -343,6 +343,7 @@
         e.preventDefault();
         
         var formID_rep = '#reply-'+String($(formID_reply + ' #contactparent').val());
+        
         console.log(formID_rep);
         $.ajax({
             
@@ -389,8 +390,8 @@
     function CreateReview_reply(data){
 
         var id_comment_not_id_reply = $(formID_reply + ' #contactparent').val();
-        var id_article = `{{ news.id }}`;
-
+        var id_article = `{{ movie.id }}`;
+        
         
         $('#'+id_article+id_comment_not_id_reply).append(
             `
@@ -405,8 +406,8 @@
                         <p id="review_rep_for_page">`+data.comment+`</p>
                         <div class="d-flex justify-content-between">
                             <div class="d-flex">
-                                <a id="liked_review" class="text-muted" onclick="like_review_reply(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-up"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0">`+data.count_liked+`</p></div>  
-                                <a id="dislike_review" class="text-muted" onclick="dislike_review_reply(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0">`+data.count_dislike+`</p></div>
+                                <a id="liked_review_reply" class="text-muted" onclick="like_review_reply(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-up"></i></a> <div class="ml-2 count_liked_review_reply "><p class="m-0 p-0">`+data.count_liked+`</p></div>  
+                                <a id="dislike_review_reply" class="text-muted" onclick="dislike_review_reply(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review_reply"><p class="m-0 p-0">`+data.count_dislike+`</p></div>
                             </div>
                             <div class="btn-gtoup dropleft">
                                 <button class="btn dropdown-toggle" style="background: none;"
@@ -478,12 +479,12 @@
                         <div class="card">
                             <div class="card-header" role="tab" id="headingTwo">
                                 <h5 class="mb-0">
-                                <a class="collapsed" style="font-size: 16px;" data-toggle="collapse" href="#{{news.id}}`+data.id_comment+`" aria-expanded="false" aria-controls="collapseTwo">
+                                <a class="collapsed" style="font-size: 16px;" data-toggle="collapse" href="#{{movie.id}}`+data.id_comment+`" aria-expanded="false" aria-controls="collapseTwo">
                                     Показати коментарі <i class="far fa-comment-dots"></i>
                                 </a>
                                 </h5>
                             </div>
-                            <div id="{{news.id}}`+data.id_comment+`" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div id="{{movie.id}}`+data.id_comment+`" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
                                 <div class="card-body_reply">
                                 </div>
                             </div>
@@ -609,13 +610,13 @@
         $.ajax({
             url: '{% url "app:liked_review" %}',
             data: {
-                'id_article': `{{ news.id }}`,
+                'id_article': `{{ movie.id }}`,
                 'id_review': id_review 
             },
             dataType: 'json',
             success: function (data) {
-                console.log('success like');
-                console.log(data);
+                
+               
                 $('.review-' +data.id_review+ ' .count_dislike_review p').text(data.conut_dislike);
                 $('.review-' +data.id_review+ ' .count_liked_review p').text(data.count_like);
 
@@ -626,7 +627,7 @@
                 }else{
                     $('.review-' +data.id_review+ ' #liked_review i').removeClass('text-primary');
                 }
-                
+                console.log('success like');
             }
         });
     }
@@ -635,13 +636,13 @@
         $.ajax({
             url: '{% url "app:dislike_review" %}',
             data: {
-                'id_article': `{{ news.id }}`,
+                'id_article': `{{ movie.id }}`,
                 'id_review': id_review 
             },
             dataType: 'json',
             success: function (data) {
-                console.log('success dislike');
-                console.log(data);
+                
+                
                 $('.review-' +data.id_review+ ' .count_dislike_review p').text(data.conut_dislike);
                 $('.review-' +data.id_review+ ' .count_liked_review p').text(data.count_like);
 
@@ -651,6 +652,7 @@
                 }else{
                     $('.review-' +data.id_review+ ' #dislike_review i').removeClass('text-primary')
                 }
+                console.log('success dislike');
                 
             }
         });
@@ -661,54 +663,54 @@
         $.ajax({
             url: '{% url "app:liked_review" %}',
             data: {
-                'id_article': `{{ news.id }}`,
+                'id_article': `{{ movie.id }}`,
                 'id_review': id_review 
             },
             dataType: 'json',
             success: function (data) {
                 
         
-                $('.review_rep-' +data.id_review+ ' .count_dislike_review p').text(data.conut_dislike);
-                $('.review_rep-' +data.id_review+ ' .count_liked_review p').text(data.count_like);
+                $('.review_rep-' +data.id_review+ ' .count_dislike_review_reply p').text(data.conut_dislike);
+                $('.review_rep-' +data.id_review+ ' .count_liked_review_reply p').text(data.count_like);
 
                 if (data.user_liked){
-                    $('.review_rep-' +data.id_review+ ' #dislike_review i').removeClass('text-primary');
-                    $('.review_rep-' +data.id_review+ ' #liked_review i').addClass('text-primary');
+                    $('.review_rep-' +data.id_review+ ' #dislike_review_reply i').removeClass('text-primary');
+                    $('.review_rep-' +data.id_review+ ' #liked_review_reply i').addClass('text-primary');
                     
                 }else{
-                    $('.review_rep-' +data.id_review+ ' #liked_review i').removeClass('text-primary');
+                    $('.review_rep-' +data.id_review+ ' #liked_review_reply i').removeClass('text-primary');
                 }
                 console.log('success like');
                 
             }
         });
     }
-
     function dislike_review_reply(id_review, e){
         e.preventDefault();
         $.ajax({
             url: '{% url "app:dislike_review" %}',
             data: {
-                'id_article': `{{ news.id }}`,
+                'id_article': `{{ movie.id }}`,
                 'id_review': id_review 
             },
             dataType: 'json',
             success: function (data) {
                 
                 
-                $('.review_rep-' +data.id_review+ ' .count_dislike_review p').text(data.conut_dislike);
-                $('.review_rep-' +data.id_review+ ' .count_liked_review p').text(data.count_like);
+                $('.review_rep-' +data.id_review+ ' .count_dislike_review_reply p').text(data.conut_dislike);
+                $('.review_rep-' +data.id_review+ ' .count_liked_review_reply p').text(data.count_like);
 
                 if (data.user_dislike){
-                    $('.review_rep-' +data.id_review+ ' #liked_review i').removeClass('text-primary');
-                    $('.review_rep-' +data.id_review+ ' #dislike_review i').addClass('text-primary');
+                    $('.review_rep-' +data.id_review+ ' #liked_review_reply i').removeClass('text-primary');
+                    $('.review_rep-' +data.id_review+ ' #dislike_review_reply i').addClass('text-primary');
                 }else{
-                    $('.review_rep-' +data.id_review+ ' #dislike_review i').removeClass('text-primary')
+                    $('.review_rep-' +data.id_review+ ' #dislike_review_reply i').removeClass('text-primary')
                 }
                 console.log('success dislike');
             }
         });
     }
+
 </script>
     
 {% endblock %}
