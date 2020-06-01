@@ -162,7 +162,7 @@
                                                                         <div class="media-body col-md-10">
                                                                             <h5 class="mt-0">{% if not user.is_anonymous %}{% if rev.id_user.first_name %}{{ rev.id_user.first_name }}{% else %}{{ rev.id_user.username }}{% endif %}{% else %}Гiсть{% endif %}</h5>
                                                                             
-                                                                            <p id="review_for_page">{{ rev.comment }}</p>
+                                                                            <p id="review_rep_for_page">{{ rev.comment }}</p>
                                                                             {% if not user.is_anonymous %}
                                                                                 {% if comment.id_user_id == user.id %}
                                                                                     <div class="d-flex justify-content-between">
@@ -398,7 +398,7 @@
                     <div class="media-body col-md-10">
                     
                         <h5 class="mt-0">{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</h5>
-                        <p id="review_for_page">`+data.comment+`</p>
+                        <p id="review_rep_for_page">`+data.comment+`</p>
                         <div class="d-flex justify-content-between">
                             <div class="d-flex">
                                 <a id="liked_review" class="text-muted" onclick="like_review_reply(`+data.id_comment+`, event)" href="#!"><i class="fas fa-thumbs-up"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0">`+data.count_liked+`</p></div>  
@@ -588,7 +588,7 @@
     
     function update_review_reply_in_this_page(data){
         var value = data.review_edited;
-        $('.review_rep-'+data.id_review+' #review_for_page').text(value);
+        $('.review_rep-'+data.id_review+' #review_rep_for_page').text(value);
         
     }
     function update_review_in_this_page(data){
