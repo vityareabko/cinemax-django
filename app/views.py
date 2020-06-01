@@ -48,10 +48,12 @@ class MoviesDetailView(View):
     def get(self, request, pk):
         movie = Film.objects.get(id=pk)
         comments = Comments.objects.order_by('-id').filter(id_film_id=pk)
+        comments_r = Comments.objects.filter(id_film_id = movie.id, id_parent_id__isnull=False)
         article = ParseMovieInfo.objects.order_by('-id').all()
         context = {
             'movie': movie,
             'comments': comments,
+            'comments_r': comments_r,
             'article': article,
         }
         return render(request, 'app_template/movie_detail.html', context)

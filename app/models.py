@@ -122,7 +122,10 @@ class Comments(TimeStampMixin, models.Model):
     comment = models.TextField()
     id_film = models.ForeignKey(Film, on_delete = models.CASCADE)
     id_user = models.ForeignKey(User, on_delete = models.CASCADE)
-
+    id_parent = models.ForeignKey(
+        'self', verbose_name="Родитель", on_delete = models.CASCADE, blank=True, null=True
+    )
+    
     liked = models.ManyToManyField(User, default = None, blank = True, related_name = 'liked_movie_review')
     dislike = models.ManyToManyField(User, default = None, blank = True, related_name = 'dislike_movie_review')
 
