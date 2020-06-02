@@ -79,7 +79,7 @@ class Session(TimeStampMixin, models.Model): # сеанс
 
 class Sector(TimeStampMixin,models.Model): # сектор
     name_sector = models.CharField(max_length = 150)
-    id_hall = models.ForeignKey(Hall, on_delete = models.CASCADE)
+    id_hall = models.ManyToManyField(Hall)
     price_sector = models.PositiveIntegerField()
     def __str__(self):
         return self.name_sector
