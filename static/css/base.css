@@ -100,8 +100,24 @@ body{
         max-width: 720px;
     }
 }
-@media (min-width: 576px){
+@media (max-width: 576px){
     .container {
         max-width: 540px;
+    }
+    .logo{
+        font-size: 28px ;
+    }
+    .dropdown .droppdown_main{
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 320px){
+    
+    .logo{
+        font-size: 20px ;
+    }
+    .dropdown .droppdown_main{
+        font-size: 12px;
     }
 }

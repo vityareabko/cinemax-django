@@ -61,9 +61,11 @@ class MoviesDetailView(View):
 class ActorDetailView(View):
 
     def get(self, request, pk):
+        article = ParseMovieInfo.objects.order_by('-id').all()
         actor = Actor.objects.get(id=pk) 
         context = {
             'actor': actor,
+            'article': article,
         }
         return render(request, 'app_template/actor_detail.html', context)
 
@@ -100,8 +102,9 @@ class SessionsListView(View):
         week = Weekday.objects.order_by('-id').all()
         movies = Film.objects.order_by('-id').all()
         halls = Hall.objects.all()
+        news_list = ParseMovieInfo.objects.order_by('-id').all()
         context = {
-
+            'news_list': news_list,
             'active_vkladka': active_vkladka,
             'sessions': sessions,
             'movies': movies,

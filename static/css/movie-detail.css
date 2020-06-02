@@ -28,3 +28,18 @@
 .comment p{
     word-break: break-all;
 }
+
+@media (max-width: 767px){
+    #formReview{
+        order: 2;
+    }
+    .comments-list{
+        order: 1;
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 320px){
+    
+   
+}

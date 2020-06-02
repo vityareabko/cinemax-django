@@ -13,9 +13,30 @@
                     <img class="img-fluid " src="{{ actor.image.url }}" alt="poster">
                 </div>
                 <div class="col-md-9">
-                    <h3> Имя {{ actor.name }}</h3>
+                    <h3>{{ actor.name }}</h3> <br>
+                    <p>вік:  {{ actor.age }} <br></p>
+                    <p>місце народження: {{ actor.birthplace }} <br></p> 
+                    <p>громадянство:  {{ actor.citizenship }} <br></p>
+                    <p>кар’єра: {{ actor.career }} <br></p>
                 </div>
-            
+        </div>
+        <h4 class="my-4">Біографія</h4> 
+        {{ actor.biography }} <br>
+
+        <div class="row mt-5">
+                
+            {% for news in article|slice:"3" %}
+            <div class="col-4 ">
+                <div class="card my-4 bg-primary h-100">
+                    <div class="card-header">
+                        <a class="text-white" href="{% url 'news:news_detail' news.url %}">{{ news.title }}</a>
+                    </div>
+                    <div class="card-body text-white news_content">
+                        {{ news.short_describe }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
             
         </div>
     </div>

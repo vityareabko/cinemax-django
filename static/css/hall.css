@@ -5,20 +5,25 @@
     width: 100%;
 
 }
-
+.hall_tittle{
+    font-size: 24px;
+}
 .hall .hall_info{
-    font-size: 20px;
+    font-size: 18px;
 }
 .hall .num_hall{
     color: rgb(255, 95, 46);
     font-weight: bold;
 }
 .sector{
-   
-    padding: 5px 2px;
+    padding: 10px 6px;
+    white-space: nowrap;
     text-align: center;
     vertical-align: middle;
     transition: all 0.3s ease;
+}
+.place_num{
+    
 }
 
 .green_sector{

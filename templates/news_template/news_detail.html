@@ -3,7 +3,9 @@
 {% load static %}
 {% load account %}
 {% block title %}Новини{% endblock %}
-{% block stylesheet %} {% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/news_detail.css' %}">
+{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -32,7 +34,7 @@
             </div>
           </div>
         <div class="row mt-5">
-            <div class="col-md-4">
+            <div class="col-md-4 news-list">
                 <h4 class="mb-4">Новини</h4>
                 {% for new in news_list|slice:"3" %}
                     <div class="card text-white bg-primary mb-3 d-inline-block" >
@@ -45,7 +47,7 @@
                     </div>
                 {% endfor %}
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 comments-list">
                 <div id="accordion" role="tablist">
                     <div class="card">
                         <div class="card-header" role="tab" id="headingOne">
@@ -80,17 +82,17 @@
                                 </a> 
                             </h5>
                         </div>
-                        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <div id="collapseTwo" class="collapse show" role="tabpanel" aria-labelledby="headingTwo">
                             <div class="card-body_comment">
                                 
                                 {% for comment in comments%}
                                     
                                    
                                     <div class="row d-flex p-3 my-3 review-{{comment.id}}" >
-                                        <div class="col-md-2">
+                                        <div class="col-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">
                                             <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
                                         </div>
-                                        <div class="col-md-10 comment">
+                                        <div class="col-12 col-sm-10 col-md-10 col-lg-10 col-xl-10 comment">
                                             <strong>{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}</strong> <br>
                                             <p id="review_for_page">{{ comment.comment }}</p>
                                             {% if not user.is_anonymous %}
@@ -154,17 +156,17 @@
                                                             
                                                             {% for rev in comments_r %}
                                                                 {% if comment.id == rev.id_parent_id %}
-                                                                    <div class="media row mt-3 review_rep-{{rev.id}}">
+                                                                    <div class="media row mt-3 p-2 review_rep-{{rev.id}}">
                                                                         
-                                                                        <a class="d-flex col-md-2 pr-3" href="#!">
+                                                                        <a class="d-flex col-4 col-sm-2 col-md-2 col-lg-2 col-xl-2 pr-3" href="#!">
                                                                             <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
                                                                         </a>
-                                                                        <div class="media-body col-md-10">
+                                                                        <div class="media-body  col-8 col-sm-10 col-md-10 col-lg-10 col-xl-10">
                                                                             <h5 class="mt-0">{% if not user.is_anonymous %}{% if rev.id_user.first_name %}{{ rev.id_user.first_name }}{% else %}{{ rev.id_user.username }}{% endif %}{% else %}Гiсть{% endif %}</h5>
                                                                             
                                                                             <p id="review_rep_for_page">{{ rev.comment }}</p>
                                                                             {% if not user.is_anonymous %}
-                                                                                {% if comment.id_user_id == user.id %}
+                                                                                {% if rev.id_user_id == user.id %}
                                                                                     <div class="d-flex justify-content-between">
                                                                                         <div class="d-flex">
                                                                                             <a id="liked_review_reply" class="text-muted" onclick="like_review_reply(`{{ rev.id }}`, event)" href="#!">
@@ -391,11 +393,11 @@
         $('#'+id_article+id_comment_not_id_reply).append(
             `
                 <div class="card-body_reply">
-                    <div class="media row mt-3 review_rep-`+data.id_comment+`">
-                    <a class="d-flex col-md-2 pr-3" href="#!">
+                    <div class="media row mt-3 p-2 review_rep-`+data.id_comment+`">
+                    <a class="d-flex col-4 col-sm-2 col-md-2 col-lg-2 col-xl-2 pr-3 pr-3" href="#!">
                         <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
                     </a>
-                    <div class="media-body col-md-10">
+                    <div class="media-body col-8 col-sm-10 col-md-10 col-lg-10 col-xl-10">
                     
                         <h5 class="mt-0">{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</h5>
                         <p id="review_rep_for_page">`+data.comment+`</p>
@@ -432,10 +434,10 @@
         $('.card-body_comment').prepend(
             `
             <div class="row d-flex p-3 my-3 review-`+data.id_comment+`" >
-                <div class="col-md-2">
+                <div class="col-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">
                     <img class="img-fluid" src="{% static 'img/user.png' %}" alt="user">
                 </div>
-                <div class="col-md-10 comment">
+                <div class="col-12 col-sm-10 col-md-10 col-lg-10 col-xl-10 comment">
                     <strong>{% if user.is_anonymous %}Гiсть{% else %}{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}{% endif %}</strong> <br>
                     <p id="review_for_page">` +data['comment']+ `</p>
                     {% if not user.is_anonymous %}

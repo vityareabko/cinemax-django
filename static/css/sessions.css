@@ -10,6 +10,7 @@
     font-size: 24px;
     margin: 0;
     padding: 0;
+    width: 100%;
     
 }
 .sessions-tabs .days .day{
@@ -41,4 +42,58 @@
     color: #fff;
     background-color: #183071;
     
+}
+.sessions-tabs .days .day:nth-child(7){
+    margin-right: 0px;
+}
+
+.news_content{
+    overflow: auto;
+    height: 200px;
+}
+.card_news{
+    height: 600px;
+}
+
+@media (min-width: 1200px){
+    .container {
+        max-width: 1140px;
+    }
+}
+@media (min-width: 992px){
+    .container {
+        max-width: 960px;
+    }
+}
+@media (min-width: 768px){
+    .container {
+        max-width: 720px;
+    }
+    .sessions-top{
+        font-size: 24px;
+    }
+    .sessions-tabs .days{
+        font-size: 18px;
+    }
+    .movie_name{
+        font-size: 14px;
+    }
+    .movie_name__link{
+        font-size: 12px;
+    }
+}
+@media (max-width: 576px){
+    .container {
+        max-width: 540px;
+    }
+    .sessions-tabs .days{
+       
+       
+    }
+    
+}
+
+@media (max-width: 320px){
+    
+   
 }

@@ -1,0 +1,15 @@
+
+@media (max-width: 767px){
+    .news-list{
+        order: 2;
+    }
+    .comments-list{
+        order: 1;
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 320px){
+    
+   
+}
