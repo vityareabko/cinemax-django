@@ -5,7 +5,8 @@ from .models import Film, Hall, Time_Sessions, Session, Place, Ticket, Sector, G
 
 class FilmAdmin(admin.ModelAdmin):
     list_display = [ field.name for field in Film._meta.fields if field.name != "desc"]
-
+    search_fields = ['contry', 'year']
+    list_filter = ['contry', 'year', 'created_at']
     class Meta:
         model = Film
 
@@ -18,13 +19,15 @@ class HallAdmin(admin.ModelAdmin):
 
 class CommentsAdmin(admin.ModelAdmin):
     list_display = [ field.name for field in Comments._meta.fields]
-
+    search_fields = ['id_user__username']
+    list_filter = ['created_at']
     class Meta:
         model = Comments
 
 class SessionAdmin(admin.ModelAdmin):
     list_display = [ field.name for field in Session._meta.fields]
-
+    search_fields = ['id_film__name', 'id_hall__number_hall']
+    list_filter = ['id_film__name', 'id_hall__number_hall']
     class Meta:
         model = Session
 
@@ -43,19 +46,21 @@ class SectorAdmin(admin.ModelAdmin):
 
 class PlaceAdmin(admin.ModelAdmin):
     list_display = [ field.name for field in Place._meta.fields ]
-
+    search_fields = ['row_number',]
+    list_filter = ['id_hall__number_hall']
     class Meta:
         model = Place
 
 class GenreAdmin(admin.ModelAdmin):
     list_display = [ field.name for field in Genre._meta.fields]
-
+    search_fields = ['name',]
+    
     class Meta:
         model = Genre
 
 class ActorAdmin(admin.ModelAdmin):
     list_display = [ field.name for field in Actor._meta.fields if field.name != "biography"]
-
+    search_fields = ['name',]
     class Meta:
         model = Actor
 
