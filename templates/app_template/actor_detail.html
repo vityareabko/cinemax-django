@@ -26,7 +26,7 @@
         <div class="row mt-5">
                 
             {% for news in article|slice:"3" %}
-            <div class="col-4 ">
+            <div class="col-12 mt-3 mt-md-0 col-md-4">
                 <div class="card my-4 bg-primary h-100">
                     <div class="card-header">
                         <a class="text-white" href="{% url 'news:news_detail' news.url %}">{{ news.title }}</a>
