@@ -332,7 +332,7 @@
     const formID_edit_reply = 'form#EditReview_reply_form';
 
     function replyReview(name_user, id_review){
-        console.log(id_review)
+        // console.log(id_review)
         $(formID_reply + ' #contactparent').val(id_review);
         $(formID_reply + ' #comment_reply-'+id_review).val(name_user+', ');
     }
@@ -356,7 +356,9 @@
                 console.log(data)
                 console.log('success')
                 CreateReview_reply(data);
-                $(formID_reply + ' .comment_reply').val('');
+                $(formID_rep + ' .comment_reply').val('');
+                
+                $(formID_rep).toggleClass('show');
                 
                 
             }
@@ -378,6 +380,7 @@
                 console.log(data)
                 CreateReview(data);
                 $(formID + ' #comment').val('');
+                
                 
                 
             }
@@ -507,6 +510,7 @@
             success: function(data){
                 
                 update_review_in_this_page(data);
+                
                 $(formID_edit).trigger("reset");
                 $('#edit_review').modal('hide');
                 console.log('success edited');
