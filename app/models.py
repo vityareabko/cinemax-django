@@ -56,10 +56,72 @@ class Hall(TimeStampMixin, models.Model): # зал
     number_hall = models.IntegerField()
     number_of_row = models.IntegerField()
     number_of_seats_in_a_row = models.IntegerField()
-    spaciousness = models.IntegerField()
+    spaciousness = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.number_hall)
+
+    def save(self, *args, **kwargs):
+        self.spaciousness = self.number_of_row * self.number_of_seats_in_a_row
+        super(Hall, self).save(*args, **kwargs)
+
+
+        k = 1
+        Place.objects.filter(id_hall_id = self.id).delete()
+        sectors = Sector.objects.all()
+
+
+
+        
+
+
+        # for i in range(1, self.number_of_row+1):
+        #     for j in range(1, self.number_of_seats_in_a_row+1):
+        #         if k <= divmod(self.spaciousness, 3)[0]:
+        #             Place(place_number = j, row_number = i, id_hall_id = self.id, id_sector_id = 1).save()
+                
+        #         if k > divmod(self.spaciousness,3)[0] and k <= (divmod(self.spaciousness,3)[0]+divmod(self.spaciousness,3)[0]):
+        #             Place(place_number = j, row_number = i, id_hall_id = self.id, id_sector_id = 2).save()
+                 
+        #         if k > (divmod(self.spaciousness,3)[0]+divmod(self.spaciousness,3)[0]) and k <= self.spaciousness:
+        #             Place(place_number = j, row_number = i, id_hall_id = self.id, id_sector_id = 3).save()
+        #         k+=1
+
+        # for i in range(1, self.number_of_row+1):
+        #     for j in range(1, self.number_of_seats_in_a_row+1):
+        #         if k <= self.spaciousness // 3:
+        #             Place(place_number = j, row_number = i, id_hall_id = self.id, id_sector_id = 1).save()
+                
+        #         if k > self.spaciousness // 3 and k <= self.spaciousness // 1.5:
+        #             Place(place_number = j, row_number = i, id_hall_id = self.id, id_sector_id = 2).save()
+                 
+        #         if k > self.spaciousness // 1.5 and k <= self.spaciousness:
+        #             Place(place_number = j, row_number = i, id_hall_id = self.id, id_sector_id = 3).save()
+        #         k+=1
+                    
+       
+        
+        k = 1
+        n = 0
+        s = 1
+        for i in sectors:
+            
+            for j in  range(k, (self.number_of_row // ((sectors.count()-n)) )+1):
+                
+                for z in range(1, self.number_of_seats_in_a_row+1):
+                    Place(place_number = s, row_number = j, id_hall_id = self.id, id_sector_id = i.id).save()
+                    s += 1
+                k+=1
+                # print(k)
+                
+                
+            n += 1
+    
+            
+                
+                
+
+
 
 class Time_Sessions(TimeStampMixin, models.Model):
     time = models.TimeField()
@@ -155,3 +217,15 @@ class DislikeReviewMovie(TimeStampMixin, models.Model):
 
     def __str__(self):
         return str(self.id_review)
+
+
+# from django.db.models.signals import post_save
+# from django.contrib.auth.models import User
+# from django.db import models
+
+# def created_hall(sender, instance, created, **kwargs):
+#     if created:
+#         Hall.objects.create(user = instance)
+#         print("createв hall")
+
+# post_save.connect(created_hall, sender=User)
