@@ -13,7 +13,9 @@ a{
 body{
 
 }
-
+.btn{
+    outline: none;
+}
 
 .footer{
     background: linear-gradient(265.6deg, #C72424 -18.27%, #133174 102.06%);
@@ -83,6 +85,7 @@ body{
     background: none;
     border: none;
     color: #fff;
+    outline: none;
 }
 
 @media (min-width: 1200px){
