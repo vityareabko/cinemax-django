@@ -60,67 +60,37 @@ class Hall(TimeStampMixin, models.Model): # зал
 
     def __str__(self):
         return str(self.number_hall)
+        
+    
+        
 
     def save(self, *args, **kwargs):
         self.spaciousness = self.number_of_row * self.number_of_seats_in_a_row
         super(Hall, self).save(*args, **kwargs)
 
-
         k = 1
         Place.objects.filter(id_hall_id = self.id).delete()
         sectors = Sector.objects.all()
 
+        d, r = divmod(self.number_of_row, sectors.count())
+        arr = [d + (1 if i < r else 0) for i in range(sectors.count())]
 
+        # print(arr)
 
-        
-
-
-        # for i in range(1, self.number_of_row+1):
-        #     for j in range(1, self.number_of_seats_in_a_row+1):
-        #         if k <= divmod(self.spaciousness, 3)[0]:
-        #             Place(place_number = j, row_number = i, id_hall_id = self.id, id_sector_id = 1).save()
-                
-        #         if k > divmod(self.spaciousness,3)[0] and k <= (divmod(self.spaciousness,3)[0]+divmod(self.spaciousness,3)[0]):
-        #             Place(place_number = j, row_number = i, id_hall_id = self.id, id_sector_id = 2).save()
-                 
-        #         if k > (divmod(self.spaciousness,3)[0]+divmod(self.spaciousness,3)[0]) and k <= self.spaciousness:
-        #             Place(place_number = j, row_number = i, id_hall_id = self.id, id_sector_id = 3).save()
-        #         k+=1
-
-        # for i in range(1, self.number_of_row+1):
-        #     for j in range(1, self.number_of_seats_in_a_row+1):
-        #         if k <= self.spaciousness // 3:
-        #             Place(place_number = j, row_number = i, id_hall_id = self.id, id_sector_id = 1).save()
-                
-        #         if k > self.spaciousness // 3 and k <= self.spaciousness // 1.5:
-        #             Place(place_number = j, row_number = i, id_hall_id = self.id, id_sector_id = 2).save()
-                 
-        #         if k > self.spaciousness // 1.5 and k <= self.spaciousness:
-        #             Place(place_number = j, row_number = i, id_hall_id = self.id, id_sector_id = 3).save()
-        #         k+=1
-                    
-       
-        
         k = 1
         n = 0
-        s = 1
+        place_num = 1
+
         for i in sectors:
-            
-            for j in  range(k, (self.number_of_row // ((sectors.count()-n)) )+1):
-                
+            for j in  range(k, arr[n]+k):
                 for z in range(1, self.number_of_seats_in_a_row+1):
-                    Place(place_number = s, row_number = j, id_hall_id = self.id, id_sector_id = i.id).save()
-                    s += 1
+                    Place(place_number = place_num, row_number = j, id_hall_id = self.id, id_sector_id = i.id).save()
+                    place_num += 1
                 k+=1
                 # print(k)
                 
                 
             n += 1
-    
-            
-                
-                
-
 
 
 class Time_Sessions(TimeStampMixin, models.Model):
