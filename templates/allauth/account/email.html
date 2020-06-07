@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock %}
 {% block content %}
-  <div class="container w-50 bg-white p-5">
+  <div class="container bg-white p-5 wrap_email mx-auto">
     <h3 class="mb-3 mt-5">{% trans "E-mail Addresses" %}</h3>
     {% if user.emailaddress_set.all %}
       <p>{% trans 'The following e-mail addresses are associated with your account:' %}</p>
@@ -30,13 +30,11 @@
                 </label>
             </div>
           {% endfor %}
-
-          <div class="btn-group" role="group">
-                <button class="secondaryAction text-white btn btn-success" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button> <br>
-                <button class="secondaryAction text-white btn btn-primary" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button> <br>
-                <button class="primaryAction text-white  btn btn-danger" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
-          </div>
-
+            <div class="d-sm-flex">
+                <button class="secondaryAction text-white btn btn-success form-control mr-3" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button> <br>
+                <button class="primaryAction text-white  btn btn-danger form-control mt-3 mt-sm-0" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
+            </div>
+            <button class="secondaryAction text-white btn btn-primary form-control mt-3" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button> <br>
         </fieldset>
       </form>
 

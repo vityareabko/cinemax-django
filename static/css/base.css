@@ -87,6 +87,13 @@ body{
     color: #fff;
     outline: none;
 }
+.wrap_login{
+    width: 300px;
+    
+}
+.wrap_email{
+    width: 500px;
+}
 
 @media (min-width: 1200px){
     .container {
@@ -112,6 +119,9 @@ body{
     }
     .dropdown .droppdown_main{
         font-size: 14px;
+    }
+    .wrap_email{
+        width: 300px;
     }
 }
 
