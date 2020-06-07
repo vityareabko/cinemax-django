@@ -26,6 +26,8 @@ body{
     background-repeat: no-repeat;
     background-position: top;
 }   
-body .container{
+.wrap_login{
+    width: 300px;
     
 }
+
