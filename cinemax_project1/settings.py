@@ -52,6 +52,8 @@ INSTALLED_APPS = [
 
     'app',
     'news',
+    'chat',
+
     'embed_video',
 ]
 
