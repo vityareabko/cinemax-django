@@ -119,25 +119,19 @@
             'ws://'+window.location.host+'/ws/chat/' + roomName + '/'
         );
 
-        chatSocket.onmessage = function(e) {
+        chatSocket.onopen = function(e){
+            fetchMessages()
+        }
 
+        chatSocket.onmessage = function(e) {
             var data = JSON.parse(e.data);
-            var message = data['message'];
-            var author = message['author'];
-            var msgListTag = document.createElement('li');
-            var imgTag = document.createElement('img');
-            var pTag = document.createElement('p');
-            pTag.textContent = message.content;
-            imgTag.src = 'http://emilcarlsson.se/assets/harveyspecter.png';
-            if (author === username){
-                msgListTag.className = 'sent';
+            if (data['command'] === 'messages'){
+                for (let i = 0; i < data['messages'].length; i++){
+                    createMessages(data['messages'][i]);
+                }
+            }else if (data['command'] === 'new_message'){
+                createMessages(data['message'])
             }
-            else{
-                msgListTag.className = 'replies';
-            }
-            msgListTag.appendChild(imgTag);
-            msgListTag.appendChild(pTag);
-            document.querySelector('#chat-log').appendChild(msgListTag);
         };
 
         chatSocket.onclose = function(e) {
@@ -152,7 +146,7 @@
         };
 
         document.querySelector('#chat-message-submit').onclick = function(e) {
-            const messageInputDom = document.querySelector('#chat-message-input');
+            const messageInputDom = document.getElementById('chat-message-input');
             const message = messageInputDom.value;
             chatSocket.send(JSON.stringify({
                 
@@ -163,6 +157,27 @@
             }));
             messageInputDom.value = '';
         };
+
+        function fetchMessages(){
+            chatSocket.send(JSON.stringify({'command': 'fetch_messages'}));
+        }
+        function createMessages(data){
+            var author = data['author'];
+            var msgListTag = document.createElement('li');
+            var imgTag = document.createElement('img');
+            var pTag = document.createElement('p');
+            pTag.textContent = data.content;
+            imgTag.src = 'http://emilcarlsson.se/assets/harveyspecter.png';
+            if (author === username){
+                msgListTag.className = 'sent';
+            }
+            else{
+                msgListTag.className = 'replies';
+            }
+            msgListTag.appendChild(imgTag);
+            msgListTag.appendChild(pTag);
+            document.querySelector('#chat-log').appendChild(msgListTag);
+        }
     </script>
 
 
