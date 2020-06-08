@@ -35,6 +35,8 @@ AUTHENTICATION_BACKENDS = (
 )
 
 INSTALLED_APPS = [
+    'channels',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,6 +54,7 @@ INSTALLED_APPS = [
 
     'app',
     'news',
+    'chatroom',
     
     'embed_video',
 ]
@@ -87,8 +90,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'cinemax_project1.wsgi.application'
-
-
+ASGI_APPLICATION = "cinemax_project1.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
