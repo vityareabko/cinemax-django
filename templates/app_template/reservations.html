@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <!-- <div class="container">
         <div class="reservation-info mt-5">
             <p class="movie">
                 <strong>  Фільм </strong> - {{ movie.name }} 
@@ -45,12 +45,147 @@
                 
                 <button type="submit" class="btn btn-primary">Забронювати</button>
                 
-            </form>
+            </form> -->
             <!-- <a href="{% url 'app:home' %}" class="btn btn-danger mt-2" >Відміна</a> -->
             
-            
+            <!-- ............................................................................................................... -->
+
+            <table class="body-wrap">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td class="container" width="600">
+                            <div class="content">
+                                <table class="main" width="100%" cellpadding="0" cellspacing="0">
+                                    <tbody>
+                                        <tr>
+                                            <td class="content-wrap aligncenter">
+                                                <table width="100%" cellpadding="0" cellspacing="0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="content-block">
+                                                                <h1>Cinemax</h1>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="content-block">
+                                                                <table class="invoice">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <table class="invoice-items" cellpadding="0" cellspacing="0">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td class="text-right pr-2">Фільм: </td>
+                                                                                            <td class=""> {{ movie.name }} </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="text-right pr-2">Дата показу: </td>
+                                                                                            <td class=""> {{ session.session_date }}  </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="text-right pr-2">Час сеансу: </td>
+                                                                                            <td class=""> {{ time_sessions.time }}  </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="text-right pr-2">зал №: </td>
+                                                                                            <td class=""> {{ num_hall }} </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="text-right pr-2">Ряд: </td>
+                                                                                            <td class=""> {{ place.row_number }}  </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="text-right pr-2">Місце в залі: </td>
+                                                                                            <td class=""> {{ place.place_number }}  </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="text-right pr-2">Ціна сеансу: </td>
+                                                                                            <td class=""> {{ session.price_session }} ₴  </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="text-right pr-2">Ціна за сектор: </td>
+                                                                                            <td class=""> {{ sector.price_sector }} ₴ </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <table class="invoice-items" cellpadding="0" cellspacing="0">
+                                                                                    <tbody>
+                                                                                        
+                                                                                        <tr>
+                                                                                            <td>Кінцева ціна</td>
+                                                                                            <td class="alignright"> </td>
+                                                                                        </tr>
+                                                                                        <tr class="total">
+                                                                                            <td class="alignright" width="80%">Total</td>
+                                                                                            <td class="alignright"> {{ price_total }} ₴ </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <form method="POST" accept-charset="utf-8" action="https://www.liqpay.ua/api/3/checkout">
+                                                                                                    <input type="hidden" name="data" value="eyJ2ZXJzaW9uIjozLCJhY3Rpb24iOiJwYXkiLCJwdWJsaWNfa2V5IjoiaTMzNDU4MDIyMzk0IiwiYW1vdW50IjoiNSIsImN1cnJlbmN5IjoiVUFIIiwiZGVzY3JpcHRpb24iOiLQnNC+0Lkg0YLQvtCy0LDRgCIsInR5cGUiOiJidXkiLCJsYW5ndWFnZSI6InJ1In0=" />
+                                                                                                    <input type="hidden" name="signature" value="H0nvr4dW8BGRCsMtpestPzTH1oo=" />
+                                                                                                    <button style="border: none !important; display:inline-block !important;text-align: center !important;padding: 7px 20px !important;
+                                                                                                        color: #fff !important; font-size:16px !important; font-weight: 600 !important; font-family:OpenSans, sans-serif; cursor: pointer !important; border-radius: 2px !important;
+                                                                                                        background: rgb(122,183,43) !important;"onmouseover="this.style.opacity='0.5';" onmouseout="this.style.opacity='1';">
+                                                                                                        <img src="https://static.liqpay.ua/buttons/logo-small.png" name="btn_text"
+                                                                                                            style="margin-right: 7px !important; vertical-align: middle !important;"/>
+                                                                                                        <span style="vertical-align:middle; !important">Оплатить 15 UAH</span>
+                                                                                                    </button>
+                                                                                                </form>
+                                                                                                
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
         </div>
     </div>
+    <div id="liqpay_checkout"></div>
+    <script>
+    window.LiqPayCheckoutCallback = function() {
+        LiqPayCheckout.init({
+        data:"eyAidmVyc2lvbiIgOiAzLCAicHVibGljX2tleSIgOiAieW91cl9wdWJsaWNfa2V5IiwgImFjdGlv" + 
+            "biIgOiAicGF5IiwgImFtb3VudCIgOiAxLCAiY3VycmVuY3kiIDogIlVTRCIsICJkZXNjcmlwdGlv" + 
+            "biIgOiAiZGVzY3JpcHRpb24gdGV4dCIsICJvcmRlcl9pZCIgOiAib3JkZXJfaWRfMSIgfQ==",
+        signature: "QvJD5u9Fg55PCx/Hdz6lzWtYwcI=",
+        embedTo: "#liqpay_checkout",
+        mode: "embed" // embed || popup,
+        }).on("liqpay.callback", function(data){
+                console.log(data.status);
+                console.log(data);
+                }).on("liqpay.ready", function(data){
+                    // ready
+                }).on("liqpay.close", function(data){
+                    // close
+            });
+    };
+    </script>
+    <script src="//static.liqpay.ua/libjs/checkout.js" async></script>
 {% endblock  %}
 
 {% block js %}  
