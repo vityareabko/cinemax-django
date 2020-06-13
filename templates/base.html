@@ -1,4 +1,4 @@
-{% load static %} {% load account %}{% load i18n %}
+{% load static %} {% load account %}{% load i18n %}{% load i18n app_tag %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +42,30 @@
                       <span class="line"></span>
                     </h1>
                   </div>
+
+
+
+
+                  <form action="{% url 'set_language' %}" method="post">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ redirect_to }}">
+                    <select name="language">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                                {{ language.name_local }} ({{ language.code }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="Go">
+                  </form>
+
+
+
+
+                  
                   <div class="{% if not user.is_anonymous %}col-4 {% endif %} auth">
                     {% if user.is_authenticated %}
                       <div class="dropdown">
