@@ -19,6 +19,8 @@ urlpatterns = [
     path('liked_review/', app_views.Liked_Review.as_view(), name="liked_review"),
     path('dislike_review/', app_views.Dislike_Review.as_view(), name="dislike_review"),
     
+
+    
     
 ]
 # <int:pk_place>/<int:pk_sector>/<int:pk_session>

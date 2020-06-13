@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.base import View
-from django.http import Http404, HttpResponseRedirect, JsonResponse
+from django.http import Http404,HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 
 from django.core.mail import send_mail
@@ -18,10 +18,6 @@ class MoviesListView(View):
     # context_object_name = "film_list"
     # template_name = "app_template/homepage.html"
     def get(self, request):
-        
-    
-        
-
 
 
         movie = Film.objects.order_by('-id').all()
@@ -29,8 +25,14 @@ class MoviesListView(View):
         count_movie = 0
         for i in movie:
             count_movie += 1
-        movie_hero = Film.objects.get(id = random.randint(1, count_movie))
 
+        T = True
+        while T: 
+            try:
+                movie_hero = Film.objects.get(id = random.randint(1, count_movie))
+                T = False
+            except:
+                pass    
         context = {
             'film_list': movie,
             'movie_hero': movie_hero,
@@ -135,13 +137,19 @@ class ReserveListView(View):
             
         }
         return render(request, 'app_template/hall.html', context)
-    
+
+
+from .mybarcode import MyBarcodeDrawing
+import base64
 class ReservationView(View):
+    
     
 
     def get(self, request, pk_movie, pk_session, number_hall, pk_place, pk_sector):
-
-        
+        d = MyBarcodeDrawing("HELLO WORLD")
+        binaryStuff = d.asString('gif')
+            
+        test = d
 
         movie = Film.objects.get(id=pk_movie)
         session = Session.objects.get(id=pk_session)
@@ -158,6 +166,9 @@ class ReservationView(View):
 
         price_total = price_sess + price_sect
 
+    
+
+
         context = {
             'movie': movie,
             'session': session,
@@ -166,9 +177,12 @@ class ReservationView(View):
             'num_hall': num_hall,
             'time_sessions': time_sessions,
             'price_total': price_total,
+            'test': base64.decodestring(binaryStuff) 
         }
 
         return render( request, 'app_template/reservations.html', context )
+        
+        
 
 class ReserveDoneView(View):
     def get(self, request, pk_session, pk_place, total_sum):

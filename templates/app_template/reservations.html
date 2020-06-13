@@ -4,6 +4,9 @@
 {% block title %}Зал{% endblock %}
 
 {% block stylesheet %} 
+    <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+39+Extended+Text" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'code-39-font-master/code39_XLL.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/reservations.css' %}">
 {% endblock %}
 
@@ -49,6 +52,9 @@
             <!-- <a href="{% url 'app:home' %}" class="btn btn-danger mt-2" >Відміна</a> -->
             
             <!-- ............................................................................................................... -->
+            <div >321321321</div>
+            <div style="font-family: 'Libre Barcode 39 Extended Text', cursive;" class="code_39_S">1232132132</div>
+
 
             <table class="body-wrap">
                 <tbody>
@@ -107,6 +113,12 @@
                                                                                             <td class="text-right pr-2">Ціна за сектор: </td>
                                                                                             <td class=""> {{ sector.price_sector }} ₴ </td>
                                                                                         </tr>
+                                                                                        <tr>
+                                                                                            
+                                                                                            <!-- <img src="{{ test }}" alt=""> -->
+                                                                                           
+                                                                                        </tr>
+                                                                                        
                                                                                     </tbody>
                                                                                 </table>
                                                                             </td>
