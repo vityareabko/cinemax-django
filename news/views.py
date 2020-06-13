@@ -73,16 +73,21 @@ def Parser(request):
     return HttpResponseRedirect( reverse('news:movie_news', args=()))
     ################################################## endpareser
 from django.core.paginator import Paginator
-
-class MovieNewsList(View): #### парсить дание в когда час будет 13:00 или вроде того, идет проверка если интервал времени входит в 13:00 до 14:00 до парсит дание только один раз, нужно сделать доп. проверку
-    def get(self, request, page_number = 1):
-        news_list = ParseMovieInfo.objects.order_by('-id').all()
-        current_page = Paginator(news_list,6)
-        context = {
-            'news_list': current_page.page(page_number),
+from django.views.generic import ListView
+class MovieNewsList(ListView): #### парсить дание в когда час будет 13:00 или вроде того, идет проверка если интервал времени входит в 13:00 до 14:00 до парсит дание только один раз, нужно сделать доп. проверку
+    model = ParseMovieInfo
+    # context_object_name = 'posts'
+    template_name = 'news_template/news.html'
+    paginate_by = 5
+    
+    # def get(self, request):
+    #     news_list = ParseMovieInfo.objects.order_by('-id').all()
+    #     current_page = Paginator(news_list,6)
+    #     context = {
+    #         'news_list': current_page.page(page_number),
             
-        }
-        return render(request, 'news_template/news.html', context)
+    #     }
+    #     return render(request, 'news_template/news.html', context)
 
 class NewsDetail(View):
     def get(self, request, url_news):
