@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock %}
 {% block content %}
-  <div class="container bg-white p-5 wrap_email mx-auto">
+  <div class="container bg-white p-5 wrap_email mx-auto" style="margin-bottom: 100vh;">
     <h3 class="mb-3 mt-5">{% trans "E-mail Addresses" %}</h3>
     {% if user.emailaddress_set.all %}
       <p>{% trans 'The following e-mail addresses are associated with your account:' %}</p>

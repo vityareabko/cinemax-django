@@ -47,6 +47,9 @@
     margin-right: 0px;
 }
 
+.news{
+    margin-bottom: 100px;
+}
 .news_content{
     overflow: auto;
     height: 200px;
