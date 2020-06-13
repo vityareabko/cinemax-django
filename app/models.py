@@ -31,6 +31,7 @@ class Actor(TimeStampMixin, models.Model ): # актеры и режисеры
     biography = models.TextField("Биография")
     image = models.ImageField(upload_to = 'actors/')
 
+    draft = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

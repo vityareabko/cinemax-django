@@ -8,65 +8,71 @@
 
 {% block content %}
 
-    <div class="sessions">
-        <div class="container">
-            <h3 class="sessions-top mt-5">
-                Розклад фільмів в кінотеатрі СINEMAX 
-            </h3>
-            <div class="sessions-tabs d-flex align-items-center">
-                <nav class="days d-flex flex-wrap flex-xl-nowrap flex-lg-nowrap flex-md-nowrap flex-sm-nowrap ">
-                    
-                    {% for day in week %}  
-                        <a href="#{{ day.weekday_en }}" class="day tabs-item {% if day.weekday_en == active_vkladka %} active {% endif %}">{{ day.weekday }}</a></li>
-                    {% endfor %}
-                </nav>
-                <span class="line"></span> 
-            </div>
-            {% for day in week %}
-                <div id="{{day.weekday_en}}" class="sessions-bottom mt-5 tabs-content {% if day.weekday_en == active_vkladka %} visible {% endif %} ">
-                    <em >{{day.date}}</em> <br>
-                    <div class="row text-center mt-5">
+    <div class="sessions sessions_bg_left ">
+        <div class="sessions_bg_right">
+            <div class="container bg-white_a py-3 my-3">
+                <h3 class="sessions-top mt-5">
+                    Розклад фільмів в кінотеатрі СINEMAX 
+                </h3>
+                <div class="sessions-tabs d-flex align-items-center">
+                    <nav class="days d-flex flex-wrap flex-xl-nowrap flex-lg-nowrap flex-md-nowrap flex-sm-nowrap ">
                         
-                        {% for movie in movies %}
-                        
-                            <div class="col-md-2 mb-5">
-                                <h6 class="movie_name">{{ movie.name }}</h6> <br>
-                                {% for sess in sessions %}
-                                    {% if day.date == sess.session_date %}
-                                    
-                                        {% if sess.id_film_id == movie.id %}
-                                            <a href="{% url 'app:reserve' sess.id_hall_id sess.id_film_id sess.id %}" class="movie_name__link mt-2">
-                                                {{ sess.id_time_session.time }}
-                                                зал № 
-                                                {{ sess.id_hall.number_hall }}
-                                            </a> <br> 
-                                        {% endif %}  
-
-                                    
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-
+                        {% for day in week %}  
+                            <a href="#{{ day.weekday_en }}" class="day tabs-item {% if day.weekday_en == active_vkladka %} active {% endif %}">{{ day.weekday }}</a></li>
                         {% endfor %}
-                    </div>
+                    </nav>
+                    <span class="line"></span> 
                 </div>
-            {% endfor %}
-            <div class="row news">
-                
-                {% for news in news_list|slice:"3" %}
-                <div class="col-12 col-md-4 ">
-                    <div class="card my-4 bg-primary h-100">
-                        <div class="card-header">
-                            <a class="text-white" href="{% url 'news:news_detail' news.url %}">{{ news.title }}</a>
-                        </div>
-                        <div class="card-body text-white news_content">
-                            {{ news.short_describe }}
+                {% for day in week %}
+                    <div id="{{day.weekday_en}}" class="sessions-bottom mt-5 tabs-content {% if day.weekday_en == active_vkladka %} visible {% endif %} ">
+                        <em >{{day.date}}</em> <br>
+                        <div class="row text-center mt-5">
+                            
+                            {% for movie in movies %}
+                            
+                                <div class="col-md-2 mb-5">
+                                    <h6 class="movie_name">{{ movie.name }}</h6> <br>
+                                    {% for sess in sessions %}
+                                        {% if day.date == sess.session_date %}
+                                        
+                                            {% if sess.id_film_id == movie.id %}
+                                                <a href="{% url 'app:reserve' sess.id_hall_id sess.id_film_id sess.id %}" class="movie_name__link mt-2">
+                                                    {{ sess.id_time_session.time }}
+                                                    зал № 
+                                                    {{ sess.id_hall.number_hall }}
+                                                </a> <br> 
+                                            {% endif %}  
+
+                                        
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+
+                            {% endfor %}
                         </div>
                     </div>
-                </div>
                 {% endfor %}
                 
             </div>
+
+            <div class="container  news ">
+                <div class="row">
+                    
+                    {% for news in news_list|slice:"3" %}
+                    <div class="col-12 col-md-4 mb-3">
+                        <div class="card my-4 bg-light h-100">
+                            <div class="card-header">
+                                <a class="text-muted" href="{% url 'news:news_detail' news.url %}">{{ news.title }}</a>
+                            </div>
+                            <div class="card-body text-muted news_content">
+                                {{ news.short_describe }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
         </div>
       
 

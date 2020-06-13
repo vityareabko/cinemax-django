@@ -1,4 +1,17 @@
 
+
+
+
+
+
+.news_dtail_bg{
+    background-image: url('../img/3.png');
+    background-size: initial;
+    background-repeat: no-repeat;
+    /* transform: rotateX(90deg); */
+    background-position: top;
+}
+
 @media (max-width: 767px){
     .news-list{
         order: 2;

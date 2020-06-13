@@ -1,3 +1,20 @@
+.sessions_bg_right{
+    background-image: url('../img/1.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    /* transform: rotateX(90deg); */
+    background-position: right;
+}
+.sessions_bg_left{
+    background-image: url('../img/3.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    /* transform: rotateX(90deg); */
+    background-position: left;
+}
+.bg-white_a{
+    background-color: rgba(255,255,255,0.5);
+}
 .sessions-tabs{
     margin-top: 30px;
     margin-bottom: 30px;

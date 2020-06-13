@@ -2,6 +2,21 @@
     margin-top: 50px;
     margin-bottom: 50px;
 }
+.movie_detail_left::after{
+    content: '';
+    background-image: url('../img/4.png');
+    background-size: initial;
+    background-repeat: no-repeat;
+    /* transform: rotateX(90deg); */
+    background-position: right;
+}
+.movie_review_bg{
+    background-image: url('../img/1.png');
+    background-size: initial;
+    background-repeat: no-repeat;
+    /* transform: rotateX(90deg); */
+    background-position: top;
+}
 
 /* .movie .desc{
     display: block;
@@ -36,6 +51,9 @@
     .comments-list{
         order: 1;
         margin-bottom: 30px;
+    }
+    .movie_detail_bg{
+        display: none;
     }
 }
 

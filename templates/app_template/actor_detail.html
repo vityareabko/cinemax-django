@@ -3,12 +3,13 @@
 {% load static %}
 {% block title %}{{ actor.name }}{% endblock %}
 {% block stylesheet %}
-
+    <link rel="stylesheet" href="{% static 'css/actor.css' %}">
 {% endblock %}
 
 {% block content %}
-    <div class="container mb-5">
-        <div class="row mt-5 actor-info">
+    <div class="bg_detail">
+        <div class="container mb-5">
+            <div class="row mt-5 actor-info">
                 <div class="col-md-3">
                     <img class="img-fluid " src="{{ actor.image.url }}" alt="poster">
                 </div>
@@ -19,19 +20,21 @@
                     <p>громадянство:  {{ actor.citizenship }} <br></p>
                     <p>кар’єра: {{ actor.career }} <br></p>
                 </div>
+            </div>
+            <h4 class="my-4">Біографія</h4> 
+            {{ actor.biography }} <br>
         </div>
-        <h4 class="my-4">Біографія</h4> 
-        {{ actor.biography }} <br>
-
+    </div>
+    <div class="container">
         <div class="row mt-5">
                 
             {% for news in article|slice:"3" %}
-            <div class="col-12 mt-3 mt-md-0 col-md-4">
-                <div class="card my-4 bg-primary h-100">
+            <div class="col-12 mt-3 mt-md-0 col-md-4 mb-4">
+                <div class="card my-4 bg-light h-100">
                     <div class="card-header">
-                        <a class="text-white" href="{% url 'news:news_detail' news.url %}">{{ news.title }}</a>
+                        <a class="text-muted" href="{% url 'news:news_detail' news.url %}">{{ news.title }}</a>
                     </div>
-                    <div class="card-body text-white news_content">
+                    <div class="card-body text-muted news_content">
                         {{ news.short_describe }}
                     </div>
                 </div>

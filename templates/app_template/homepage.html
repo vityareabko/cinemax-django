@@ -35,12 +35,20 @@
                         </p>
                         <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "><strong>актори: </strong>
                             {% for actor in movie_hero.actor.all %}
-                                <a href="{% url 'app:actor_detail' actor.id %}"> {{ actor.name }}</a>,
+                                {% if not actor.draft %}                         
+                                    <a class="text-primary" href="{% url 'app:actor_detail' actor.id %}">{{ actor.name }}</a>,
+                                {% else %}
+                                    <a class="text-white link_draft" href="#!">{{ actor.name }}</a>,
+                                {% endif %}     
                             {% endfor %}
                         </p>
                         <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "><strong>режисер: </strong>
                             {% for director in movie_hero.directors.all %}
-                                <a href="{% url 'app:actor_detail' director.id %}"> {{ director.name }}</a>
+                                {% if not director.draft %}  
+                                    <a class="text-primary" href="{% url 'app:actor_detail' director.id %}">{{ director.name }}</a>
+                                {% else %}
+                                    <a class="text-white link_draft" href="#!">{{ director.name }}</a>,
+                                {% endif %} 
                             {% endfor %}
                         </p>
                         <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "> <strong>Прем’єра: </strong> {{ movie_hero.premiere }} </p>

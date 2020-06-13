@@ -1,0 +1,7 @@
+.bg_detail{
+    background-image: url('../img/1.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    /* transform: rotateX(90deg); */
+    background-position: right;
+}

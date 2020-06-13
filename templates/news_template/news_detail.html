@@ -8,9 +8,10 @@
 {% endblock %}
 
 {% block content %}
+    
     <div class="container">
         <div class="card mt-5">
-            <div class="card-header">
+            <div class="card-header ">
                 <h4>{{news.title}}</h4>
                 <p class="mr-5">{{ news.created_at }}</p>
             </div>
@@ -33,7 +34,7 @@
                 </div>
             </div>
           </div>
-        <div class="row mt-5">
+        <div class="row mt-5 ">
             <div class="col-md-4 news-list">
                 <h4 class="mb-4">Новини</h4>
                 {% for new in news_list|slice:"3" %}
@@ -47,7 +48,7 @@
                     </div>
                 {% endfor %}
             </div>
-            <div class="col-md-8 comments-list">
+            <div class="col-md-8 comments-list news_dtail_bg">
                 <div id="accordion" role="tablist">
                     <div class="card">
                         <div class="card-header" role="tab" id="headingOne">
@@ -83,7 +84,7 @@
                             </h5>
                         </div>
                         <div id="collapseTwo" class="collapse show" role="tabpanel" aria-labelledby="headingTwo">
-                            <div class="card-body_comment">
+                            <div class="card-body_comment ">
                                 
                                 {% for comment in comments%}
                                     
