@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Film, Hall, Time_Sessions, Session, Place, Ticket, Sector, Genre, Actor, Weekday, Comments
+from .models import Film, Hall, Time_Sessions, Session, Place, Ticket, Sector, Genre, Actor, Weekday, Comments, Name_Cinema
 from modeltranslation.admin import TranslationAdmin
 
 
@@ -82,6 +82,7 @@ admin.site.register(Sector, SectorAdmin)
 admin.site.register(Genre, GenreAdmin)
 admin.site.register(Actor, ActorAdmin)
 admin.site.register(Weekday)
+admin.site.register(Name_Cinema)
 
 # admin.site.register(Weekday)
 

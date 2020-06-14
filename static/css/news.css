@@ -1,7 +1,11 @@
+
 .news_bg{
     background-image: url('../img/2.png');
     background-size: contain;
     background-repeat: no-repeat;
     /* transform: rotateX(90deg); */
     background-position: right;
+}
+.block_wrapper{
+    flex-grow: 1;
 }

@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 # TimeField() хранит время
 # TextField()
 
+
+
 class TimeStampMixin(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
@@ -189,6 +191,11 @@ class DislikeReviewMovie(TimeStampMixin, models.Model):
     def __str__(self):
         return str(self.id_review)
 
+class Name_Cinema(TimeStampMixin, models.Model):
+    name_cinema = models.CharField(max_length = 50)
+
+    def __str__(self):
+        return self.name_cinema
 
 # from django.db.models.signals import post_save
 # from django.contrib.auth.models import User

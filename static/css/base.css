@@ -10,9 +10,20 @@ li{
 a{
     text-decoration: none;
 }
+html{
+    height: 100%
+}
 body{
     /* overflow: hidden; */
     font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100%
+}
+footer{
+    
+    
+    flex-grow: 1;
 }
 ::-webkit-scrollbar {
     width: 1px;

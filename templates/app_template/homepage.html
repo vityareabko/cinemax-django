@@ -1,7 +1,7 @@
 
 {% extends "base.html" %}
 
-{% load static i18n %}
+{% load static i18n app_tag %}
 {% block title %}Главная{% endblock %}
 {% block stylesheet %} 
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/> -->
@@ -68,7 +68,7 @@
 
     <div class="container">
         <h1 class="title">
-            {% trans "Зараз у кінотеатрі" %}
+            {% trans "Зараз у кінотеатрі" %} 
         </h1>
         
         <div class="cards">

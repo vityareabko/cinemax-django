@@ -77,15 +77,19 @@ class SessionsListView(View):
         tday = date.today()
         num_week_day = date.today().weekday()
         sessions = Session.objects.all()
+        # print(tday)
 
         ##########################################################
         days = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'нд']
+        days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
         k = 0
+        
         ################################################################################ - баги на сервере может быть потому что этот кусок кода удаляет из таблицы даные и записывает их снова и снова
         # Weekday.objects.all().delete()
         for i in range(0, len(days)):
+            print(Weekday.objects.filter(weekday = days[num_week_day + i]))
             try:
-                Weekday.objects.filter(weekday = days[num_week_day + i]).update(date = tday + datetime.timedelta(days=i))
+                Weekday.objects.filter(weekday = days[num_week_day + i], weekday_en = days[num_week_day + i]).update(date = tday + datetime.timedelta(days=i))
                 # Weekday(weekday = days[num_week_day + i], date = tday + datetime.timedelta(days=i)).save()
                 k += 1
             except Exception:

@@ -1,4 +1,4 @@
-{% load static %} {% load account %}{% load i18n %}{% load i18n app_tag %}
+{% load static app_tag %} {% load account %}{% load i18n %}{% load i18n app_tag %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +38,7 @@
                   <div class="col-4">
                     <h1 class="logo">
                       <span class="line"></span>
-                      <a href="{% url 'app:home' %}">Cinemax</a>
+                      <a href="{% url 'app:home' %}">{% cinema_tag %}</a>
                       <span class="line"></span>
                     </h1>
                   </div>
@@ -143,7 +143,7 @@
                 <div class="col-4">
                   <h1 class="logo">
                     <span class="line"></span>
-                    <a href="{% url 'app:home' %}">Cinemax</a>
+                    <a href="{% url 'app:home' %}">{% cinema_tag %}</a>
                     <span class="line"></span>
                   </h1>
                 </div>
