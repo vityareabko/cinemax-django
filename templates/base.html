@@ -42,30 +42,11 @@
                       <span class="line"></span>
                     </h1>
                   </div>
-
-
-
-
-                  <form action="{% url 'set_language' %}" method="post">
-                    {% csrf_token %}
-                    <input name="next" type="hidden" value="{{ redirect_to }}">
-                    <select name="language">
-                        {% get_current_language as LANGUAGE_CODE %}
-                        {% get_available_languages as LANGUAGES %}
-                        {% get_language_info_list for LANGUAGES as languages %}
-                        {% for language in languages %}
-                            <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
-                                {{ language.name_local }} ({{ language.code }})
-                            </option>
-                        {% endfor %}
-                    </select>
-                    <input type="submit" value="Go">
-                  </form>
-
-
-
-
                   
+                  
+                  
+                  
+ 
                   <div class="{% if not user.is_anonymous %}col-4 {% endif %} auth">
                     {% if user.is_authenticated %}
                       <div class="dropdown">
@@ -93,6 +74,7 @@
                       
                     {% endif %}
                   </div>
+                 
                   <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                   </button>
@@ -115,8 +97,10 @@
                           <li class="nav-item">
                             <a class="nav-link" href="{% url 'account_signup' %}">Зареєструватися</a>
                           </li>
+                          
                         {% endif %}
                       </ul>
+                      
                     </div>
                   </div>
                   
@@ -151,11 +135,11 @@
         {% endif %} -->
     
           
-          <div class="header-wrap ">
+          <div class="header-wrap d-flex align-items-center justify-content-between">
             
               
                 
-              <nav class="d-flex align-items-center justify-content-center navbar-expand-lg navbar-dark w-100 row">
+              <nav class=" navbar-expand-lg navbar-dark w-100 ">
                 <div class="col-4">
                   <h1 class="logo">
                     <span class="line"></span>
@@ -164,7 +148,24 @@
                   </h1>
                 </div>
               </nav>
-          
+              <form id="form_lang" action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+              
+                <input name="next" type="hidden" value="{{ redirect_to }}">
+                <select id="mounth" class="select_send_form" name="language">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    
+                    {% for language in languages %}
+                        <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                            {{ language.name_local }} ({{ language.code }})
+                        </option>
+                    {% endfor %}
+                    
+                </select>
+               
+              </form>
               
             
               
@@ -207,11 +208,77 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script>
+      $('.select_send_form').on('change', function () {
+        console.log('changed')
+        $(this.form).submit();
+      });
+
+
+  $('select').each(function(){
+    var $this = $(this), numberOfOptions = $(this).children('option').length;
+  
+    $this.addClass('select-hidden'); 
+    $this.wrap('<div class="select"></div>');
+    $this.after('<div class="select-styled"></div>');
+    
+    var $styledSelect = $this.next('div.select-styled');
+    $styledSelect.text($this.children('option').eq(0).text());
+  
+    var $list = $('<ul />', {
+        'class': 'select-options'
+    }).insertAfter($styledSelect);
+  
+    for (var i = 0; i < numberOfOptions; i++) {
+        $('<li />', {
+            text: $this.children('option').eq(i).text(),
+            rel: $this.children('option').eq(i).val()
+        }).appendTo($list);
+    }
+  
+    var $listItems = $list.children('li');
+  
+    $styledSelect.click(function(e) {
+      
+        e.stopPropagation();
+        $('div.select-styled.active').not(this).each(function(){
+            $(this).removeClass('active').next('ul.select-options').hide();
+        });
+        $(this).toggleClass('active').next('ul.select-options').toggle();
+        
+        
+    });
+  
+    $listItems.click(function(e) {
+      
+        // $('#form_lang').submit();
+        
+        
+        e.stopPropagation();
+        $styledSelect.text($(this).text()).removeClass('active');
+        $this.val($(this).attr('rel'));
+        $('#form_lang select option').val($(this).attr('rel'))
+        $('#form_lang').submit();
+        $list.hide();
+        console.log($('#form_lang select option').val());
+        console.log($(this).attr('rel'));
+    });
+  
+    $(document).click(function() {
+        $styledSelect.removeClass('active');
+        $list.hide();
+    });
+
+  });
+    </script>
+
     {% block js %}{% endblock %}
     {% block extra_body %}
     {% endblock %}
-    <script src="{% static 'js/main.js' %}"></script>
     
+    <script src="{% static 'js/main.js' %}"></script>
+      
+
     
 </body>
 

@@ -4,10 +4,10 @@
 .hero{
     min-height: 90vh;
     min-width: 100vw;
-    background: transparent;
+    /* background: transparent; */
     z-index: 2;
     padding: 100px 0;
-    background: rgb(0,0,0,0.6);
+    /* background: rgb(0,0,0,0.6); */
 }
 
   
@@ -138,6 +138,9 @@
 @media (min-width: 576px){
     .container {
         max-width: 540px;
+    }
+    .hero{
+        height: auto;
     }
 }
 
