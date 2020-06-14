@@ -60,13 +60,19 @@ def Parser(request):
                 T = False
         if T:
             tit = trans.translate(title[iter].text, src = 'ru', dest='uk').text
+            tit_en = trans.translate(title[iter].text, src = 'ru', dest='en').text
             sh_d = trans.translate(short_describe[iter].text, src = 'ru', dest='uk').text
+            sh_d_en = trans.translate(short_describe[iter].text, src = 'ru', dest='en').text
             full_d = trans.translate(full_content_text[iter], src = 'ru', dest='uk').text
+            full_d_en = trans.translate(full_content_text[iter], src = 'ru', dest='en').text
             ParseMovieInfo(
                 title = tit,
+                title_en = tit_en,
                 date = dat[iter].text, 
                 short_describe = sh_d,
+                short_describe_en = sh_d_en,
                 full_describe = full_d, 
+                full_describe_en = full_d_en, 
                 url = str(url_more[iter].get('href')).replace('/', '')
             ).save()
     

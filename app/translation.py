@@ -8,11 +8,11 @@ class GenreTranslationOptions(TranslationOptions):
 
 @register(Actor)
 class ActorTranslationOptions(TranslationOptions):
-    fields = ('biography',)
+    fields = ('biography','name', 'birthplace', 'citizenship', 'career',)
 
 @register(Film)
 class FilmTranslationOptions(TranslationOptions):
-    fields = ('name', 'desc',)
+    fields = ('name', 'desc', 'contry',)
 
 @register(Sector)
 class SectorTranslationOptions(TranslationOptions):

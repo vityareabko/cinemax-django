@@ -45,7 +45,7 @@ class Film(TimeStampMixin, models.Model): # Фильм
     genre = models.ManyToManyField(Genre, verbose_name="жанры")
     actor = models.ManyToManyField(Actor, verbose_name="актеры", related_name="film_actor")
     directors = models.ManyToManyField(Actor, verbose_name="режиссер", related_name="film_director")
-    premiere = models.CharField(max_length = 150)
+    premiere = models.DateField(default=None)
     budget = models.PositiveIntegerField()
     image = models.ImageField(upload_to = 'posters/')
     url_trailer = models.CharField(max_length=200)
