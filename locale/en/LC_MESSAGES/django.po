@@ -1,0 +1,688 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-14 21:52+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\templates\allauth\account\account_inactive.html:5
+#: .\templates\allauth\account\account_inactive.html:9
+msgid "Account Inactive"
+msgstr ""
+
+#: .\templates\allauth\account\account_inactive.html:11
+msgid "This account is inactive."
+msgstr ""
+
+#: .\templates\allauth\account\email.html:5
+#: .\templates\allauth\account\email.html:11
+msgid "E-mail Addresses"
+msgstr ""
+
+#: .\templates\allauth\account\email.html:13
+msgid "The following e-mail addresses are associated with your account:"
+msgstr ""
+
+#: .\templates\allauth\account\email.html:25
+msgid "Verified"
+msgstr ""
+
+#: .\templates\allauth\account\email.html:27
+msgid "Unverified"
+msgstr ""
+
+#: .\templates\allauth\account\email.html:29
+msgid "Primary"
+msgstr ""
+
+#: .\templates\allauth\account\email.html:34
+msgid "Make Primary"
+msgstr ""
+
+#: .\templates\allauth\account\email.html:35
+#: .\templates\allauth\socialaccount\connections.html:35
+msgid "Remove"
+msgstr ""
+
+#: .\templates\allauth\account\email.html:37
+msgid "Re-send Verification"
+msgstr ""
+
+#: .\templates\allauth\account\email.html:42
+msgid "Warning:"
+msgstr ""
+
+#: .\templates\allauth\account\email.html:42
+msgid ""
+"You currently do not have any e-mail address set up. You should really add "
+"an e-mail address so you can receive notifications, reset your password, etc."
+msgstr ""
+
+#: .\templates\allauth\account\email.html:45
+msgid "Add E-mail Address"
+msgstr ""
+
+#: .\templates\allauth\account\email.html:50
+msgid "Add E-mail"
+msgstr ""
+
+#: .\templates\allauth\account\email.html:59
+msgid "Do you really want to remove the selected e-mail address?"
+msgstr ""
+
+#: .\templates\allauth\account\email_confirm.html:6
+#: .\templates\allauth\account\email_confirm.html:10
+msgid "Confirm E-mail Address"
+msgstr ""
+
+#: .\templates\allauth\account\email_confirm.html:16
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
+"address for user %(user_display)s."
+msgstr ""
+
+#: .\templates\allauth\account\email_confirm.html:20
+msgid "Confirm"
+msgstr ""
+
+#: .\templates\allauth\account\email_confirm.html:27
+#, python-format
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please <a href="
+"\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr ""
+
+#: .\templates\allauth\account\login.html:6
+#: .\templates\allauth\account\login.html:17
+#: .\templates\allauth\account\login.html:30
+msgid "Sign In"
+msgstr ""
+
+#: .\templates\allauth\account\login.html:31
+msgid "Forgot Password?"
+msgstr ""
+
+#: .\templates\allauth\account\login.html:39
+#, python-format
+msgid ""
+" Please sign in with on of your existing third party accounts. Or, <a href="
+"\"%(signup_url)s\">sign up</a> for a %(site_name)s"
+msgstr ""
+
+#: .\templates\allauth\account\login.html:49
+msgid "or"
+msgstr ""
+
+#: .\templates\allauth\account\login.html:56
+#, python-format
+msgid ""
+"If you have not created an account yet, then please\n"
+"          <a href=\"%(signup_url)s\">sign up</a> first."
+msgstr ""
+
+#: .\templates\allauth\account\login.html:61
+#, python-format
+msgid ""
+"Если вы еще не создали аккаунт, пожалуйста, \n"
+"            <a href=\"%(signup_url)s\">зарегистрируйтесь</a>"
+msgstr ""
+
+#: .\templates\allauth\account\logout.html:5
+#: .\templates\allauth\account\logout.html:8
+#: .\templates\allauth\account\logout.html:17 .\templates\base.html:184
+#: .\templates\base.html:199
+msgid "Sign Out"
+msgstr ""
+
+#: .\templates\allauth\account\logout.html:10 .\templates\base.html:192
+msgid "Are you sure you want to sign out?"
+msgstr ""
+
+#: .\templates\allauth\account\password_change.html:5
+#: .\templates\allauth\account\password_change.html:11
+#: .\templates\allauth\account\password_change.html:17
+#: .\templates\allauth\account\password_reset_from_key.html:4
+#: .\templates\allauth\account\password_reset_from_key.html:10
+#: .\templates\allauth\account\password_reset_from_key_done.html:4
+#: .\templates\allauth\account\password_reset_from_key_done.html:10
+msgid "Change Password"
+msgstr ""
+
+#: .\templates\allauth\account\password_reset.html:6
+#: .\templates\allauth\account\password_reset.html:12
+#: .\templates\allauth\account\password_reset_done.html:8
+#: .\templates\allauth\account\password_reset_done.html:12
+msgid "Password Reset"
+msgstr ""
+
+#: .\templates\allauth\account\password_reset.html:17
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll send you "
+"an e-mail allowing you to reset it."
+msgstr ""
+
+#: .\templates\allauth\account\password_reset.html:27
+msgid "Reset My Password"
+msgstr ""
+
+#: .\templates\allauth\account\password_reset.html:30
+msgid "Please contact us if you have any trouble resetting your password."
+msgstr ""
+
+#: .\templates\allauth\account\password_reset_done.html:18
+msgid ""
+"We have sent you an e-mail. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: .\templates\allauth\account\password_reset_from_key.html:10
+msgid "Bad Token"
+msgstr ""
+
+#: .\templates\allauth\account\password_reset_from_key.html:14
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
+msgstr ""
+
+#: .\templates\allauth\account\password_reset_from_key.html:25
+msgid "change password"
+msgstr ""
+
+#: .\templates\allauth\account\password_reset_from_key.html:28
+#: .\templates\allauth\account\password_reset_from_key_done.html:11
+msgid "Your password is now changed."
+msgstr ""
+
+#: .\templates\allauth\account\password_set.html:5
+#: .\templates\allauth\account\password_set.html:9
+#: .\templates\allauth\account\password_set.html:19
+msgid "Set Password"
+msgstr ""
+
+#: .\templates\allauth\account\signup.html:5
+#: .\templates\allauth\socialaccount\signup.html:5
+msgid "Signup"
+msgstr ""
+
+#: .\templates\allauth\account\signup.html:13
+#: .\templates\allauth\account\signup.html:23
+#: .\templates\allauth\socialaccount\signup.html:8
+#: .\templates\allauth\socialaccount\signup.html:19
+msgid "Sign Up"
+msgstr ""
+
+#: .\templates\allauth\account\signup.html:14
+#: .\templates\allauth\account\signup.html:27
+#, python-format
+msgid ""
+"Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgstr ""
+
+#: .\templates\allauth\account\signup_closed.html:5
+#: .\templates\allauth\account\signup_closed.html:8
+msgid "Sign Up Closed"
+msgstr ""
+
+#: .\templates\allauth\account\signup_closed.html:10
+msgid "We are sorry, but the sign up is currently closed."
+msgstr ""
+
+#: .\templates\allauth\account\snippets\already_logged_in.html:5
+msgid "Note"
+msgstr ""
+
+#: .\templates\allauth\account\snippets\already_logged_in.html:5
+#, python-format
+msgid "you are already logged in as %(user_display)s."
+msgstr ""
+
+#: .\templates\allauth\account\verification_sent.html:5
+#: .\templates\allauth\account\verification_sent.html:8
+#: .\templates\allauth\account\verified_email_required.html:5
+#: .\templates\allauth\account\verified_email_required.html:8
+msgid "Verify Your E-mail Address"
+msgstr ""
+
+#: .\templates\allauth\account\verification_sent.html:10
+msgid ""
+"We have sent an e-mail to you for verification. Follow the link provided to "
+"finalize the signup process. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: .\templates\allauth\account\verified_email_required.html:12
+msgid ""
+"This part of the site requires us to verify that\n"
+"you are who you claim to be. For this purpose, we require that you\n"
+"verify ownership of your e-mail address. "
+msgstr ""
+
+#: .\templates\allauth\account\verified_email_required.html:16
+msgid ""
+"We have sent an e-mail to you for\n"
+"verification. Please click on the link inside this e-mail. Please\n"
+"contact us if you do not receive it within a few minutes."
+msgstr ""
+
+#: .\templates\allauth\account\verified_email_required.html:20
+#, python-format
+msgid ""
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
+"mail address</a>."
+msgstr ""
+
+#: .\templates\allauth\openid\login.html:9
+msgid "OpenID Sign In"
+msgstr ""
+
+#: .\templates\allauth\socialaccount\authentication_error.html:5
+#: .\templates\allauth\socialaccount\authentication_error.html:8
+msgid "Social Network Login Failure"
+msgstr ""
+
+#: .\templates\allauth\socialaccount\authentication_error.html:10
+msgid ""
+"An error occurred while attempting to login via your social network account."
+msgstr ""
+
+#: .\templates\allauth\socialaccount\connections.html:5
+#: .\templates\allauth\socialaccount\connections.html:8
+msgid "Account Connections"
+msgstr ""
+
+#: .\templates\allauth\socialaccount\connections.html:11
+msgid ""
+"You can sign in to your account using any of the following third party "
+"accounts:"
+msgstr ""
+
+#: .\templates\allauth\socialaccount\connections.html:43
+msgid ""
+"You currently have no social network accounts connected to this account."
+msgstr ""
+
+#: .\templates\allauth\socialaccount\connections.html:46
+msgid "Add a 3rd Party Account"
+msgstr ""
+
+#: .\templates\allauth\socialaccount\login_cancelled.html:5
+#: .\templates\allauth\socialaccount\login_cancelled.html:9
+msgid "Login Cancelled"
+msgstr ""
+
+#: .\templates\allauth\socialaccount\login_cancelled.html:13
+#, python-format
+msgid ""
+"You decided to cancel logging in to our site using one of your existing "
+"accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s"
+"\">sign in</a>."
+msgstr ""
+
+#: .\templates\allauth\socialaccount\signup.html:10
+#, python-format
+msgid ""
+"You are about to use your %(provider_name)s account to login to\n"
+"%(site_name)s. As a final step, please complete the following form:"
+msgstr ""
+
+#: .\templates\app_template\actor_detail.html:18
+msgid "вік"
+msgstr "age"
+
+#: .\templates\app_template\actor_detail.html:19
+msgid "місце народження"
+msgstr "Place of birth"
+
+#: .\templates\app_template\actor_detail.html:20
+msgid "громадянство"
+msgstr "citizenship"
+
+#: .\templates\app_template\actor_detail.html:21
+msgid "кар’єра"
+msgstr "Premiere"
+
+#: .\templates\app_template\actor_detail.html:24
+msgid "Біографія"
+msgstr "Biography"
+
+#: .\templates\app_template\hall.html:15
+msgid "Забронюйте місце на фільм"
+msgstr "Book a place for a movie"
+
+#: .\templates\app_template\hall.html:18
+msgid "Сеанс почнеться на"
+msgstr "The session will start on"
+
+#: .\templates\app_template\hall.html:18
+msgid "в залі"
+msgstr "in the hall"
+
+#: .\templates\app_template\hall.html:18
+msgid "під номером"
+msgstr "under the number"
+
+#: .\templates\app_template\hall.html:24
+msgid "Увага"
+msgstr "Warning"
+
+#: .\templates\app_template\hall.html:24
+msgid ""
+"Місця розташовані тут не як в залі, тому будьте обережні з вибором місця"
+msgstr ""
+"The seats here are not like in the hall, so be careful when choosing a place"
+
+#: .\templates\app_template\homepage.html:30
+#: .\templates\app_template\movie_detail.html:19
+msgid "Тривалість фільма"
+msgstr "Duration"
+
+#: .\templates\app_template\homepage.html:31
+#: .\templates\app_template\movie_detail.html:20
+msgid "Країна"
+msgstr "Coгntry"
+
+#: .\templates\app_template\homepage.html:32
+#: .\templates\app_template\movie_detail.html:21
+msgid "Жанри"
+msgstr "Genre"
+
+#: .\templates\app_template\homepage.html:37
+#: .\templates\app_template\movie_detail.html:26
+msgid "Актори"
+msgstr "Actor"
+
+#: .\templates\app_template\homepage.html:46
+#: .\templates\app_template\movie_detail.html:31
+msgid "Режисер"
+msgstr "Direcor"
+
+#: .\templates\app_template\homepage.html:55
+#: .\templates\app_template\movie_detail.html:36
+msgid "Прем’єра"
+msgstr "Premiere"
+
+#: .\templates\app_template\homepage.html:56
+#: .\templates\app_template\movie_detail.html:37
+msgid "Бюджет"
+msgstr "Budget"
+
+#: .\templates\app_template\homepage.html:58
+#: .\templates\app_template\movie_detail.html:45
+msgid "Опис"
+msgstr "Description"
+
+#: .\templates\app_template\homepage.html:60
+#: .\templates\app_template\homepage.html:86
+#: .\templates\app_template\movie_detail.html:41
+msgid "Забронювати місце"
+msgstr "Book a place"
+
+#: .\templates\app_template\homepage.html:61
+#: .\templates\app_template\homepage.html:87
+#: .\templates\news_template\news.html:24
+msgid "Докладніше"
+msgstr "More details"
+
+#: .\templates\app_template\homepage.html:71
+msgid "Зараз у кінотеатрі"
+msgstr "Now at the cinema"
+
+#: .\templates\app_template\movie_detail.html:69
+#: .\templates\news_template\news_detail.html:73
+msgid "залишити коментар"
+msgstr "leave a comment"
+
+#: .\templates\app_template\movie_detail.html:74 .\templates\base.html:91
+#: .\templates\news_template\news_detail.html:39
+msgid "Новини"
+msgstr "News"
+
+#: .\templates\app_template\movie_detail.html:93
+#: .\templates\news_template\news_detail.html:82
+msgid "коментарi"
+msgstr "comments"
+
+#: .\templates\app_template\movie_detail.html:116
+#: .\templates\app_template\movie_detail.html:137
+#: .\templates\app_template\movie_detail.html:263
+#: .\templates\app_template\movie_detail.html:465
+#: .\templates\news_template\news_detail.html:106
+#: .\templates\news_template\news_detail.html:129
+#: .\templates\news_template\news_detail.html:255
+#: .\templates\news_template\news_detail.html:458
+msgid "відповісти"
+msgstr "answers"
+
+#: .\templates\app_template\movie_detail.html:127
+#: .\templates\app_template\movie_detail.html:204
+#: .\templates\app_template\movie_detail.html:431
+#: .\templates\app_template\movie_detail.html:477
+#: .\templates\news_template\news_detail.html:118
+#: .\templates\news_template\news_detail.html:196
+#: .\templates\news_template\news_detail.html:424
+#: .\templates\news_template\news_detail.html:470
+msgid "Редагувати"
+msgstr "Edit"
+
+#: .\templates\app_template\movie_detail.html:128
+#: .\templates\app_template\movie_detail.html:205
+#: .\templates\app_template\movie_detail.html:432
+#: .\templates\app_template\movie_detail.html:478
+#: .\templates\news_template\news_detail.html:119
+#: .\templates\news_template\news_detail.html:197
+#: .\templates\news_template\news_detail.html:425
+#: .\templates\news_template\news_detail.html:471
+msgid "Видалити"
+msgstr "delete"
+
+#: .\templates\app_template\movie_detail.html:157
+#: .\templates\app_template\movie_detail.html:494
+#: .\templates\news_template\news_detail.html:149
+#: .\templates\news_template\news_detail.html:487
+msgid "Показати коментарі"
+msgstr "Show comments"
+
+#: .\templates\app_template\movie_detail.html:289
+#: .\templates\app_template\movie_detail.html:314
+#: .\templates\news_template\news_detail.html:281
+#: .\templates\news_template\news_detail.html:307
+msgid "Редагування"
+msgstr "Editing"
+
+#: .\templates\app_template\movie_detail.html:302
+#: .\templates\app_template\movie_detail.html:327
+#: .\templates\news_template\news_detail.html:294
+#: .\templates\news_template\news_detail.html:320
+msgid "Відміна"
+msgstr "Close"
+
+#: .\templates\app_template\movie_detail.html:303
+#: .\templates\app_template\movie_detail.html:328
+#: .\templates\news_template\news_detail.html:295
+#: .\templates\news_template\news_detail.html:321
+msgid "Зберегти"
+msgstr "Save"
+
+#: .\templates\app_template\movie_detail.html:552
+#: .\templates\app_template\movie_detail.html:574
+#: .\templates\news_template\news_detail.html:548
+#: .\templates\news_template\news_detail.html:570
+msgid "Ви впевнені що хочете видалити коментар?"
+msgstr "Are you sure you want to delete the comment?"
+
+#: .\templates\app_template\reservations.html:45
+msgid "Фільм"
+msgstr "Film"
+
+#: .\templates\app_template\reservations.html:49
+msgid "Дата показу"
+msgstr "Movie screening date"
+
+#: .\templates\app_template\reservations.html:53
+msgid "Час сеансу"
+msgstr "Session time"
+
+#: .\templates\app_template\reservations.html:57
+#: .\templates\app_template\sessions.html:41
+msgid "зал"
+msgstr "hall"
+
+#: .\templates\app_template\reservations.html:61
+msgid "Ряд"
+msgstr "Row"
+
+#: .\templates\app_template\reservations.html:65
+msgid "Місце в залі"
+msgstr "Place in the hall"
+
+#: .\templates\app_template\reservations.html:69
+msgid "Ціна сеансу"
+msgstr "Price per session"
+
+#: .\templates\app_template\reservations.html:73
+msgid "Ціна за сектор"
+msgstr "Price per sector"
+
+#: .\templates\app_template\reservations.html:92
+msgid "Кінцева ціна"
+msgstr "Total"
+
+#: .\templates\app_template\reservations.html:96
+msgid "В сумі"
+msgstr "In total"
+
+#: .\templates\app_template\sessions.html:15
+msgid "Розклад фільмів в кінотеатрі"
+msgstr "Schedule of movies in the cinema"
+
+#: .\templates\base.html:65
+msgid "адмін управління"
+msgstr "admin panel"
+
+#: .\templates\base.html:66
+msgid "парсити дані"
+msgstr "parse data"
+
+#: .\templates\base.html:68
+msgid "Змінити E-mail"
+msgstr "Change E-mail"
+
+#: .\templates\base.html:69
+msgid "Змінити пароль"
+msgstr "Change password"
+
+#: .\templates\base.html:70
+msgid "Вихiд"
+msgstr "Exit"
+
+#: .\templates\base.html:85
+msgid "Головна"
+msgstr "Home"
+
+#: .\templates\base.html:88
+msgid "Сеанси"
+msgstr "Sessions"
+
+#: .\templates\base.html:95
+msgid "Увійти"
+msgstr "Log in"
+
+#: .\templates\base.html:98
+msgid "Зареєструватися"
+msgstr "sign up"
+
+#: .\templates\news_template\news.html:36
+#: .\templates\news_template\news.html:40
+msgid "Перша"
+msgstr "First"
+
+#: .\templates\news_template\news.html:46
+#: .\templates\news_template\news.html:50
+msgid "Попередня"
+msgstr "Previous"
+
+#: .\templates\news_template\news.html:71
+#: .\templates\news_template\news.html:75
+msgid "Наступна"
+msgstr "Next"
+
+#: .\templates\news_template\news.html:81
+#: .\templates\news_template\news.html:85
+msgid "Останній"
+msgstr "Last"
+
+#: .\templates\news_template\news_detail.html:32
+msgid "коментарiв"
+msgstr "comments"
+
+#: .\templates\news_template\news_detail.html:57
+msgid "Ваша думка ?"
+msgstr "Your opinion?"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:7
+msgid "Django: the Web framework for perfectionists with deadlines."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:346
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:368
+msgid "The install worked successfully! Congratulations!"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:369
+#, python-format
+msgid ""
+"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
+"\">DEBUG=True</a> is in your settings file and you have not configured any "
+"URLs."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:384
+msgid "Django Documentation"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:385
+msgid "Topics, references, &amp; how-to’s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:396
+msgid "Tutorial: A Polling App"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:397
+msgid "Get started with Django"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:408
+msgid "Django Community"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:409
+msgid "Connect, get help, or contribute"
+msgstr ""
+
+#~ msgid "Заброювати місце"
+#~ msgstr "Book a place"

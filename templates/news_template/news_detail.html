@@ -1,6 +1,6 @@
 
 {% extends "base.html" %}
-{% load static %}
+{% load static i18n %}
 {% load account %}
 {% block title %}Новини{% endblock %}
 {% block stylesheet %}
@@ -29,14 +29,14 @@
                         {% endif %}
                     </div>
                     <div class="d-flex">
-                        <p>коментарiв: {{ quantity }}</p>
+                        <p>{% trans "коментарiв" %}: {{ quantity }}</p>
                     </div>
                 </div>
             </div>
           </div>
         <div class="row mt-5 ">
             <div class="col-md-4 news-list">
-                <h4 class="mb-4">Новини</h4>
+                <h4 class="mb-4">{% trans "Новини" %}</h4>
                 {% for new in news_list|slice:"3" %}
                     <div class="card text-white bg-primary mb-3 d-inline-block" >
                         <div class="card-header">
@@ -54,7 +54,7 @@
                         <div class="card-header" role="tab" id="headingOne">
                             <h5 class="mb-0">
                                 <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Ваша думка ?
+                                    {% trans "Ваша думка ?" %}
                                 </a>
                             </h5>
                         </div>
@@ -70,7 +70,7 @@
                                         </div>
                                     </fieldset>
                                     <textarea name="comment" id="comment" class="form-control" rows="3" required></textarea>
-                                    <input class="btn btn-primary form-control mt-2" type="submit" value="залишити коментарий">
+                                    <input class="btn btn-primary form-control mt-2" type="submit" value="{% trans 'залишити коментар' %}">
                                 </form>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                         <div class="card-header" role="tab" id="headingTwo">
                             <h5 class="mb-0">
                                 <a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    коментарi
+                                    {% trans "коментарi" %}
                                 </a> 
                             </h5>
                         </div>
@@ -103,7 +103,7 @@
                                                             <a id="liked_review" class="text-muted" onclick="like_review(`{{ comment.id }}`, event)" href="#!"><i class="fas fa-thumbs-up {% if user in comment.liked.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0"> {{ comment.liked.all.count }}</p></div>  
                                                             <a id="dislike_review" class="text-muted" onclick="dislike_review(`{{ comment.id }}`, event)" href="#!"><i class="fas fa-thumbs-down ml-2 {% if user in comment.dislike.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0"> {{ comment.dislike.all.count }}</p></div>
                                                             <a class="ml-2" data-toggle="collapse" href="#reply-{{ comment.id }}" aria-expanded="false" aria-controls="collapseExample" onclick="replyReview('{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}', '{{ comment.id }}')">
-                                                                відповісти <i class="fas fa-reply-all"></i>
+                                                                {% trans "відповісти" %} <i class="fas fa-reply-all"></i>
                                                             </a> 
                                                             
                                                         </div>
@@ -115,8 +115,8 @@
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenu1" >
                                                               
-                                                                <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review" onclick="puttext_review_and_put_id_review(`{{comment.comment}}`, `{{comment.id}}`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
-                                                                <a class="dropdown-item text-danger" href="#" onclick="deleteReview(`{{comment.id}}`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
+                                                                <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review" onclick="puttext_review_and_put_id_review(`{{comment.comment}}`, `{{comment.id}}`)"><i class="far fa-edit mr-1"></i>{% trans "Редагувати" %}</a>
+                                                                <a class="dropdown-item text-danger" href="#" onclick="deleteReview(`{{comment.id}}`, event)"><i class="fas fa-trash-alt mr-1">{% trans "Видалити" %}</i></a>
                                                             </div>
                                                           </div>
                                                           
@@ -126,7 +126,7 @@
                                                         <a id="liked_review" class="text-muted" onclick="like_review(`{{ comment.id }}`, event)" href="#!"><i class="fas fa-thumbs-up {% if user in comment.liked.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0"> {{ comment.liked.all.count }}</p></div>
                                                         <a id="dislike_review" class="text-muted" onclick="dislike_review(`{{ comment.id }}`, event)" href="#!"><i class="fas fa-thumbs-down ml-2 {% if user in comment.dislike.all %} text-primary {% endif %}"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0"> {{ comment.dislike.all.count }}</p></div>
                                                         <a class="ml-2" data-toggle="collapse" href="#reply-{{ comment.id }}" aria-expanded="false" aria-controls="collapseExample" onclick="replyReview('{% if comment.id_user.first_name %}{{ comment.id_user.first_name }}{% else %}{{ comment.id_user.username }}{% endif %}', '{{ comment.id }}')">
-                                                            відповісти <i class="fas fa-reply-all"></i>
+                                                            {% trans "відповісти" %} <i class="fas fa-reply-all"></i>
                                                         </a>
                                                     </div>
                                                 {% endif %}
@@ -146,7 +146,7 @@
                                                     <div class="card-header" role="tab" id="headingTwo">
                                                         <h5 class="mb-0">
                                                         <a class="collapsed" style="font-size: 16px;" data-toggle="collapse" href="#{{ comment.id_article_id }}{{ comment.id }}" aria-expanded="false" aria-controls="collapseTwo">
-                                                            Показати коментарі <i class="far fa-comment-dots"></i>
+                                                            {% trans "Показати коментарі" %} <i class="far fa-comment-dots"></i>
                                                         </a>
                                                         </h5>
                                                     </div>
@@ -192,8 +192,8 @@
                                                                                             </button>
                                                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenu1" >
                                                                                             
-                                                                                                <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review_reply" onclick="puttext_review_reply_and_put_id_review(`{{rev.comment}}`, `{{rev.id}}`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
-                                                                                                <a class="dropdown-item text-danger" href="#" onclick="deleteReview_reply(`{{rev.id}}`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
+                                                                                                <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review_reply" onclick="puttext_review_reply_and_put_id_review(`{{rev.comment}}`, `{{rev.id}}`)"><i class="far fa-edit mr-1"></i>{% trans "Редагувати" %}</a>
+                                                                                                <a class="dropdown-item text-danger" href="#" onclick="deleteReview_reply(`{{rev.id}}`, event)"><i class="fas fa-trash-alt mr-1">{% trans "Видалити" %}</i></a>
                                                                                             </div>
                                                                                         </div>
                                                                                         <!-- onclick="updateReview(`{{ comment.id }}`, event)" -->
@@ -249,7 +249,7 @@
                                                         <input type="hidden" name="id_reply_user" value="{{ comment.id }}" >
 
                                                         <textarea name="comment" id="comment_reply-{{ comment.id }}" class="form-control comment_reply" rows="3" required></textarea>
-                                                        <input class="btn btn-primary form-control mt-2" type="submit" value="відповісти">
+                                                        <input class="btn btn-primary form-control mt-2" type="submit" value="{% trans 'відповісти' %}">
                                                     </form>
                                                 </div>
                                             </div>
@@ -275,7 +275,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Редагування</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{% trans "Редагування" %}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -288,8 +288,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Відміна</button>
-                        <button type="submit" class="btn btn-primary">Зберегти</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Відміна" %}</button>
+                        <button type="submit" class="btn btn-primary">{% trans "Зберегти" %}</button>
                     </div>
                 </form>
             </div>
@@ -301,7 +301,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Редагування</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{% trans "Редагування" %}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -314,8 +314,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Відміна</button>
-                        <button type="submit" class="btn btn-primary">Зберегти</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Відміна" %}</button>
+                        <button type="submit" class="btn btn-primary">{% trans "Зберегти" %}</button>
                     </div>
                 </form>
             </div>
@@ -418,8 +418,8 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenu1" >
                                 
-                                    <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review_reply" onclick="puttext_review_reply_and_put_id_review('`+data.comment+`', `+data.id_comment+`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
-                                    <a class="dropdown-item text-danger" href="#" onclick="deleteReview_reply(`+data.id_comment+`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
+                                    <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review_reply" onclick="puttext_review_reply_and_put_id_review('`+data.comment+`', `+data.id_comment+`)"><i class="far fa-edit mr-1"></i>{% trans "Редагувати" %}</a>
+                                    <a class="dropdown-item text-danger" href="#" onclick="deleteReview_reply(`+data.id_comment+`, event)"><i class="fas fa-trash-alt mr-1">{% trans "Видалити" %}</i></a>
                                 </div>
                             </div>
                             
@@ -452,7 +452,7 @@
                                 <a id="liked_review" class="text-muted" onclick="like_review(` +data.id_comment+ `, event)" href="#!"><i class="fas fa-thumbs-up "></i></a> <div class="ml-2 count_liked_review "><p class="m-0 p-0"> `+ data.count_liked +`</p></div>
                                 <a id="dislike_review" class="text-muted" onclick="dislike_review(` +data.id_comment+ `, event)" href="#!"><i class="fas fa-thumbs-down ml-2"></i></a> <div class="ml-2 count_dislike_review"><p class="m-0 p-0">`+ data.count_dislike +`</p></div>
                                 <a class="ml-2" href="#reply-` +data.id_comment+ `" onclick="window.location.reload();">
-                                    відповісти <i class="fas fa-reply-all"></i>
+                                    {% trans "відповісти" %}<i class="fas fa-reply-all"></i>
                                 </a> 
                             </div>
                         </div>
@@ -464,8 +464,8 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu1" >
                                 
-                                <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review" onclick="puttext_review_and_put_id_review('`+data.comment+`', `+data.id_comment+`)"><i class="far fa-edit mr-1"></i>Редагувати</a>
-                                <a class="dropdown-item text-danger" href="#" onClick="deleteReview(`+data.id_comment+`, event)"><i class="fas fa-trash-alt mr-1">Видалити</i></a>
+                                <a class="dropdown-item text-muted" href="#"  data-toggle="modal" data-target="#edit_review" onclick="puttext_review_and_put_id_review('`+data.comment+`', `+data.id_comment+`)"><i class="far fa-edit mr-1"></i>{% trans "Редагувати" %}</a>
+                                <a class="dropdown-item text-danger" href="#" onClick="deleteReview(`+data.id_comment+`, event)"><i class="fas fa-trash-alt mr-1">{% trans "Видалити" %}</i></a>
                             </div>
                             </div>
                     </div>
@@ -481,7 +481,7 @@
                             <div class="card-header" role="tab" id="headingTwo">
                                 <h5 class="mb-0">
                                 <a class="collapsed" style="font-size: 16px;" data-toggle="collapse" href="#{{news.id}}`+data.id_comment+`" aria-expanded="false" aria-controls="collapseTwo">
-                                    Показати коментарі <i class="far fa-comment-dots"></i>
+                                    {% trans "Показати коментарі" %} <i class="far fa-comment-dots"></i>
                                 </a>
                                 </h5>
                             </div>
@@ -542,7 +542,7 @@
 
     // Delete Django Ajax Call
     function deleteReview(id_review, e) {
-        var action = confirm("Ви впевнені що хочете видалити коментар?");
+        var action = confirm("{% trans 'Ви впевнені що хочете видалити коментар?' %}");
         e.preventDefault();
         if (action != false) {
             $.ajax({
@@ -564,7 +564,7 @@
     }
 
     function deleteReview_reply(id_review, e) {
-        var action = confirm("Ви впевнені що хочете видалити коментар?");
+        var action = confirm("{% trans 'Ви впевнені що хочете видалити коментар?' %}");
         e.preventDefault();
         if (action != false) {
             $.ajax({

@@ -62,12 +62,12 @@
                         
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="position: absolute; transform: translate3d(-100px, 10px, 0px);  will-change: transform;">
                           {% if user.username == 'admin' %}
-                            <a href="/admin" class="dropdown-item" >адмін управління</a>
-                            <a href="{% url 'news:parse' %}"  class="dropdown-item">парсити дані</a>
+                            <a href="/admin" class="dropdown-item" >{% trans "адмін управління" %}</a>
+                            <a href="{% url 'news:parse' %}"  class="dropdown-item">{% trans "парсити дані" %}</a>
                           {% endif %}
-                          <a class="dropdown-item" href="{% url 'account_email' %}">Змінити E-mail</a>
-                          <a class="dropdown-item" href="{% url 'account_change_password' %}">Змінити пароль</a>
-                          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logout">Вихiд</a>
+                          <a class="dropdown-item" href="{% url 'account_email' %}">{% trans "Змінити E-mail" %}</a>
+                          <a class="dropdown-item" href="{% url 'account_change_password' %}">{% trans "Змінити пароль" %}</a>
+                          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logout">{% trans "Вихiд" %}</a>
                         </div>
                       </div>
                     
@@ -82,20 +82,20 @@
                     <div class="collapse navbar-collapse p-3 justify-content-end text-right" id="navbarSupportedContent">
                       <ul class="navbar-nav row">
                         <li class="nav-item">
-                          <a class="nav-link" href="{% url 'app:home' %}">Головна<span class="sr-only">(current)</span></a>
+                          <a class="nav-link" href="{% url 'app:home' %}">{% trans "Головна" %}<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item ">
-                          <a class="nav-link" href="{% url 'app:sessions' %}">Сеанси</a>
+                          <a class="nav-link" href="{% url 'app:sessions' %}">{% trans "Сеанси" %}</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="{% url 'news:movie_news' %}">Новини</a>
+                          <a class="nav-link" href="{% url 'news:movie_news' %}">{% trans "Новини" %}</a>
                         </li>
                         {% if user.is_anonymous %}
                           <li class="nav-item ">
-                            <a class="nav-link" href="{% url 'account_login' %}">Увійти</a>
+                            <a class="nav-link" href="{% url 'account_login' %}">{% trans "Увійти" %}</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="{% url 'account_signup' %}">Зареєструватися</a>
+                            <a class="nav-link" href="{% url 'account_signup' %}">{% trans "Зареєструватися" %}</a>
                           </li>
                           
                         {% endif %}
@@ -152,7 +152,7 @@
                 {% csrf_token %}
               
                 <input name="next" type="hidden" value="{{ redirect_to }}">
-                <select id="mounth" class="select_send_form" name="language">
+                <select class="select_send_form" name="language">
                     {% get_current_language as LANGUAGE_CODE %}
                     {% get_available_languages as LANGUAGES %}
                     {% get_language_info_list for LANGUAGES as languages %}
@@ -209,21 +209,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script>
-      $('.select_send_form').on('change', function () {
-        console.log('changed')
-        $(this.form).submit();
-      });
+      // $('.select_send_form').on('change', function () {
+      //   console.log('changed')
+      //   $(this.form).submit();
+      // });
 
 
   $('select').each(function(){
     var $this = $(this), numberOfOptions = $(this).children('option').length;
-  
+    
+
+    console.log($('.select_send_form option:selected').val());
+
     $this.addClass('select-hidden'); 
     $this.wrap('<div class="select"></div>');
     $this.after('<div class="select-styled"></div>');
     
     var $styledSelect = $this.next('div.select-styled');
-    $styledSelect.text($this.children('option').eq(0).text());
+    if ($('.select_send_form option:selected').val() == 'en'){
+      $styledSelect.text($this.children('option').eq(1).text());
+    }else{
+      $styledSelect.text($this.children('option').eq(0).text());
+    }
+      
   
     var $list = $('<ul />', {
         'class': 'select-options'
@@ -239,12 +247,16 @@
     var $listItems = $list.children('li');
   
     $styledSelect.click(function(e) {
-      
+
         e.stopPropagation();
+        
         $('div.select-styled.active').not(this).each(function(){
             $(this).removeClass('active').next('ul.select-options').hide();
         });
         $(this).toggleClass('active').next('ul.select-options').toggle();
+        
+          
+        
         
         
     });

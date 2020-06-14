@@ -1,6 +1,6 @@
 
 {% extends "base.html" %}
-{% load static %}
+{% load static i18n %}
 {% block title %}Зал{% endblock %}
 
 {% block stylesheet %} 
@@ -12,16 +12,16 @@
         <div class="container mb-5">
             
             <h2 class="hall_tittle mt-5">
-                Забронюйте місце на фільм {{ movie.name }}
+                {% trans "Забронюйте місце на фільм" %} {{ movie.name }}
             </h2>
             <span class="line"></span>
-            <p class="hall_info"> Сеанс почнеться на {{ session.id_time_session.time  }} в залі  <span class="num_hall">під номером №{{ hall.number_hall }}</span></p> 
+            <p class="hall_info"> {% trans "Сеанс почнеться на" %} {{ session.id_time_session.time  }} {% trans "в залі" %}  <span class="num_hall">{% trans "під номером" %} №{{ hall.number_hall }}</span></p> 
             <em>{{ session.session_date }}</em>
             <div class="alert alert-warning alert-dismissible fade show my-4 " role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
-                <strong>Увага</strong> Місця розташовані тут не як в залі, тому будьте обережні з вибором місця
+                <strong>{% trans "Увага" %}</strong>{% trans "Місця розташовані тут не як в залі, тому будьте обережні з вибором місця" %}
               </div>
             <div class="places">
                 <div class=" row">
@@ -81,42 +81,3 @@
 
 {% block js %}  
 {% endblock %}
-
-
-
-<!-- <a href="
-                                {% for ticket in tickets %} 
-                                    {% if ticket.id_place_id == place.id %}
-                                        #!
-                                    {%endif%} 
-                                {% endfor %}
-                                {% url 'app:reservation' movie.id session.id hall.number_hall place.id place.id_sector_id %}" 
-                                class="sector_link 
-                                {% for ticket in tickets %} 
-                                    {% if ticket.id_place_id == place.id %}
-                                        
-                                            isDisabled
-                                      
-                                            
-                                    {%endif%} 
-                                    
-                                    
-                                {% endfor %}">
-
-                            <p class="sector  
-                            {% if place.id_sector_id == 1 %}
-                                green_sector
-                            {% endif %}
-                            {% if place.id_sector_id == 2 %}
-                                orange_sector{% endif %}
-                            {% if place.id_sector_id == 3 %}
-                                red_sector
-                            {% endif %} 
-                            {% for ticket in tickets %} 
-                                {% if ticket.id_place_id == place.id %}
-                                    sector-reserve
-                                {%endif%}
-                            {% endfor %}">
-                             м/р <br> {{ place.place_number }} / {{ place.row_number }}
-                            </p>
-                        </a> -->

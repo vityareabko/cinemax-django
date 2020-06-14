@@ -1,6 +1,6 @@
 
 {% extends "base.html" %}
-{% load static %}
+{% load static i18n %}
 {% block title %}Главная{% endblock %}
 {% block stylesheet %} 
   <link rel="stylesheet" href="{% static 'css/news.css'%}">
@@ -21,7 +21,7 @@
                   <p class="card-text">
                     {{ news.short_describe }} 
                   </p>
-                  <a href="{% url 'news:news_detail' news.url %}" class="card-link ">Докладніше</a> <br>
+                  <a href="{% url 'news:news_detail' news.url %}" class="card-link ">{% trans "Докладніше" %}</a> <br>
                   
                 </div>
             </div>
@@ -33,21 +33,21 @@
                   <ul class="pagination">
                     {% if page_obj.number > 1 %}
                       <li class="page-item">
-                        <a class="page-link" href="?page=1">Перша</a>
+                        <a class="page-link" href="?page=1">{% trans "Перша" %}</a>
                       </li>
                     {% else %}
                       <li class="page-item disabled">
-                        <span class="page-link">Перша</span>
+                        <span class="page-link">{% trans "Перша" %}</span>
                       </li>
                     {% endif %}
               
                     {% if page_obj.has_previous %}
                       <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Попередня</a>
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">{% trans "Попередня" %}</a>
                       </li>
                     {% else %}
                       <li class="page-item disabled">
-                        <span class="page-link">Попередня</span>
+                        <span class="page-link">{% trans "Попередня" %}</span>
                       </li>
                     {% endif %}
               
@@ -68,21 +68,21 @@
               
                     {% if page_obj.has_next %}
                       <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Наступна</a>
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">{% trans "Наступна" %}</a>
                       </li>
                     {% else %}
                       <li class="page-item disabled">
-                        <span class="page-link">Наступна</span>
+                        <span class="page-link">{% trans "Наступна" %}</span>
                       </li>
                     {% endif %}
               
                     {% if page_obj.number != paginator.num_pages %}
                       <li class="page-item">
-                        <a class="page-link" href="?page={{ paginator.num_pages }}">Останній</a>
+                        <a class="page-link" href="?page={{ paginator.num_pages }}">{% trans "Останній" %}</a>
                       </li>
                     {% else %}
                       <li class="page-item disabled">
-                        <span class="page-link">Останній</span>
+                        <span class="page-link">{% trans "Останній" %}</span>
                       </li>
                     {% endif %}
                   </ul>

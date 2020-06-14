@@ -1,6 +1,6 @@
 
 {% extends "base.html" %}
-{% load static %}
+{% load static i18n %}
 {% block title %}{{ actor.name }}{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'css/actor.css' %}">
@@ -15,18 +15,18 @@
                 </div>
                 <div class="col-md-9">
                     <h3>{{ actor.name }}</h3> <br>
-                    <p>вік:  {{ actor.age }} <br></p>
-                    <p>місце народження: {{ actor.birthplace }} <br></p> 
-                    <p>громадянство:  {{ actor.citizenship }} <br></p>
-                    <p>кар’єра: {{ actor.career }} <br></p>
+                    <p>{% trans "вік" %}:  {{ actor.age }} <br></p>
+                    <p>{% trans "місце народження" %}: {{ actor.birthplace }} <br></p> 
+                    <p>{% trans "громадянство" %}:  {{ actor.citizenship }} <br></p>
+                    <p>{% trans "кар’єра" %}: {{ actor.career }} <br></p>
                 </div>
             </div>
-            <h4 class="my-4">Біографія</h4> 
+            <h4 class="my-4">{% trans "Біографія" %}</h4> 
             {{ actor.biography }} <br>
         </div>
     </div>
     <div class="container">
-        <div class="row mt-5">
+        <div class="row my-5">
                 
             {% for news in article|slice:"3" %}
             <div class="col-12 mt-3 mt-md-0 col-md-4 mb-4">

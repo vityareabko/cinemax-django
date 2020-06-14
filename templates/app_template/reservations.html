@@ -1,6 +1,6 @@
 
 {% extends "base.html" %}
-{% load static %}
+{% load static i18n %}
 {% block title %}Зал{% endblock %}
 
 {% block stylesheet %} 
@@ -11,47 +11,7 @@
 {% endblock %}
 
 {% block content %}
-    <!-- <div class="container">
-        <div class="reservation-info mt-5">
-            <p class="movie">
-                <strong>  Фільм </strong> - {{ movie.name }} 
-            </p>
-            <p class="date">
-                <strong>  дата </strong> - {{ session.session_date }} 
-            </p>
-            <p class="time">
-                <strong>  час </strong> - {{ time_sessions.time }}
-            </p>
-            <p class="hall">
-                <strong>  зал № </strong> - {{ num_hall }}
-            </p>
-            <p class="place">
-                <strong>  місце </strong> - {{ place.place_number }}  
-            </p>
-            <p class="place_row">
-                <strong>  ряд </strong> - {{ place.row_number }}
-            </p>
-            
-            <p class="sector">
-                <strong>  Cектор </strong> - {{ sector.name_sector }} 
-            </p>
-            <p> <strong>  Ціна </strong> - {{ price_total }} </p>
-
-            <form action="{% url 'app:get_ticket' session.id place.id price_total %}" method="get" >
-                
-                {% csrf_token %}
-
-                <div class="form-group">
-                    <label class="mr-3"> <strong> Ваш E-mail</strong></label>
-                    <input type="email" name="email_input" class= "input-email" id="formGroupExampleInput" placeholder="example@gmail.com" required>
-                </div>
-                
-                <button type="submit" class="btn btn-primary">Забронювати</button>
-                
-            </form> -->
-            <!-- <a href="{% url 'app:home' %}" class="btn btn-danger mt-2" >Відміна</a> -->
-            
-            <!-- ............................................................................................................... -->
+    
             <div >321321321</div>
             <div style="font-family: 'Libre Barcode 39 Extended Text', cursive;" class="code_39_S">1232132132</div>
 
@@ -82,35 +42,35 @@
                                                                                 <table class="invoice-items" cellpadding="0" cellspacing="0">
                                                                                     <tbody>
                                                                                         <tr>
-                                                                                            <td class="text-right pr-2">Фільм: </td>
+                                                                                            <td class="text-right pr-2">{% trans "Фільм" %}: </td>
                                                                                             <td class=""> {{ movie.name }} </td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class="text-right pr-2">Дата показу: </td>
+                                                                                            <td class="text-right pr-2">{% trans "Дата показу" %}: </td>
                                                                                             <td class=""> {{ session.session_date }}  </td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class="text-right pr-2">Час сеансу: </td>
+                                                                                            <td class="text-right pr-2">{% trans "Час сеансу" %}: </td>
                                                                                             <td class=""> {{ time_sessions.time }}  </td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class="text-right pr-2">зал №: </td>
+                                                                                            <td class="text-right pr-2">{% trans "зал" %} №: </td>
                                                                                             <td class=""> {{ num_hall }} </td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class="text-right pr-2">Ряд: </td>
+                                                                                            <td class="text-right pr-2">{% trans "Ряд" %}: </td>
                                                                                             <td class=""> {{ place.row_number }}  </td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class="text-right pr-2">Місце в залі: </td>
+                                                                                            <td class="text-right pr-2">{% trans "Місце в залі" %}: </td>
                                                                                             <td class=""> {{ place.place_number }}  </td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class="text-right pr-2">Ціна сеансу: </td>
+                                                                                            <td class="text-right pr-2">{% trans "Ціна сеансу" %}: </td>
                                                                                             <td class=""> {{ session.price_session }} ₴  </td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class="text-right pr-2">Ціна за сектор: </td>
+                                                                                            <td class="text-right pr-2">{% trans "Ціна за сектор" %}: </td>
                                                                                             <td class=""> {{ sector.price_sector }} ₴ </td>
                                                                                         </tr>
                                                                                         <tr>
@@ -129,11 +89,11 @@
                                                                                     <tbody>
                                                                                         
                                                                                         <tr>
-                                                                                            <td>Кінцева ціна</td>
+                                                                                            <td>{% trans "Кінцева ціна" %}</td>
                                                                                             <td class="alignright"> </td>
                                                                                         </tr>
                                                                                         <tr class="total">
-                                                                                            <td class="alignright" width="80%">Total</td>
+                                                                                            <td class="alignright" width="80%">{% trans "В сумі" %}</td>
                                                                                             <td class="alignright"> {{ price_total }} ₴ </td>
                                                                                         </tr>
                                                                                         <tr>

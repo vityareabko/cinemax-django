@@ -1,6 +1,7 @@
 
 {% extends "base.html" %}
-{% load static %}
+
+{% load static i18n %}
 {% block title %}Главная{% endblock %}
 {% block stylesheet %} 
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/> -->
@@ -26,14 +27,14 @@
                         <h2 class="movie_title">
                             {{ movie_hero.name }}
                         </h2>
-                        <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "><strong>Тривалість фільма: </strong> {{ movie_hero.duration_film }}</p>
-                        <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "><strong>Країна: </strong> {{ movie_hero.contry }}</p>
-                        <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "><strong>Жанри: </strong> 
+                        <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "><strong>{% trans "Тривалість фільма" %}: </strong> {{ movie_hero.duration_film }}</p>
+                        <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "><strong>{% trans "Країна" %}: </strong> {{ movie_hero.contry }}</p>
+                        <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "><strong>{% trans "Жанри" %}: </strong> 
                             {% for genre in movie_hero.genre.all %}
                                {{ genre.name }},
                             {% endfor %}
                         </p>
-                        <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "><strong>актори: </strong>
+                        <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "><strong>{% trans "Актори" %}: </strong>
                             {% for actor in movie_hero.actor.all %}
                                 {% if not actor.draft %}                         
                                     <a class="text-primary" href="{% url 'app:actor_detail' actor.id %}">{{ actor.name }}</a>,
@@ -42,7 +43,7 @@
                                 {% endif %}     
                             {% endfor %}
                         </p>
-                        <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "><strong>режисер: </strong>
+                        <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "><strong>{% trans "Режисер" %}: </strong>
                             {% for director in movie_hero.directors.all %}
                                 {% if not director.draft %}  
                                     <a class="text-primary" href="{% url 'app:actor_detail' director.id %}">{{ director.name }}</a>
@@ -51,13 +52,13 @@
                                 {% endif %} 
                             {% endfor %}
                         </p>
-                        <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "> <strong>Прем’єра: </strong> {{ movie_hero.premiere }} </p>
-                        <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "><strong>Бюджет</strong>  {{ movie_hero.budget }} </p>
+                        <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "> <strong>{% trans "Прем’єра" %}: </strong> {{ movie_hero.premiere }} </p>
+                        <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none "><strong>{% trans "Бюджет" %}:</strong>  {{ movie_hero.budget }} </p>
                         
-                        <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none " style=" height: 150px; overflow: auto;"><strong>Опис</strong>  {{ movie_hero.desc }} </p>
+                        <p class="description-hero d-xl-block d-lg-block d-md-block d-sm-none d-none " style=" height: 150px; overflow: auto;"><strong>{% trans "Опис" %}:</strong>  {{ movie_hero.desc }} </p>
                         
-                        <a href="{% url 'app:sessions' %}" class="btn btn-primary mt-3 mb-2 ">Забронювати місце</a>
-                        <a href="{% url 'app:movie_detail' movie_hero.id %}" class="btn btn-secondary mt-3 mb-2">Докладніше</a>
+                        <a href="{% url 'app:sessions' %}" class="btn btn-primary mt-3 mb-2 ">{% trans "Забронювати місце" %}</a>
+                        <a href="{% url 'app:movie_detail' movie_hero.id %}" class="btn btn-secondary mt-3 mb-2">{% trans "Докладніше" %}</a>
                 
                     </div>
                 </div>
@@ -67,7 +68,7 @@
 
     <div class="container">
         <h1 class="title">
-            Зараз у кінотеатрі
+            {% trans "Зараз у кінотеатрі" %}
         </h1>
         
         <div class="cards">
@@ -82,8 +83,8 @@
                                     {{ film.name }}
                                 </h3>
                                 <p class="desc">{{ film.desc }}</p>
-                                <a href="{% url 'app:sessions' %}"><input type="button" class="btn btn-primary mb-2" value="Забронювати квиток"></a>
-                                <a href="{% url 'app:movie_detail' film.id %}"><input type="button" class="btn btn-secondary mb-2" value="Докладніше"></a>
+                                <a href="{% url 'app:sessions' %}"><input type="button" class="btn btn-primary mb-2" value="{% trans 'Забронювати місце' %}"></a>
+                                <a href="{% url 'app:movie_detail' film.id %}"><input type="button" class="btn btn-secondary mb-2" value="{% trans 'Докладніше' %}"></a>
                             </div>
                         </div>
                     </div>

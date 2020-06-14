@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static i18n %}
 {% block title %}Сеанси{% endblock %}
 {% block stylesheet %} 
     <link rel="stylesheet" href="{% static 'css/jquery.fancybox.css' %}">
@@ -12,7 +12,7 @@
         <div class="sessions_bg_right">
             <div class="container bg-white_a py-3 my-3">
                 <h3 class="sessions-top mt-5">
-                    Розклад фільмів в кінотеатрі СINEMAX 
+                    {% trans "Розклад фільмів в кінотеатрі" %} СINEMAX
                 </h3>
                 <div class="sessions-tabs d-flex align-items-center">
                     <nav class="days d-flex flex-wrap flex-xl-nowrap flex-lg-nowrap flex-md-nowrap flex-sm-nowrap ">
@@ -38,7 +38,7 @@
                                             {% if sess.id_film_id == movie.id %}
                                                 <a href="{% url 'app:reserve' sess.id_hall_id sess.id_film_id sess.id %}" class="movie_name__link mt-2">
                                                     {{ sess.id_time_session.time }}
-                                                    зал № 
+                                                    {% trans "зал" %} № 
                                                     {{ sess.id_hall.number_hall }}
                                                 </a> <br> 
                                             {% endif %}  

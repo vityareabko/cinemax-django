@@ -138,12 +138,10 @@ USE_L10N = True
 
 USE_TZ = True
 
-def gettext_noop(s):
-    return s
-
+gettext = lambda s: s
 LANGUAGES = (
-    ('uk', gettext_noop('Ukrainian')),
-    ('en', gettext_noop('English')),
+    ('uk', gettext('Ukrainian')),
+    ('en', gettext('English')),
 )
 
 LOCALE_PATHS = (
