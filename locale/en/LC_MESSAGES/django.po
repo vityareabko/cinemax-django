@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-14 21:52+0300\n"
+"POT-Creation-Date: 2020-06-15 15:41+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -436,7 +436,7 @@ msgstr "Book a place"
 
 #: .\templates\app_template\homepage.html:61
 #: .\templates\app_template\homepage.html:87
-#: .\templates\news_template\news.html:24
+#: .\templates\news_template\news.html:25
 msgid "Докладніше"
 msgstr "More details"
 
@@ -568,6 +568,10 @@ msgstr "Total"
 msgid "В сумі"
 msgstr "In total"
 
+#: .\templates\app_template\reservations.html:111
+msgid "Забронювати"
+msgstr "Book a place"
+
 #: .\templates\app_template\sessions.html:15
 msgid "Розклад фільмів в кінотеатрі"
 msgstr "Schedule of movies in the cinema"
@@ -608,23 +612,23 @@ msgstr "Log in"
 msgid "Зареєструватися"
 msgstr "sign up"
 
-#: .\templates\news_template\news.html:36
-#: .\templates\news_template\news.html:40
+#: .\templates\news_template\news.html:37
+#: .\templates\news_template\news.html:41
 msgid "Перша"
 msgstr "First"
 
-#: .\templates\news_template\news.html:46
-#: .\templates\news_template\news.html:50
+#: .\templates\news_template\news.html:47
+#: .\templates\news_template\news.html:51
 msgid "Попередня"
 msgstr "Previous"
 
-#: .\templates\news_template\news.html:71
-#: .\templates\news_template\news.html:75
+#: .\templates\news_template\news.html:72
+#: .\templates\news_template\news.html:76
 msgid "Наступна"
 msgstr "Next"
 
-#: .\templates\news_template\news.html:81
-#: .\templates\news_template\news.html:85
+#: .\templates\news_template\news.html:82
+#: .\templates\news_template\news.html:86
 msgid "Останній"
 msgstr "Last"
 

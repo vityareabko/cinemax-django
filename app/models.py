@@ -135,6 +135,7 @@ class Ticket(TimeStampMixin, models.Model): # билет
     id_session = models.ForeignKey(Session, on_delete = models.CASCADE)
     id_place = models.ForeignKey(Place, on_delete = models.CASCADE)
     ticket_paid = models.PositiveIntegerField()
+    barcode = models.ImageField(upload_to = 'tikets/')
     
     def __str__(self):
         return str(self.id_session)

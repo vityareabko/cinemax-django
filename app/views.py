@@ -8,8 +8,11 @@ from django.core.mail import send_mail
 from .models import Film, Actor, Session, Time_Sessions, Hall, Place, Sector, Ticket, Weekday, Comments
 from news.models import ParseMovieInfo
 from datetime import datetime, date, time
+from barcode.writer import ImageWriter
+
 import datetime
 import random
+import barcode
 
 class MoviesListView(View):
 
@@ -143,17 +146,14 @@ class ReserveListView(View):
         return render(request, 'app_template/hall.html', context)
 
 
-from .mybarcode import MyBarcodeDrawing
-import base64
+
+
 class ReservationView(View):
-    
-    
 
     def get(self, request, pk_movie, pk_session, number_hall, pk_place, pk_sector):
-        d = MyBarcodeDrawing("HELLO WORLD")
-        binaryStuff = d.asString('gif')
-            
-        test = d
+        
+        
+        
 
         movie = Film.objects.get(id=pk_movie)
         session = Session.objects.get(id=pk_session)
@@ -171,7 +171,7 @@ class ReservationView(View):
         price_total = price_sess + price_sect
 
     
-
+        
 
         context = {
             'movie': movie,
@@ -181,7 +181,9 @@ class ReservationView(View):
             'num_hall': num_hall,
             'time_sessions': time_sessions,
             'price_total': price_total,
-            'test': base64.decodestring(binaryStuff) 
+
+            'tikets': Ticket.objects.all()
+            
         }
 
         return render( request, 'app_template/reservations.html', context )
@@ -204,6 +206,18 @@ class ReserveDoneView(View):
         hall_num     = Hall.objects.get(id = session.id_hall_id)
         sector       = Sector.objects.get( id = place.id_sector_id)
         
+        randomlist = random.sample(range(1, 99), 13)
+        print(randomlist)
+
+        bar_code = ''
+        for i in randomlist:
+            bar_code += str(i)
+
+        print(bar_code)
+        hr = barcode.get_barcode_class('ean13')
+        HR = hr(bar_code)
+        qr = HR.save('media/tikets/'+bar_code)
+
         # print(movie)
         # print(session_date)
         # print(time_sess)
@@ -222,7 +236,7 @@ class ReserveDoneView(View):
             fail_silently=False
         )
 
-        Ticket(id_place_id = pk_place, id_session_id = pk_session, ticket_paid = total_sum).save()
+        Ticket(id_place_id = pk_place, id_session_id = pk_session, ticket_paid = total_sum, barcode = 'tikets/'+bar_code+'.svg' ).save()
 
         context = {
 
