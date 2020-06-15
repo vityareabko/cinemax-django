@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from django.core.mail import send_mail
 
-from .models import Film, Actor, Session, Time_Sessions, Hall, Place, Sector, Ticket, Weekday, Comments
+from .models import Film, Actor, Session, Time_Sessions, Hall, Place, Sector, Ticket, Weekday, Comments, Name_Cinema
 from news.models import ParseMovieInfo
 from datetime import datetime, date, time
 from barcode.writer import ImageWriter
@@ -189,7 +189,10 @@ class ReservationView(View):
         return render( request, 'app_template/reservations.html', context )
         
         
-
+from django.core import mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.contrib.sites.shortcuts import get_current_site
 class ReserveDoneView(View):
     def get(self, request, pk_session, pk_place, total_sum):
 
@@ -205,6 +208,11 @@ class ReserveDoneView(View):
         row_pl       = place.row_number
         hall_num     = Hall.objects.get(id = session.id_hall_id)
         sector       = Sector.objects.get( id = place.id_sector_id)
+
+
+        price_sess = session.price_session
+        price_sect = sector.price_sector
+        price_total = price_sess + price_sect
         
         randomlist = random.sample(range(1, 99), 13)
         print(randomlist)
@@ -218,23 +226,39 @@ class ReserveDoneView(View):
         HR = hr(bar_code)
         qr = HR.save('media/tikets/'+bar_code)
 
-        # print(movie)
-        # print(session_date)
-        # print(time_sess)
-        # print(hall_num)
-        # print(place_num)
-        # print(row_pl)
-        # print(sector)
-        # print(total_sum)
+        name_cinema = Name_Cinema.objects.all()[0]
+        site_name = get_current_site(request).name
+        context = {
+            'movie': movie,
+            'session': session,
+            'place': place,
+            'sector': sector.name_sector,
+            'num_hall': hall_num,
+            'time_sessions': time_sess,
+            'price_total': price_total,
+            'img_path': qr,
+            'site_name': site_name,
+            
+            
+        }
+        print(site_name)
+        subject = name_cinema
+        html_message = render_to_string('app_template/mail_template.html', context)
+        plain_message = strip_tags(html_message)
+        from_email = 'From <cinemacount12090@gmail.com>'
+        to = email
 
-        messages = "Фільм: " +str(movie.name)+ "\nдата: " +str(session_date)+ "\nчас :" +str(time_sess.time)+ "\nзал №: " +str(hall_num.number_hall)+ "\nмісце: " +str(place_num)+ "\nряд: " +str(row_pl)+ "\nCектор: " +str(sector.name_sector)+ "\nЦіна: " +str(total_sum)+"\nчекаємо вас на сеанс!\n с повагою кінотеатр CINEMAX"
-        # print(messages)
-        send_mail('квиток на фільм',
-            messages,
-            'cinemacount12090@gmail.com',
-            [email],
-            fail_silently=False
-        )
+        mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+
+
+        # messages = "Фільм: " +str(movie.name)+ "\nдата: " +str(session_date)+ "\nчас :" +str(time_sess.time)+ "\nзал №: " +str(hall_num.number_hall)+ "\nмісце: " +str(place_num)+ "\nряд: " +str(row_pl)+ "\nCектор: " +str(sector.name_sector)+ "\nЦіна: " +str(total_sum)+"\nчекаємо вас на сеанс!\n с повагою кінотеатр CINEMAX"
+        # # print(messages)
+        # send_mail('квиток на фільм',
+        #     messages,
+        #     'cinemacount12090@gmail.com',
+        #     [email],
+        #     fail_silently=False
+        # )
 
         Ticket(id_place_id = pk_place, id_session_id = pk_session, ticket_paid = total_sum, barcode = 'tikets/'+bar_code+'.svg' ).save()
 
