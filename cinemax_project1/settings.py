@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     'app',
     'news',
     'embed_video',
+
+    'storages',
 ]
 
 
@@ -197,6 +199,15 @@ ACCOUNT_FORMS = {
     'reset_password_from_key': 'app.forms.MyCustomResetPasswordKeyForm',
     }
 
+
+
+AWS_ACCESS_KEY_ID = 'AKIA6HMGNQDFUJ4WOAX6'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'cinemaxpro-bucket'
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Provider specific settings
 # SOCIALACCOUNT_PROVIDERS = {
