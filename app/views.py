@@ -192,7 +192,7 @@ class ReservationView(View):
 from django.core import mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from django.contrib.sites.shortcuts import get_current_site
+# from django.contrib.sites.shortcuts import get_current_site
 class ReserveDoneView(View):
     def get(self, request, pk_session, pk_place, total_sum):
 
@@ -227,7 +227,7 @@ class ReserveDoneView(View):
         qr = HR.save('media/tikets/'+bar_code)
 
         name_cinema = Name_Cinema.objects.all()[0]
-        site_name = get_current_site(request).name
+        # site_name = get_current_site(request).name
         context = {
             'movie': movie,
             'session': session,
@@ -237,7 +237,7 @@ class ReserveDoneView(View):
             'time_sessions': time_sess,
             'price_total': price_total,
             'img_path': qr,
-            'site_name': site_name,
+            # 'site_name': site_name,
             
             
         }
