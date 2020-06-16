@@ -84,19 +84,19 @@ class SessionsListView(View):
 
         ##########################################################
         days = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'нд']
-        days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+        days1 = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
         k = 0
         
         ################################################################################ - баги на сервере может быть потому что этот кусок кода удаляет из таблицы даные и записывает их снова и снова
         # Weekday.objects.all().delete()
         for i in range(0, len(days)):
-            print(Weekday.objects.filter(weekday = days[num_week_day + i]))
+            # print(Weekday.objects.filter(weekday = days[num_week_day + i]))
             try:
-                Weekday.objects.filter(weekday = days[num_week_day + i], weekday_en = days[num_week_day + i]).update(date = tday + datetime.timedelta(days=i))
+                Weekday.objects.filter(weekday = days[num_week_day + i], weekday_en = days1[num_week_day + i]).update(date = tday + datetime.timedelta(days=i))
                 # Weekday(weekday = days[num_week_day + i], date = tday + datetime.timedelta(days=i)).save()
                 k += 1
             except Exception:
-                Weekday.objects.filter(weekday = days[i-k]).update(date = tday + datetime.timedelta(days=i))
+                Weekday.objects.filter(weekday = days[i-k], weekday_en = days1[i-k]).update(date = tday + datetime.timedelta(days=i))
                 # Weekday(weekday = days[i-k], date = tday + datetime.timedelta(days=i)).save()
         
         active_vkladka = 0
@@ -232,7 +232,7 @@ class ReserveDoneView(View):
             'movie': movie,
             'session': session,
             'place': place,
-            'sector': sector.name_sector,
+            'sector': sector,
             'num_hall': hall_num,
             'time_sessions': time_sess,
             'price_total': price_total,
