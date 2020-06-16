@@ -20,12 +20,13 @@ PROJECT_ROOT = os.path.dirname(__file__)
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '2dis46$fom-fxxb6x+8y9hi$r4s1aei0zkaz8d%$dw2okg@7&u'
+from protect_k import SECRET_KEY
+SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['cinemaxpro.herokuapp.com', '127.0.0.1']
 
 AUTHENTICATION_BACKENDS = (
     
@@ -62,6 +63,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
 
     'django.middleware.locale.LocaleMiddleware',
@@ -151,11 +155,14 @@ LOCALE_PATHS = (
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATIC_URL = '/static/'
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [ STATIC_DIR ]
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 
 
 MEDIA_URL = '/media/'
