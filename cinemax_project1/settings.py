@@ -179,17 +179,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = False
 
-
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+SENDGRID_API_KEY = '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'
+EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = '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'
+EMAIL_HOST_PASSWORD = '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'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-
 SITE_ID = 1
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login/'
