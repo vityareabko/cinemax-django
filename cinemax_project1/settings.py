@@ -184,11 +184,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'cinemax'
+EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = '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'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/accounts/login/'
 
 SITE_ID = 1
 
