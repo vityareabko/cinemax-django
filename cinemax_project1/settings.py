@@ -179,15 +179,30 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = False
 
-SENDGRID_API_KEY = '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'
-EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = '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'
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+# SENDGRID_API_KEY = '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'
+# EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'apikey'
+# EMAIL_HOST_PASSWORD = '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'
+# EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False
+# SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+
+if not DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = 'cinemacount12090@gmail.com'
+    EMAIL_HOST_PASSWORD = 'cinemaccountx12'
+    EMAIL_USE_TLS = True
+    EMAIL_USE_SSL = False
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+
+
 
 SITE_ID = 1
 
@@ -215,13 +230,13 @@ ACCOUNT_FORMS = {
 
 
 
-# AWS_ACCESS_KEY_ID = 'AKIA6HMGNQDFUJ4WOAX6'
-# AWS_SECRET_ACCESS_KEY = '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'
-# AWS_STORAGE_BUCKET_NAME = 'cinemaxpro-bucket'
+AWS_ACCESS_KEY_ID = 'AKIA6HMGNQDFUJ4WOAX6'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'cinemaxpro-bucket'
 
-# AWS_S3_FILE_OVERWRITE = False
-# AWS_DEFAULT_ACL = None
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Provider specific settings
 # SOCIALACCOUNT_PROVIDERS = {
