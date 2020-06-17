@@ -80,20 +80,28 @@ class SessionsListView(View):
         tday = date.today()
         num_week_day = date.today().weekday()
         sessions = Session.objects.all()
-        # print(tday)
+        print(num_week_day)
 
         ##########################################################
         days = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'нд']
-        days1 = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+        days1 = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'son']
         k = 0
         
         ################################################################################ - баги на сервере может быть потому что этот кусок кода удаляет из таблицы даные и записывает их снова и снова
         # Weekday.objects.all().delete()
+
+        for i in range(0,6):
+            if num_week_day == 0:
+                Weekday.objects.filter(weekday = days[num_week_day + i], weekday_en = days1[num_week_day + i]).update(date = tday + datetime.timedelta(days=i))
+
+
         for i in range(0, len(days)):
             # print(Weekday.objects.filter(weekday = days[num_week_day + i]))
             try:
                 Weekday.objects.filter(weekday = days[num_week_day + i], weekday_en = days1[num_week_day + i]).update(date = tday + datetime.timedelta(days=i))
                 # Weekday(weekday = days[num_week_day + i], date = tday + datetime.timedelta(days=i)).save()
+                print(days[num_week_day + i])
+                print(num_week_day + i)
                 k += 1
             except Exception:
                 Weekday.objects.filter(weekday = days[i-k], weekday_en = days1[i-k]).update(date = tday + datetime.timedelta(days=i))
