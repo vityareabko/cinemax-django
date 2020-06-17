@@ -260,7 +260,8 @@ class ReserveDoneView(View):
 
         messages = "Фільм: " +str(movie.name)+ "\nдата: " +str(session_date)+ "\nчас :" +str(time_sess.time)+ "\nзал №: " +str(hall_num.number_hall)+ "\nмісце: " +str(place_num)+ "\nряд: " +str(row_pl)+ "\nCектор: " +str(sector.name_sector)+ "\nЦіна: " +str(total_sum)+"\nчекаємо вас на сеанс!\n с повагою кінотеатр CINEMAX"
         # print(messages)
-        send_mail('квиток на фільм',
+        send_mail(
+            'квиток на фільм',
             messages,
             'cinemacount12090@gmail.com',
             [email],
