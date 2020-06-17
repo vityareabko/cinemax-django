@@ -263,7 +263,7 @@ class ReserveDoneView(View):
         send_mail(
             'квиток на фільм',
             messages,
-            'reabko15@gmail.com',#'cinemacount12090@gmail.com',
+            'cinemacount12090@gmail.com',
             [email],
             fail_silently=False
         )
