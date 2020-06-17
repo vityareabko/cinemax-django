@@ -188,6 +188,7 @@ EMAIL_HOST_PASSWORD = 'SG.02k0gRP_TDC95aIDQCxCbg.zo_32TQKDZh2nx2KsLGxQcOO0pK4db3
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+DEFAULT_FROM_EMAIL = 'reabko15@gmail.com'
 
 # try:
 #     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
