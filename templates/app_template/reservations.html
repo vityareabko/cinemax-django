@@ -155,7 +155,7 @@
         button.addParam("lang","uk");
         button.setProtocol("https");
         button.setMerchantId(1449632);
-        button.setAmount("{{ total_sum }}","UAH",true);
+        button.setAmount("{{ price_total }}","UAH",true);
         button.setResponseUrl("{response_url}");
         button.addParam("order_desc","квитки на сеанс");
         var url = button.getUrl();
