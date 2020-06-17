@@ -233,40 +233,40 @@ class ReserveDoneView(View):
 
 
 
-        # name_cinema = Name_Cinema.objects.all()[0]
-        # # site_name = get_current_site(request).name
-        # context = {
-        #     'movie': movie,
-        #     'session': session,
-        #     'place': place,
-        #     'sector': sector,
-        #     'num_hall': hall_num,
-        #     'time_sessions': time_sess,
-        #     'price_total': price_total,
-        #     'img_path': qr,
-        #     # 'site_name': site_name,
+        name_cinema = Name_Cinema.objects.all()[0]
+        # site_name = get_current_site(request).name
+        context = {
+            'movie': movie,
+            'session': session,
+            'place': place,
+            'sector': sector,
+            'num_hall': hall_num,
+            'time_sessions': time_sess,
+            'price_total': price_total,
+            'img_path': qr,
+            # 'site_name': site_name,
             
             
-        # }
-        # print(site_name)
-        # subject = name_cinema
-        # html_message = render_to_string('app_template/mail_template.html', context)
-        # plain_message = strip_tags(html_message)
-        # from_email = 'From <cinemacount12090@gmail.com>'
-        # to = email
+        }
+        print(site_name)
+        subject = name_cinema
+        html_message = render_to_string('app_template/mail_template.html', context)
+        plain_message = strip_tags(html_message)
+        from_email = 'From <cinemacount12090@gmail.com>'
+        to = email
 
-        # mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+        mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
 
 
-        messages = "Фільм: " +str(movie.name)+ "\nдата: " +str(session_date)+ "\nчас :" +str(time_sess.time)+ "\nзал №: " +str(hall_num.number_hall)+ "\nмісце: " +str(place_num)+ "\nряд: " +str(row_pl)+ "\nCектор: " +str(sector.name_sector)+ "\nЦіна: " +str(total_sum)+"\nчекаємо вас на сеанс!\n с повагою кінотеатр CINEMAX"
-        # print(messages)
-        send_mail(
-            'квиток на фільм',
-            messages,
-            'cinemacount12090@gmail.com',
-            [email],
-            fail_silently=False
-        )
+        # messages = "Фільм: " +str(movie.name)+ "\nдата: " +str(session_date)+ "\nчас :" +str(time_sess.time)+ "\nзал №: " +str(hall_num.number_hall)+ "\nмісце: " +str(place_num)+ "\nряд: " +str(row_pl)+ "\nCектор: " +str(sector.name_sector)+ "\nЦіна: " +str(total_sum)+"\nчекаємо вас на сеанс!\n с повагою кінотеатр CINEMAX"
+        # # print(messages)
+        # send_mail(
+        #     'квиток на фільм',
+        #     messages,
+        #     'cinemacount12090@gmail.com',
+        #     [email],
+        #     fail_silently=False
+        # )
 
         Ticket(id_place_id = pk_place, id_session_id = pk_session, ticket_paid = total_sum, barcode = 'tikets/'+bar_code+'.svg' ).save()
 
