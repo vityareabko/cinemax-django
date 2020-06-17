@@ -234,7 +234,7 @@ class ReserveDoneView(View):
 
 
         name_cinema = Name_Cinema.objects.all()[0]
-        # site_name = get_current_site(request).name
+        site_name = get_current_site(request).name
         context = {
             'movie': movie,
             'session': session,
