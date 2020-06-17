@@ -179,13 +179,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = False
 
-SENDGRID_API_KEY = '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'
-# EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
+# SENDGRID_API_KEY = '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'
+EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'cinemacount12090@gmail.com'
-EMAIL_HOST_PASSWORD = 'cinemaccountx12'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
 EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 # try:
