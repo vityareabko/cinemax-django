@@ -192,6 +192,8 @@ class ReservationView(View):
 from django.core import mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from sendgrid.helpers.mail import *
+import sendgrid
 # from django.contrib.sites.shortcuts import get_current_site
 class ReserveDoneView(View):
     def get(self, request, pk_session, pk_place, total_sum):
@@ -226,6 +228,33 @@ class ReserveDoneView(View):
         HR = hr(bar_code)
         qr = HR.save('media/tikets/'+bar_code)
 
+
+
+        message = Mail(
+            from_email='cinemacount12090@gmail.com',,
+            to_emails=email
+            subject='квиток на фільм',
+            html_content=render_to_string('app_template/mail_template.html', context)
+        )
+        try:
+            sg = SendGridAPIClient('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')
+            response = sg.send(message)
+            
+            print(response.status_code)
+            print(response.body)
+            print(response.headers)
+
+            return {
+                'status_code' : response.status_code,
+                'body' : response.body,
+                'headers' : response.headers
+            }
+        except Exception as e:
+            print(e.message)
+            raise e 
+
+
+
         # name_cinema = Name_Cinema.objects.all()[0]
         # # site_name = get_current_site(request).name
         # context = {
@@ -251,14 +280,14 @@ class ReserveDoneView(View):
         # mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
 
 
-        messages = "Фільм: " +str(movie.name)+ "\nдата: " +str(session_date)+ "\nчас :" +str(time_sess.time)+ "\nзал №: " +str(hall_num.number_hall)+ "\nмісце: " +str(place_num)+ "\nряд: " +str(row_pl)+ "\nCектор: " +str(sector.name_sector)+ "\nЦіна: " +str(total_sum)+"\nчекаємо вас на сеанс!\n с повагою кінотеатр CINEMAX"
-        # print(messages)
-        send_mail('квиток на фільм',
-            messages,
-            'cinemacount12090@gmail.com',
-            [email],
-            fail_silently=False
-        )
+        # messages = "Фільм: " +str(movie.name)+ "\nдата: " +str(session_date)+ "\nчас :" +str(time_sess.time)+ "\nзал №: " +str(hall_num.number_hall)+ "\nмісце: " +str(place_num)+ "\nряд: " +str(row_pl)+ "\nCектор: " +str(sector.name_sector)+ "\nЦіна: " +str(total_sum)+"\nчекаємо вас на сеанс!\n с повагою кінотеатр CINEMAX"
+        # # print(messages)
+        # send_mail('квиток на фільм',
+        #     messages,
+        #     'cinemacount12090@gmail.com',
+        #     [email],
+        #     fail_silently=False
+        # )
 
         Ticket(id_place_id = pk_place, id_session_id = pk_session, ticket_paid = total_sum, barcode = 'tikets/'+bar_code+'.svg' ).save()
 
