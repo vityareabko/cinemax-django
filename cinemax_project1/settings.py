@@ -24,7 +24,7 @@ from protect_k import SECRET_KEY
 SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['cinemaxpro.herokuapp.com', '127.0.0.1']
 
@@ -204,10 +204,6 @@ DEFAULT_FROM_EMAIL = 'cinemacount12090@gmail.com'
 
 
 
-
-SITE_ID = 1
-
-
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login/'
 
@@ -235,9 +231,14 @@ AWS_ACCESS_KEY_ID = 'AKIA6HMGNQDFUJ4WOAX6'
 AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'cinemaxpro-bucket'
 
-AWS_S3_FILE_OVERWRITE = False
+# AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+AWS_LOCATION = 'media'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
 # Provider specific settings
 # SOCIALACCOUNT_PROVIDERS = {
