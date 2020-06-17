@@ -89,6 +89,7 @@ class MovieNewsList(ListView): #### парсить дание в когда ча
     # context_object_name = 'posts'
     template_name = 'news_template/news.html'
     paginate_by = 5
+    ordering = ['-id']
     
     # def get(self, request):
     #     news_list = ParseMovieInfo.objects.order_by('-id').all()
