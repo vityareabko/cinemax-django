@@ -147,7 +147,8 @@
 {% endblock  %}
 
 {% block js %}
-    <script src="//api.fondy.eu/static_common/v1/checkout/ipsp.js"></script>
+    {% comment %}
+    <!-- <script src="//api.fondy.eu/static_common/v1/checkout/ipsp.js"></script>
     <script>
         var button = $ipsp.get("button");
         button.setHost("api.fondy.eu");
@@ -174,5 +175,5 @@
             })
             this.loadUrl(url);
         });
-        </script>
+        </script> -->{% endcomment %}
 {% endblock %}
