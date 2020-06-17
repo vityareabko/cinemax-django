@@ -223,8 +223,8 @@ class ReserveDoneView(View):
             bar_code += str(i)
 
         print(bar_code)
-        hr = barcode.get_barcode_class('ean13')
-        HR = hr(bar_code)
+        hr = barcode.get_barcode_class('code39')
+        HR = hr(bar_code,writer=ImageWriter())
         qr = HR.save('media/tikets/'+bar_code)
 
 
