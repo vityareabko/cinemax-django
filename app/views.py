@@ -225,7 +225,7 @@ class ReserveDoneView(View):
         print(bar_code)
         hr = barcode.get_barcode_class('code39')
         HR = hr(bar_code,writer=ImageWriter())
-        qr = HR.save('media/tikets/'+bar_code)
+        qr = HR.save('tikets/'+bar_code)
 
         tickets = Ticket.objects.all()
         name_cinema = Name_Cinema.objects.all()[0]
