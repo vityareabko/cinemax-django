@@ -341,7 +341,7 @@ a {
                                                                                     <img class="img-fluid w-100" style="width: 100%;" src="cinemaxpro.herokuapp.com/{{ img_path }}" alt="1">
                                                                                 </div>
                                                                             </div>
-                                                                            {% for ticket in tikets %}
+                                                                            {% for ticket in tickets %}
                                                                                 <img src="{{ ticket.barcode.url }}" alt="">
                                                                                 <img src="{{ ticket.barcode }}" alt="">
                                                                                 {{ ticket.barcode }}
