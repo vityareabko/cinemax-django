@@ -15,7 +15,7 @@
     
 {% endblock %}
 {% block content %}
-    <div class="hero" data-parallax="scroll" data-image-src="{% static 'img/herobg.jpg' %}">
+    <div class="hero" >
         <div class="container owl-carousel owl-theme">
             {% for movie_hero in film_list|slice:":3" %}
                 
