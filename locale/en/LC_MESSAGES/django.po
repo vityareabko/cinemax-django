@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-15 15:41+0300\n"
+"POT-Creation-Date: 2020-06-19 00:44+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,6 +116,10 @@ msgstr ""
 msgid "Forgot Password?"
 msgstr ""
 
+#: .\templates\allauth\account\login.html:38
+msgid "увійдіть за допомогою сервісів"
+msgstr "login using services"
+
 #: .\templates\allauth\account\login.html:39
 #, python-format
 msgid ""
@@ -135,11 +139,12 @@ msgid ""
 msgstr ""
 
 #: .\templates\allauth\account\login.html:61
-#, python-format
-msgid ""
-"Если вы еще не создали аккаунт, пожалуйста, \n"
-"            <a href=\"%(signup_url)s\">зарегистрируйтесь</a>"
-msgstr ""
+msgid "Якщо ви ще не створили акаунт, будь ласка"
+msgstr "If you have not created an account, please"
+
+#: .\templates\allauth\account\login.html:62
+msgid "зареєструйтеся"
+msgstr "register"
 
 #: .\templates\allauth\account\logout.html:5
 #: .\templates\allauth\account\logout.html:8
@@ -444,6 +449,57 @@ msgstr "More details"
 msgid "Зараз у кінотеатрі"
 msgstr "Now at the cinema"
 
+#: .\templates\app_template\mail_template.html:274
+#: .\templates\app_template\reservations.html:39
+msgid "Фільм"
+msgstr "Film"
+
+#: .\templates\app_template\mail_template.html:278
+#: .\templates\app_template\reservations.html:43
+msgid "Дата показу"
+msgstr "Movie screening date"
+
+#: .\templates\app_template\mail_template.html:282
+#: .\templates\app_template\reservations.html:47
+msgid "Час сеансу"
+msgstr "Session time"
+
+#: .\templates\app_template\mail_template.html:286
+#: .\templates\app_template\reservations.html:51
+#: .\templates\app_template\sessions.html:41
+msgid "зал"
+msgstr "hall"
+
+#: .\templates\app_template\mail_template.html:290
+#: .\templates\app_template\reservations.html:55
+msgid "Ряд"
+msgstr "Row"
+
+#: .\templates\app_template\mail_template.html:294
+#: .\templates\app_template\reservations.html:59
+msgid "Місце в залі"
+msgstr "Place in the hall"
+
+#: .\templates\app_template\mail_template.html:298
+#: .\templates\app_template\reservations.html:63
+msgid "Ціна сеансу"
+msgstr "Price per session"
+
+#: .\templates\app_template\mail_template.html:302
+#: .\templates\app_template\reservations.html:67
+msgid "Ціна за сектор"
+msgstr "Price per sector"
+
+#: .\templates\app_template\mail_template.html:321
+#: .\templates\app_template\reservations.html:86
+msgid "Кінцева ціна"
+msgstr "Total"
+
+#: .\templates\app_template\mail_template.html:325
+#: .\templates\app_template\reservations.html:90
+msgid "В сумі"
+msgstr "In total"
+
 #: .\templates\app_template\movie_detail.html:69
 #: .\templates\news_template\news_detail.html:73
 msgid "залишити коментар"
@@ -527,48 +583,7 @@ msgstr "Save"
 msgid "Ви впевнені що хочете видалити коментар?"
 msgstr "Are you sure you want to delete the comment?"
 
-#: .\templates\app_template\reservations.html:45
-msgid "Фільм"
-msgstr "Film"
-
-#: .\templates\app_template\reservations.html:49
-msgid "Дата показу"
-msgstr "Movie screening date"
-
-#: .\templates\app_template\reservations.html:53
-msgid "Час сеансу"
-msgstr "Session time"
-
-#: .\templates\app_template\reservations.html:57
-#: .\templates\app_template\sessions.html:41
-msgid "зал"
-msgstr "hall"
-
-#: .\templates\app_template\reservations.html:61
-msgid "Ряд"
-msgstr "Row"
-
-#: .\templates\app_template\reservations.html:65
-msgid "Місце в залі"
-msgstr "Place in the hall"
-
-#: .\templates\app_template\reservations.html:69
-msgid "Ціна сеансу"
-msgstr "Price per session"
-
-#: .\templates\app_template\reservations.html:73
-msgid "Ціна за сектор"
-msgstr "Price per sector"
-
-#: .\templates\app_template\reservations.html:92
-msgid "Кінцева ціна"
-msgstr "Total"
-
-#: .\templates\app_template\reservations.html:96
-msgid "В сумі"
-msgstr "In total"
-
-#: .\templates\app_template\reservations.html:111
+#: .\templates\app_template\reservations.html:105
 msgid "Забронювати"
 msgstr "Book a place"
 

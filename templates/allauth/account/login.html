@@ -35,7 +35,7 @@
           
           {% if socialaccount_providers %}
           
-          <p class="mt-4" >войдите с помощью других сервисов</p>
+          <p class="mt-4">{% trans "увійдіть за допомогою сервісів" %}</p>
           <!-- <p>{% blocktrans with site.name as site_name %} Please sign in with on of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a> for a {{ site_name }}{% endblocktrans %}</p> -->
           
         
@@ -58,8 +58,8 @@
           {% endif %}
         </div>
         <div class="bottom bg-light mt-2 py-2 px-3 wrap_login mx-auto">
-          <p>{% blocktrans %}Если вы еще не создали аккаунт, пожалуйста, 
-            <a href="{{ signup_url }}">зарегистрируйтесь</a>{% endblocktrans %}</p>
+          <p>{% trans "Якщо ви ще не створили акаунт, будь ласка" %}
+            <a href="{{ signup_url }}">{% trans "зареєструйтеся" %}</a></p>
         </div>
       </div>
     {% endblock %}
