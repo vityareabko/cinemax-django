@@ -264,7 +264,7 @@ class ReserveDoneView(View):
         #     fail_silently=False
         # )
 
-        Ticket(id_place_id = pk_place, id_session_id = pk_session, ticket_paid = total_sum, barcode = 'tikets/'+bar_code+'.png' ).save()
+        Ticket(id_place_id = pk_place, id_session_id = pk_session, ticket_paid = total_sum, barcode = 'tikets/'+bar_code+'.svg' ).save()
         
         context = {
 
