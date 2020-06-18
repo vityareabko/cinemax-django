@@ -8,12 +8,11 @@
     z-index: 2;
     padding: 100px 0;
     /* background: rgb(0,0,0,0.6); */
-    /* overflow: auto; */
 }
 
   
 .hero img{
-    /* max-width: 400px; */
+    max-width: 400px;
 }
 .hero .row{
     margin: 0;
@@ -135,7 +134,6 @@
     .container {
         max-width: 720px;
     }
-    
 }
 @media (min-width: 576px){
     .container {
@@ -143,10 +141,6 @@
     }
     .hero{
         height: auto;
-        
-    }
-    .hero img{
-        width: 50%;
     }
 }
 
