@@ -267,14 +267,11 @@ class ReserveDoneView(View):
         # )
         s3_client = boto3.client('s3')
         try:
-            response = s3_client.upload_file(bar_code+'.png', 'cinemaxpro-bucket', bar_code+'.png')
+            response = s3_client.upload_file(HR, 'cinemaxpro-bucket', HR)
         except ClientError as e:
             logging.error(e)
         Ticket(id_place_id = pk_place, id_session_id = pk_session, ticket_paid = total_sum, barcode = 'tikets/'+bar_code+'.png' ).save()
         
-        context = {
-
-        }
     
         # return render(request, 'app_template/get_ticket.html')
 
