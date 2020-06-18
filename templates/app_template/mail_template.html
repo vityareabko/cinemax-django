@@ -343,7 +343,11 @@ a {
                                                                             </div>
                                                                             {% for ticket in tikets %}
                                                                                 <img src="{{ ticket.barcode.url }}" alt="">
+                                                                                <img src="{{ ticket.barcode }}" alt="">
+                                                                                {{ ticket.barcode }}
                                                                             {% endfor %}
+
+                                                                           
                                                                     </td>
                                                                 </tr>
                                                                 
