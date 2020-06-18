@@ -15,9 +15,9 @@
     
 {% endblock %}
 {% block content %}
-    <div class="hero" >
+    <div class="hero" data-parallax="scroll" data-image-src="{% static 'img/herobg.jpg' %}">
         <div class="container owl-carousel owl-theme">
-            {% for movie_hero in film_list|slice:":3" %}
+            {% for movie_hero in film_list|slice:":1" %}
                 
                 <div class="owl_item row mx-auto ">
                     <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 d-flex justify-content-center">

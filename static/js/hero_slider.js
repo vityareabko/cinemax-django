@@ -1,18 +1,18 @@
-$('.owl-carousel').owlCarousel({
+// $('.owl-carousel').owlCarousel({
 
-    responsiveClass: true,
-    autoplay: true,
-    loop: true,
-    dots: false,
-    responsive:{
-        0:{
-            items:1,
-        },
-        600:{
-            items:1,
-        },
-        1000:{
-            items:1,
-        }
-    }
-})
+//     responsiveClass: true,
+//     autoplay: true,
+//     loop: true,
+//     dots: false,
+//     responsive:{
+//         0:{
+//             items:1,
+//         },
+//         600:{
+//             items:1,
+//         },
+//         1000:{
+//             items:1,
+//         }
+//     }
+// })
