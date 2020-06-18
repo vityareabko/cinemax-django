@@ -8,7 +8,7 @@
     z-index: 2;
     padding: 100px 0;
     /* background: rgb(0,0,0,0.6); */
-    overflow: auto;
+    /* overflow: auto; */
 }
 
   
@@ -144,6 +144,9 @@
     .hero{
         height: auto;
         
+    }
+    .hero img{
+        width: 50%;
     }
 }
 
