@@ -227,7 +227,7 @@ class ReserveDoneView(View):
         HR = hr(bar_code,writer=ImageWriter())
         qr = HR.save('media/tikets/'+bar_code)
 
-
+        tickets = Ticket.objects.all()
         name_cinema = Name_Cinema.objects.all()[0]
         # site_name = get_current_site(request).name
         context = {
@@ -240,6 +240,7 @@ class ReserveDoneView(View):
             'price_total': price_total,
             'img_path': qr,
             # 'site_name': site_name,
+            'tickets': tickets
             
             
         }
@@ -264,7 +265,7 @@ class ReserveDoneView(View):
         # )
 
         Ticket(id_place_id = pk_place, id_session_id = pk_session, ticket_paid = total_sum, barcode = 'tikets/'+bar_code+'.svg' ).save()
-
+        
         context = {
 
         }
