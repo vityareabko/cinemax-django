@@ -10,7 +10,9 @@
     /* background-image: url('../img/herobg.jpg'); */
     /* background: rgb(0,0,0,0.6); */
 }
-
+.owl_item img{
+    height: 500px;
+}
   
 .hero img{
     /* max-width: 400px; */
@@ -139,7 +141,7 @@
         max-width: 720px;
     }
 }
-@media (min-width: 576px){
+@media (max-width: 576px){
     .container {
         max-width: 540px;
     }
@@ -147,8 +149,16 @@
         height: 400px;
     }
     .hero{
-        height: auto;
+        /* height: auto; */
         width: auto;
+        padding: 30px 0;
+    }
+    .owl_item img{
+        height: 400px;
+    }
+    .hero .movie_title{
+        color:#fff;
+        margin-bottom: 0px;
     }
 }
 
