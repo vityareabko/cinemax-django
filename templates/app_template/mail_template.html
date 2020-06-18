@@ -335,17 +335,17 @@ a {
                                                                     <td class="bg_test ">
                                                                  
                                                                             <!-- <a href="https://cinemaxpro.herokuapp.com/{{ img_path }}">https://cinemaxpro.herokuapp.com/{{ img_path }}</a>    -->
-                                                                            {{ img_path.url }}
+                                                                           
                                                                             <div class="row">
                                                                                 <div class="col-12 d-flex justify-content-center" >   
                                                                                     <img class="img-fluid w-100" style="width: 100%;" src="cinemaxpro.herokuapp.com/{{ img_path }}" alt="1">
                                                                                 </div>
                                                                             </div>
-                                                                            {% for ticket in tickets %}
+                                                                            {% comment %}<!-- {% for ticket in tickets %}
                                                                                 <img src="{{ ticket.barcode.url }}" alt="">
                                                                                 <img src="{{ ticket.barcode }}" alt="">
                                                                                 {{ ticket.barcode }}
-                                                                            {% endfor %}
+                                                                            {% endfor %} -->{% endcomment %}
 
                                                                            
                                                                     </td>
