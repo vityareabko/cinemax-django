@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}Сеанси{% endblock %}
+{% block stylesheet %}{% endblock %}
+
+{% block content %}
+    <div class="text-center h-100">
+        <h1 class="display-3 mt-5">Thank You!</h1>
+        <p class="lead"><strong>Please check your email</strong> for further instructions on how to complete your account setup.</p>
+        <hr>
+        <p>
+            <form action="{% url 'app:get_ticket' session.id place.id price_total %}" id="formtest" method="get" >
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="email" name="email_input" class= "input-email" id="formGroupExampleInput" placeholder="E-mail" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-success" type="submit">{% trans 'Забронювати' %}</button>
+                        
+                    </div>
+                </div>
+            </form>
+        </p>
+        <p class="lead">
+        <a class="btn btn-primary btn-sm" href="#!" role="button">Continue to homepage</a>
+        </p>
+    </div>
+
+
+{% endblock %}
+    
+{% block js %}{% endblock %}

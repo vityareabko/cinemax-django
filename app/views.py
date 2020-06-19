@@ -199,7 +199,7 @@ from botocore.exceptions import ClientError
 
 # from liqpay import LiqPay
 class ReserveDoneView(View):
-    def get(self, request, pk_session, pk_place, total_sum):
+    def get(self, request, pk_session, pk_place, total_sum, email):
 
 
         # liqpay = LiqPay('sandbox_i23530229261', 'sandbox_MMOSjBFdRH3DapWpqGiLy6ePgltCzK1dyyfae519')
@@ -219,8 +219,8 @@ class ReserveDoneView(View):
 
 
 
-        email = str(request.GET['email_input'])
-       
+        # email = str(request.GET['email_input'])
+        print(email)
         
 
         session      = Session.objects.get(id = pk_session)
@@ -422,3 +422,9 @@ class Dislike_Review(View):
         
         print(data)
         return JsonResponse(data)
+
+
+class ThankPage(View):
+    def get(self, request):
+        context = {}
+        return render( request, 'app_template/thanks.html', context )

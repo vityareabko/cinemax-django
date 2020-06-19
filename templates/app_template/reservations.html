@@ -96,18 +96,15 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="d-flex justify-content-center">
-                                                                                <form action="{% url 'app:get_ticket' session.id place.id price_total %}" id="formtest" method="get" >
-                                                                                    {% csrf_token %}
-                                                                                    <div class="input-group">
-                                                                                        <input type="email" name="email_input" class= "input-email" id="formGroupExampleInput" placeholder="E-mail" required>
-                                                                                        <div class="input-group-append">
-                                                                                            <button class="btn btn-success" type="submit">{% trans 'Забронювати' %}</button>
-                                                                                            
-                                                                                        </div>
+                                                                            <td>
+                                                                                <div class="input-group d-flex justify-content-center mt-3">
+                                                                                    <input type="hidden" id="amount" value="{{ price_total }}">
+                                                                                    <input type="email" name="email_input" class= "input-email" id="formGroupExampleInput" placeholder="E-mail" >
+                                                                                    <div class="input-group-append">
+                                                                                        
+                                                                                        <button id="pay_btn" class="btn btn-success " type="submit" onclick="location.href=createOrder('{{ price_total }}')">{% trans 'Забронювати' %} {{ price_total }} UAH</button> 
                                                                                     </div>
-                                                                                </form>
-                                                                                
+                                                                                </div>
                                                                             </td>
                                                                         </tr>
                                                                         
@@ -115,29 +112,13 @@
                                                                             <td class="">
                                                                                 <!-- <div id="checkout"></div> -->
 
-
-                                                                                <button class="btn btn-success" onclick="location.href=createOrder('{{ price_total }}')">{% trans 'Забронювати' %} {{ price_total }} UAH</button>
-
-
-
-
-                                                                                <div id="liqpay_checkout">
+                                                                                
                                                                                 
 
-                                                                                    <form method="POST" accept-charset="utf-8" action="https://www.liqpay.ua/api/3/checkout">
-                                                                                        <input type="hidden" name="data" value="eyJ2ZXJzaW9uIjozLCJhY3Rpb24iOiJwYXkiLCJwdWJsaWNfa2V5IjoiaTcxMTUzNzY2NjAwIiwiYW1vdW50IjoiNSIsImN1cnJlbmN5IjoiVUFIIiwiZGVzY3JpcHRpb24iOiLQnNC+0Lkg0YLQvtCy0LDRgCIsInR5cGUiOiJidXkiLCJsYW5ndWFnZSI6InJ1In0=" />
-                                                                                        <input type="hidden" name="signature" value="T4rPYFS4pHt3Om2L1q1aulWJdNs=" />
-                                                                                        <button style="border: none !important; display:inline-block !important;text-align: center !important;padding: 7px 20px !important;
-                                                                                            color: #fff !important; font-size:16px !important; font-weight: 600 !important; font-family:OpenSans, sans-serif; cursor: pointer !important; border-radius: 2px !important;
-                                                                                            background: rgb(122,183,43) !important;"onmouseover="this.style.opacity='0.5';" onmouseout="this.style.opacity='1';">
-                                                                                            <img src="https://static.liqpay.ua/buttons/logo-small.png" name="btn_text"
-                                                                                                style="margin-right: 7px !important; vertical-align: middle !important;"/>
-                                                                                            <span style="vertical-align: middle !important">Оплатить 5 UAH</span>
-                                                                                        </button>
-                                                                                    </form>
 
-                                                                                    
-                                                                                </div>
+
+
+                                                                                
                                                                                     
                                                                             </td>
                                                                         </tr>
@@ -178,19 +159,34 @@
         button.setHost('api.fondy.eu');
     </script> -->
     <script> // тестовый кошелек card - 4444555566661111 use - 10/22 cvv - 324
-        function createOrder(amount) {
-            var button = $ipsp.get('button');
-            button.setMerchantId(1449720);
-            button.addParam("lang","{{LANGUAGE_CODE}}");
-            button.setAmount(amount, 'UAH', true);
+    
+
+    function createOrder(amount){
             
-            button.setResponseUrl('https://cinemaxpro.herokuapp.com/');
-            button.setHost('api.fondy.eu'); 
+            
+            
+            var email = $('.input-email').val();
+            console.log(email)
+            if(email == ''){
+                alert('eee');
+            }else{
+                location.href
+                console.log('ss')
+                var amount = $('#amount').val()
+                var button = $ipsp.get('button');
+                button.setMerchantId(1449720);
+                button.addParam("lang","{{LANGUAGE_CODE}}");
+                button.setAmount(amount, 'UAH', true);
+                button.setResponseUrl('https://cinemaxpro.herokuapp.com/get_ticket/{{session.id}}/{{place.id}}/{{price_total}}/'+email); //'https://cinemaxpro.herokuapp.com/'
+                button.setHost('api.fondy.eu'); 
            
+    
+                return button.getUrl(); 
+            }
+
             
-            return button.getUrl(); 
-        }
         
+    }
         // var button = $ipsp.get('button');
         
         // button.setMerchantId(1449720);
