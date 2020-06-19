@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.vk',
     
+    'liqpay',
 
     'app',
     'news',
@@ -237,6 +238,15 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_PUBLIC_MEDIA_LOCATION = 'media'
 
+
+
+LIQPAY_PUBLIC_KEY = 'sandbox_i23530229261'
+
+LIQPAY_PRIVATE_KE = 'sandbox_MMOSjBFdRH3DapWpqGiLy6ePgltCzK1dyyfae519'
+
+LIQPAY_DEFAULT_CURRENCY = 'UAH'
+
+LIQPAY_DEFAULT_LANGUAGE = 'uk'
 # AWS_LOCATION = 'media'
 # AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 # MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)

@@ -196,10 +196,32 @@ from django.utils.html import strip_tags
 import logging
 import boto3
 from botocore.exceptions import ClientError
+
+# from liqpay import LiqPay
 class ReserveDoneView(View):
     def get(self, request, pk_session, pk_place, total_sum):
 
+
+        # liqpay = LiqPay('sandbox_i23530229261', 'sandbox_MMOSjBFdRH3DapWpqGiLy6ePgltCzK1dyyfae519')
+        # params = {
+        #     'action': 'pay',
+        #     'amount': '100',
+        #     'currency': 'USD',
+        #     'description': 'Payment for clothes',
+        #     'order_id': 'order_id_1',
+        #     'version': '3',
+        #     'sandbox': 0, # sandbox mode, set to 1 to enable it
+        #     'server_url': 'https://test.com/billing/pay-callback/', # url to callback view
+        # }
+        # signature = liqpay.cnb_signature(params)
+        # data = liqpay.cnb_data(params)
+
+
+
+
         email = str(request.GET['email_input'])
+       
+        
 
         session      = Session.objects.get(id = pk_session)
         place        = Place.objects.get(id = pk_place)

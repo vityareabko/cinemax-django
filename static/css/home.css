@@ -2,8 +2,8 @@
     
 }   
 .hero{
-    /* min-height: 90vh; */
-    /* min-width: 100vw; */
+    min-height: 90vh;
+    min-width: 100vw;
     /* background: transparent; */
     z-index: 2;
     padding: 100px 0;
