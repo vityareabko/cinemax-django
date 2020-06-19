@@ -152,6 +152,8 @@
         /* height: auto; */
         width: auto;
         padding: 30px 0;
+        min-height: auto;
+        min-width: auto;
     }
     .owl_item img{
         height: 400px;
