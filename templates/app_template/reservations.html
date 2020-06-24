@@ -1,7 +1,7 @@
 
 {% extends "base.html" %}
 {% load static i18n %}
-{% block title %}Зал{% endblock %}
+{% block title %}{% trans "бронювання" %}{% endblock %}
 
 {% block stylesheet %} 
 
@@ -177,7 +177,7 @@
                 button.setMerchantId(1449720);
                 button.addParam("lang","{{LANGUAGE_CODE}}");
                 button.setAmount(amount, 'UAH', true);
-                button.setResponseUrl('https://cinemaxpro.herokuapp.com/get_ticket/{{session.id}}/{{place.id}}/{{price_total}}/'+email); //'https://cinemaxpro.herokuapp.com/'
+                button.setResponseUrl('http://127.0.0.1:8000/get_ticket/{{session.id}}/{{place.id}}/{{price_total}}/'+email); // button.setResponseUrl('https://cinemaxpro.herokuapp.com/get_ticket/{{session.id}}/{{place.id}}/{{price_total}}/'+email);  //////////// button.setResponseUrl('https://cinemaxpro.herokuapp.com/get_ticket/{{session.id}}/{{place.id}}/{{price_total}}/'+email); //'https://cinemaxpro.herokuapp.com/'
                 button.setHost('api.fondy.eu'); 
            
     

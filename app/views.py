@@ -263,7 +263,7 @@ class ReserveDoneView(View):
             'time_sessions': time_sess,
             'price_total': price_total,
             'img_path': qr,
-            # 'site_name': site_name,
+            'name_cinema': name_cinema.name_cinema,
             'tickets': tickets
             
             
@@ -272,7 +272,7 @@ class ReserveDoneView(View):
         subject = name_cinema
         html_message = render_to_string('app_template/mail_template.html', context)
         plain_message = strip_tags(html_message)
-        from_email = 'From <cinemacount12090@gmail.com>'
+        from_email = str(name_cinema.name_cinema)+'<cinemacount12090@gmail.com>'
         to = email
 
         mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
