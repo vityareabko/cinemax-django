@@ -26,8 +26,8 @@ class CommentsAdmin(admin.ModelAdmin):
 
 class SessionAdmin(admin.ModelAdmin):
     list_display = [ field.name for field in Session._meta.fields]
-    search_fields = ['id_film__name', 'id_hall__number_hall']
-    list_filter = ['id_film__name', 'id_hall__number_hall']
+    
+    list_filter = ['id_hall__number_hall']
     class Meta:
         model = Session
 
