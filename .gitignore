@@ -1,5 +1,10 @@
 
 venv/
+
+.vs
+
+app/__pycache__
+
 # Windows thumbnail cache files
 Thumbs.db
 Thumbs.db:encryptable
